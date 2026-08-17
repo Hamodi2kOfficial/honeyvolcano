@@ -30,7 +30,7 @@ export default function ProductsPage() {
   };
 
   return (
-    <main className="dark relative min-h-[100svh] overflow-hidden bg-[#0b0a08] text-white">
+    <main className="dark relative min-h-[100svh] overflow-hidden bg-[#090405] text-white">
       <HoneycombCanvas />
       <AuroraBackground className="mix-blend-screen" />
       {/* Dark stage: solid behind the logo/title, softening lower so the honey
@@ -40,7 +40,7 @@ export default function ProductsPage() {
         className="absolute inset-0"
         style={{
           background:
-            "linear-gradient(to bottom, #0b0a08 0%, rgba(11,10,8,0.95) 34%, rgba(11,10,8,0.62) 56%, rgba(11,10,8,0.5) 74%, rgba(11,10,8,0.76) 100%)",
+            "linear-gradient(to bottom, #090405 0%, rgba(9,4,5,0.95) 34%, rgba(9,4,5,0.62) 56%, rgba(9,4,5,0.5) 74%, rgba(9,4,5,0.76) 100%)",
         }}
       />
 
@@ -77,7 +77,7 @@ export default function ProductsPage() {
             style={{ background: "radial-gradient(circle, rgba(212,175,55,0.16), transparent 66%)" }}
           />
           <Image
-            src="/logo-full.jpg"
+            src="/logo-full.png"
             alt="Honey Volcano"
             width={360}
             height={360}
