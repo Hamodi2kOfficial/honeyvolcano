@@ -1,0 +1,92 @@
+@import "tailwindcss";
+
+/* next-themes toggles the `dark` class on <html> */
+@custom-variant dark (&:is(.dark *));
+
+/* ---- MEDAUS ŪKIS brand tokens ---- */
+:root {
+  /* Light mode: warm cream paper, deep ink, darkened gold for contrast */
+  --bg: #f6f2e9;
+  --bg-soft: #efe9db;
+  --fg: #1b1a17;
+  --fg-muted: rgba(27, 26, 23, 0.66);
+  --accent: #9a7d1e;
+  --accent-strong: #b8912e;
+  --border: rgba(154, 125, 30, 0.22);
+}
+
+.dark {
+  /* Dark mode (default): deep label black, off-white, metallic gold */
+  --bg: #151515;
+  --bg-soft: #0f0f0f;
+  --fg: #f4f4f4;
+  --fg-muted: rgba(244, 244, 244, 0.68);
+  --accent: #d4af37;
+  --accent-strong: #e5b869;
+  --border: rgba(212, 175, 55, 0.16);
+}
+
+@theme inline {
+  --color-background: var(--bg);
+  --color-bg-soft: var(--bg-soft);
+  --color-foreground: var(--fg);
+  --color-foreground-muted: var(--fg-muted);
+  --color-accent: var(--accent);
+  --color-accent-strong: var(--accent-strong);
+  --color-border: var(--border);
+
+  --font-display: var(--font-cinzel);
+  --font-serif: var(--font-cormorant);
+  --font-sans: var(--font-lato);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--font-lato), system-ui, -apple-system, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  transition: background-color 0.4s ease, color 0.4s ease;
+}
+
+::selection {
+  background: var(--accent);
+  color: #151515;
+}
+
+/* Lenis smooth scroll */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+.lenis.lenis-stopped {
+  overflow: clip;
+}
+
+/* Gold marquee ribbon */
+@keyframes medaus-marquee {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+.animate-marquee {
+  animation: medaus-marquee 32s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .animate-marquee {
+    animation: none;
+  }
+}
