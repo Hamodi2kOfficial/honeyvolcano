@@ -1,0 +1,14 @@
+# Netlify deployment config for the Honey Volcano site.
+# The app builds to a fully static export (next.config.ts → output: "export"),
+# so Netlify just needs to run the build and publish the generated `out/` folder.
+
+[build]
+  command = "npm run build"
+  publish = "out"
+
+[build.environment]
+  # Next.js 16 / React 19 need a modern Node runtime.
+  NODE_VERSION = "20"
+
+# Static export already emits /products/index.html etc. (trailingSlash: true),
+# and a 404.html that Netlify serves automatically — no extra redirects needed.

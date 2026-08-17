@@ -68,12 +68,12 @@ export default function ProductsPage() {
           transition={{ duration: 1.4, ease: EASE }}
         >
           <Image
-            src="/logo-clean.png"
+            src="/logo-gold.png"
             alt="Honey Volcano"
-            width={220}
-            height={220}
+            width={320}
+            height={320}
             priority
-            className="h-auto w-[130px] md:w-[160px]"
+            className="h-auto w-[150px] md:w-[180px]"
             style={{ filter: "drop-shadow(0 14px 46px rgba(212,175,55,0.32))" }}
           />
         </motion.div>
