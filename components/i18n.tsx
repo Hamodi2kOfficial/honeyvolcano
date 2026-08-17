@@ -509,7 +509,10 @@ export function I18nProvider({ children }: { children: React.ReactNode }) {
   const [lang, setLangState] = React.useState<Lang>("en");
 
   React.useEffect(() => {
+    // Read the saved language after mount (client-only) so SSR and the first
+    // client render both start from "en" — avoids a hydration mismatch.
     const saved = window.localStorage.getItem("medaus-lang") as Lang | null;
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     if (saved && DICTS[saved]) setLangState(saved);
   }, []);
 
