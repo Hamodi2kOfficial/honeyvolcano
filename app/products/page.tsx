@@ -30,15 +30,17 @@ export default function ProductsPage() {
   };
 
   return (
-    <main className="dark relative min-h-[100svh] overflow-hidden bg-[#0e0c0a] text-white">
+    <main className="dark relative min-h-[100svh] overflow-hidden bg-[#0b0a08] text-white">
       <HoneycombCanvas />
       <AuroraBackground className="mix-blend-screen" />
+      {/* Dark stage: solid behind the logo/title, softening lower so the honey
+          cells stay alive around the taste card — keeps everything legible. */}
       <div
         aria-hidden
         className="absolute inset-0"
         style={{
           background:
-            "radial-gradient(ellipse at 50% 30%, rgba(14,12,10,0) 0%, rgba(14,12,10,0.6) 60%, rgba(14,12,10,0.95) 100%)",
+            "linear-gradient(to bottom, #0b0a08 0%, rgba(11,10,8,0.95) 34%, rgba(11,10,8,0.62) 56%, rgba(11,10,8,0.5) 74%, rgba(11,10,8,0.76) 100%)",
         }}
       />
 
@@ -66,15 +68,21 @@ export default function ProductsPage() {
           initial={{ opacity: 0, scale: 0.85, filter: "blur(12px)" }}
           animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
           transition={{ duration: 1.4, ease: EASE }}
+          className="relative"
         >
+          {/* soft circular gold halo (behind the square logo) */}
+          <div
+            aria-hidden
+            className="absolute left-1/2 top-1/2 -z-10 h-[150%] w-[150%] -translate-x-1/2 -translate-y-1/2 rounded-full opacity-70 blur-2xl"
+            style={{ background: "radial-gradient(circle, rgba(212,175,55,0.16), transparent 66%)" }}
+          />
           <Image
-            src="/logo-gold.png"
+            src="/logo-full.jpg"
             alt="Honey Volcano"
-            width={320}
-            height={320}
+            width={360}
+            height={360}
             priority
-            className="h-auto w-[150px] md:w-[180px]"
-            style={{ filter: "drop-shadow(0 14px 46px rgba(212,175,55,0.32))" }}
+            className="h-auto w-[168px] rounded-md md:w-[208px]"
           />
         </motion.div>
 
