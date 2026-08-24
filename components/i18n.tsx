@@ -26,6 +26,14 @@ const en = {
     stat2: "Small batch",
     stat3: "Unfiltered",
   },
+  trust: {
+    eyebrow: "A source you can trust",
+    heading: "Reliable source.\nTrustworthy business.",
+    body:
+      "Every jar comes from our own hives and reaches you exactly as promised — pure, traceable, honest. The honey we sell is the honey we keep on our own table.",
+    point1: "Our own hives",
+    point2: "Independently tested",
+  },
   values: {
     eyebrow: "Real honey, nothing hidden",
     heading: "You deserve to know\nexactly what's in the jar.",
@@ -108,6 +116,14 @@ const lt: Dict = {
     stat2: "Maža partija",
     stat3: "Nefiltruotas",
   },
+  trust: {
+    eyebrow: "Šaltinis, kuriuo galima pasitikėti",
+    heading: "Patikimas šaltinis.\nSąžiningas verslas.",
+    body:
+      "Kiekvienas indelis kilęs iš mūsų pačių avilių ir pasiekia jus lygiai toks, koks pažadėtas — grynas, atsekamas, sąžiningas. Medų, kurį parduodame, laikome ir ant savo stalo.",
+    point1: "Mūsų pačių aviliai",
+    point2: "Nepriklausomai ištirtas",
+  },
   values: {
     eyebrow: "Tikras medus, nieko paslėpta",
     heading: "Turite žinoti,\nkas tiksliai yra stiklainyje.",
@@ -187,6 +203,14 @@ const is: Dict = {
     stat1: "Villtsafnað",
     stat2: "Lítil lota",
     stat3: "Ósíað",
+  },
+  trust: {
+    eyebrow: "Uppspretta sem þú getur treyst",
+    heading: "Áreiðanleg uppspretta.\nTraust fyrirtæki.",
+    body:
+      "Hvert glas kemur úr okkar eigin búum og berst þér nákvæmlega eins og lofað var — hreint, rekjanlegt, heiðarlegt. Hunangið sem við seljum er hunangið sem við höfum á okkar eigin borði.",
+    point1: "Okkar eigin bú",
+    point2: "Óháð prófað",
   },
   values: {
     eyebrow: "Ekta hunang, ekkert falið",
@@ -268,6 +292,14 @@ const es: Dict = {
     stat2: "Lote pequeño",
     stat3: "Sin filtrar",
   },
+  trust: {
+    eyebrow: "Una fuente en la que confiar",
+    heading: "Origen fiable.\nNegocio de confianza.",
+    body:
+      "Cada tarro proviene de nuestras propias colmenas y te llega tal como lo prometemos: puro, trazable, honesto. La miel que vendemos es la miel que tenemos en nuestra propia mesa.",
+    point1: "Nuestras propias colmenas",
+    point2: "Analizada de forma independiente",
+  },
   values: {
     eyebrow: "Miel de verdad, nada oculto",
     heading: "Mereces saber\nexactamente qué hay en el tarro.",
@@ -348,6 +380,14 @@ const ru: Dict = {
     stat2: "Малая партия",
     stat3: "Нефильтрованный",
   },
+  trust: {
+    eyebrow: "Источник, которому можно доверять",
+    heading: "Надёжный источник.\nЧестное дело.",
+    body:
+      "Каждая банка — с наших собственных пасек и доходит до вас именно такой, как обещано: чистой, прослеживаемой, честной. Мёд, который мы продаём, стоит и на нашем собственном столе.",
+    point1: "Наши собственные пасеки",
+    point2: "Независимо проверен",
+  },
   values: {
     eyebrow: "Настоящий мёд, ничего не скрыто",
     heading: "Вы вправе знать,\nчто именно в банке.",
@@ -427,6 +467,14 @@ const pl: Dict = {
     stat1: "Dziko zbierany",
     stat2: "Mała partia",
     stat3: "Niefiltrowany",
+  },
+  trust: {
+    eyebrow: "Źródło, któremu możesz zaufać",
+    heading: "Pewne źródło.\nGodny zaufania biznes.",
+    body:
+      "Każdy słoik pochodzi z naszych własnych pasiek i trafia do Ciebie dokładnie taki, jak obiecujemy — czysty, identyfikowalny, uczciwy. Miód, który sprzedajemy, stoi też na naszym własnym stole.",
+    point1: "Nasze własne pasieki",
+    point2: "Niezależnie przebadany",
   },
   values: {
     eyebrow: "Prawdziwy miód, nic ukrytego",
