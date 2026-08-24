@@ -45,3 +45,6 @@ next-env.d.ts
 
 # local-only invoice generator (contains personal/bank details)
 scripts/make-invoice-pdf.js
+
+# Stray root asset, not part of the site
+WhatsApp Image*.jpeg
