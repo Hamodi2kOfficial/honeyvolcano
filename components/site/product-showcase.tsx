@@ -8,12 +8,10 @@ import { EASE } from "@/lib/motion";
 
 function Feature({
   title,
-  desc,
   align,
   delay,
 }: {
   title: string;
-  desc: string;
   align: "left" | "right";
   delay: number;
 }) {
@@ -32,9 +30,6 @@ function Feature({
       <h3 className="font-display text-lg tracking-[0.15em] text-accent">
         {title}
       </h3>
-      <p className="mx-auto mt-2 max-w-[15rem] text-sm font-light leading-relaxed text-foreground-muted md:mx-0">
-        {desc}
-      </p>
     </motion.div>
   );
 }
@@ -71,8 +66,8 @@ export function ProductShowcase() {
         <div className="mt-16 grid items-center gap-10 md:grid-cols-[1fr_auto_1fr] md:gap-6">
           {/* left features */}
           <div className="flex flex-col gap-12 md:items-end">
-            <Feature title={t.product.f1t} desc={t.product.f1d} align="right" delay={0.1} />
-            <Feature title={t.product.f2t} desc={t.product.f2d} align="right" delay={0.2} />
+            <Feature title={t.product.f1t} align="right" delay={0.1} />
+            <Feature title={t.product.f2t} align="right" delay={0.2} />
           </div>
 
           {/* jar */}
@@ -117,7 +112,7 @@ export function ProductShowcase() {
 
           {/* right feature */}
           <div className="flex flex-col justify-center md:items-start">
-            <Feature title={t.product.f3t} desc={t.product.f3d} align="left" delay={0.3} />
+            <Feature title={t.product.f3t} align="left" delay={0.3} />
           </div>
         </div>
       </div>

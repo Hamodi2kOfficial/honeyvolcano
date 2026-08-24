@@ -53,17 +53,9 @@ export function TrustSection() {
           >
             {t.trust.heading}
           </motion.h2>
-          <motion.p
-            variants={rise}
-            custom={2}
-            className="mt-7 max-w-md text-base font-light leading-relaxed text-foreground-muted"
-          >
-            {t.trust.body}
-          </motion.p>
-
           <motion.div
             variants={rise}
-            custom={3}
+            custom={2}
             className="mt-9 flex flex-wrap gap-x-8 gap-y-3 border-t border-border pt-6"
           >
             {[t.trust.point1, t.trust.point2].map((s) => (

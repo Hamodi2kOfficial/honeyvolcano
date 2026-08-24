@@ -29,8 +29,6 @@ const en = {
   trust: {
     eyebrow: "A source you can trust",
     heading: "Reliable source.\nTrustworthy business.",
-    body:
-      "Every jar comes from our own hives and reaches you exactly as promised — pure, traceable, honest. The honey we sell is the honey we keep on our own table.",
     point1: "Our own hives",
     point2: "Independently tested",
   },
@@ -56,20 +54,13 @@ const en = {
     p3: "We bottle only what the forest offers — and we are grateful for every single drop.",
     signature: "— The Honey Volcano beekeepers",
   },
-  band: {
-    quote: "Straight from the comb.\nNothing in between.",
-    sub: "Cold-extracted and raw — the way honey was always meant to be.",
-  },
   product: {
     eyebrow: "Liquid Gold",
     heading: "Raw Forest Honey",
     subtitle: "Pure, unfiltered, and alive with the character of the wild.",
     f1t: "100% Raw",
-    f1d: "Never heated, never processed — enzymes and pollen left intact.",
     f2t: "Artisanal Extraction",
-    f2d: "Harvested by hand in small, seasonal batches.",
     f3t: "Untamed Flavor",
-    f3d: "Deep, floral, and complex — shaped by wild lupine forests.",
   },
   cta: {
     heading: "Taste the Wild.",
@@ -119,8 +110,6 @@ const lt: Dict = {
   trust: {
     eyebrow: "Šaltinis, kuriuo galima pasitikėti",
     heading: "Patikimas šaltinis.\nSąžiningas verslas.",
-    body:
-      "Kiekvienas indelis kilęs iš mūsų pačių avilių ir pasiekia jus lygiai toks, koks pažadėtas — grynas, atsekamas, sąžiningas. Medų, kurį parduodame, laikome ir ant savo stalo.",
     point1: "Mūsų pačių aviliai",
     point2: "Nepriklausomai ištirtas",
   },
@@ -146,20 +135,13 @@ const lt: Dict = {
     p3: "Supilstome tik tai, ką dovanoja miškas — ir esame dėkingi už kiekvieną lašą.",
     signature: "— Honey Volcano bitininkai",
   },
-  band: {
-    quote: "Tiesiai iš korio.\nNieko tarp jūsų ir jo.",
-    sub: "Šaltai išgautas ir žalias — toks, koks medus visada turėjo būti.",
-  },
   product: {
     eyebrow: "Skystas auksas",
     heading: "Žalias miško medus",
     subtitle: "Grynas, nefiltruotas ir gyvas laukinės gamtos charakteriu.",
     f1t: "100% žalias",
-    f1d: "Niekada nekaitintas, neapdorotas — fermentai ir žiedadulkės nepaliesti.",
     f2t: "Rankų darbo išgava",
-    f2d: "Renkamas rankomis mažomis sezoninėmis partijomis.",
     f3t: "Laukinis skonis",
-    f3d: "Gilus, gėlėtas ir sudėtingas — suformuotas laukinių lubinų miškų.",
   },
   cta: {
     heading: "Paragauk laukinės gamtos.",
@@ -207,8 +189,6 @@ const is: Dict = {
   trust: {
     eyebrow: "Uppspretta sem þú getur treyst",
     heading: "Áreiðanleg uppspretta.\nTraust fyrirtæki.",
-    body:
-      "Hvert glas kemur úr okkar eigin búum og berst þér nákvæmlega eins og lofað var — hreint, rekjanlegt, heiðarlegt. Hunangið sem við seljum er hunangið sem við höfum á okkar eigin borði.",
     point1: "Okkar eigin bú",
     point2: "Óháð prófað",
   },
@@ -234,20 +214,13 @@ const is: Dict = {
     p3: "Við setjum aðeins á glas það sem skógurinn gefur — og við erum þakklát fyrir hvern einasta dropa.",
     signature: "— Býflugnabændur Honey Volcano",
   },
-  band: {
-    quote: "Beint úr vaxkökunni.\nEkkert þar á milli.",
-    sub: "Kaldunnið og hrátt — eins og hunang átti alltaf að vera.",
-  },
   product: {
     eyebrow: "Fljótandi gull",
     heading: "Hrátt skógarhunang",
     subtitle: "Hreint, ósíað og iðandi af karakter villtrar náttúru.",
     f1t: "100% hrátt",
-    f1d: "Aldrei hitað, aldrei unnið — ensím og frjókorn ósnortin.",
     f2t: "Handverksvinnsla",
-    f2d: "Handtekið í litlum, árstíðabundnum lotum.",
     f3t: "Villt bragð",
-    f3d: "Djúpt, blómlegt og margslungið — mótað af villtum lúpínuskógum.",
   },
   cta: {
     heading: "Smakkaðu villta náttúru.",
@@ -295,8 +268,6 @@ const es: Dict = {
   trust: {
     eyebrow: "Una fuente en la que confiar",
     heading: "Origen fiable.\nNegocio de confianza.",
-    body:
-      "Cada tarro proviene de nuestras propias colmenas y te llega tal como lo prometemos: puro, trazable, honesto. La miel que vendemos es la miel que tenemos en nuestra propia mesa.",
     point1: "Nuestras propias colmenas",
     point2: "Analizada de forma independiente",
   },
@@ -322,20 +293,13 @@ const es: Dict = {
     p3: "Envasamos solo lo que el bosque ofrece, y agradecemos cada gota.",
     signature: "— Los apicultores de Honey Volcano",
   },
-  band: {
-    quote: "Directa del panal.\nNada en medio.",
-    sub: "Extraída en frío y cruda, como la miel siempre debió ser.",
-  },
   product: {
     eyebrow: "Oro líquido",
     heading: "Miel cruda del bosque",
     subtitle: "Pura, sin filtrar y viva con el carácter de lo salvaje.",
     f1t: "100% cruda",
-    f1d: "Nunca calentada ni procesada: enzimas y polen intactos.",
     f2t: "Extracción artesanal",
-    f2d: "Recogida a mano en pequeños lotes de temporada.",
     f3t: "Sabor indómito",
-    f3d: "Profundo, floral y complejo, moldeado por bosques de altramuz salvaje.",
   },
   cta: {
     heading: "Prueba lo salvaje.",
@@ -383,8 +347,6 @@ const ru: Dict = {
   trust: {
     eyebrow: "Источник, которому можно доверять",
     heading: "Надёжный источник.\nЧестное дело.",
-    body:
-      "Каждая банка — с наших собственных пасек и доходит до вас именно такой, как обещано: чистой, прослеживаемой, честной. Мёд, который мы продаём, стоит и на нашем собственном столе.",
     point1: "Наши собственные пасеки",
     point2: "Независимо проверен",
   },
@@ -410,20 +372,13 @@ const ru: Dict = {
     p3: "Мы разливаем только то, что даёт лес, и благодарны за каждую каплю.",
     signature: "— Пчеловоды Honey Volcano",
   },
-  band: {
-    quote: "Прямо из соты.\nНичего между.",
-    sub: "Холодного отжима и сырой — таким мёд и должен быть.",
-  },
   product: {
     eyebrow: "Жидкое золото",
     heading: "Сырой лесной мёд",
     subtitle: "Чистый, нефильтрованный и живой характером дикой природы.",
     f1t: "100% сырой",
-    f1d: "Никогда не нагревался и не обрабатывался — ферменты и пыльца нетронуты.",
     f2t: "Ремесленная добыча",
-    f2d: "Собран вручную малыми сезонными партиями.",
     f3t: "Дикий вкус",
-    f3d: "Глубокий, цветочный и сложный — сформирован дикими лесами люпина.",
   },
   cta: {
     heading: "Почувствуй дикое.",
@@ -471,8 +426,6 @@ const pl: Dict = {
   trust: {
     eyebrow: "Źródło, któremu możesz zaufać",
     heading: "Pewne źródło.\nGodny zaufania biznes.",
-    body:
-      "Każdy słoik pochodzi z naszych własnych pasiek i trafia do Ciebie dokładnie taki, jak obiecujemy — czysty, identyfikowalny, uczciwy. Miód, który sprzedajemy, stoi też na naszym własnym stole.",
     point1: "Nasze własne pasieki",
     point2: "Niezależnie przebadany",
   },
@@ -498,20 +451,13 @@ const pl: Dict = {
     p3: "Butelkujemy tylko to, co daje las — i jesteśmy wdzięczni za każdą kroplę.",
     signature: "— Pszczelarze Honey Volcano",
   },
-  band: {
-    quote: "Prosto z plastra.\nNic pomiędzy.",
-    sub: "Wyciskany na zimno i surowy — taki, jaki miód zawsze miał być.",
-  },
   product: {
     eyebrow: "Płynne złoto",
     heading: "Surowy miód leśny",
     subtitle: "Czysty, niefiltrowany i żywy charakterem dzikiej natury.",
     f1t: "100% surowy",
-    f1d: "Nigdy niepodgrzewany ani przetwarzany — enzymy i pyłek nienaruszone.",
     f2t: "Rzemieślnicze pozyskiwanie",
-    f2d: "Zbierany ręcznie w małych sezonowych partiach.",
     f3t: "Dziki smak",
-    f3d: "Głęboki, kwiatowy i złożony — ukształtowany przez dzikie lasy łubinu.",
   },
   cta: {
     heading: "Posmakuj dzikości.",
