@@ -1,6 +1,5 @@
 import { Navbar } from "@/components/site/navbar";
 import { Hero } from "@/components/site/hero";
-import { Marquee } from "@/components/site/marquee";
 import { TrustSection } from "@/components/site/trust-section";
 import { ValuesSection } from "@/components/site/values-section";
 import { HoneyBand } from "@/components/site/honey-band";
@@ -14,7 +13,6 @@ export default function Home() {
     <main className="relative">
       <Navbar />
       <Hero />
-      <Marquee />
 
       {/* Trust block — reliable source, trustworthy business */}
       <TrustSection />

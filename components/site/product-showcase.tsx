@@ -27,7 +27,7 @@ function Feature({
           : "text-center md:text-left"
       }
     >
-      <h3 className="font-display text-lg tracking-[0.15em] text-accent">
+      <h3 className="text-shimmer font-display text-xl tracking-[0.15em] md:text-2xl">
         {title}
       </h3>
     </motion.div>

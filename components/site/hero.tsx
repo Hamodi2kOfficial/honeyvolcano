@@ -14,7 +14,7 @@ export function Hero() {
   return (
     <section
       id="top"
-      className="relative flex h-[100svh] min-h-[640px] w-full items-center justify-center overflow-hidden bg-[#090405] text-white"
+      className="relative flex h-[100svh] min-h-[640px] w-full items-center justify-center overflow-hidden bg-[#060302] text-white"
     >
       {/* Center content — the logo on a matching black backdrop */}
       <div className="relative z-10 flex flex-col items-center px-6 text-center">
@@ -30,11 +30,12 @@ export function Hero() {
             className="relative w-[300px] md:w-[440px]"
           >
             <Image
-              src="/logo-full.png"
+              src="/logo-hd.jpg"
               alt="Honey Volcano — Raw Forest Honey"
-              width={640}
-              height={640}
+              width={1024}
+              height={1024}
               priority
+              quality={100}
               className="h-auto w-full"
               style={{ filter: "drop-shadow(0 20px 70px rgba(212,175,55,0.22))" }}
             />
