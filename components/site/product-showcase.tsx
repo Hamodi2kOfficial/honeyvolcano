@@ -17,10 +17,10 @@ function Feature({
 }) {
   return (
     <motion.div
-      initial={{ opacity: 0, y: 24 }}
-      whileInView={{ opacity: 1, y: 0 }}
+      initial={{ opacity: 0, y: 20, filter: "blur(8px)" }}
+      whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
       viewport={{ once: true, amount: 0.5 }}
-      transition={{ duration: 0.8, ease: EASE, delay }}
+      transition={{ duration: 0.9, ease: EASE, delay }}
       className={
         align === "right"
           ? "text-center md:text-right"
@@ -51,9 +51,6 @@ export function ProductShowcase() {
           transition={{ duration: 0.9, ease: EASE }}
           className="mx-auto max-w-2xl text-center"
         >
-          <p className="mb-4 text-xs font-medium uppercase tracking-[0.35em] text-accent">
-            {t.product.eyebrow}
-          </p>
           <h2 className="font-serif text-5xl font-light text-foreground md:text-6xl">
             {t.product.heading}
           </h2>

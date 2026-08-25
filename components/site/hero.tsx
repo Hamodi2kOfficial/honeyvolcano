@@ -2,7 +2,6 @@
 
 import Image from "next/image";
 import { motion } from "motion/react";
-import { ChevronDown } from "lucide-react";
 
 import { HoneyCta } from "@/components/ui/honey-cta";
 import { useI18n } from "@/components/i18n";
@@ -37,7 +36,13 @@ export function Hero() {
               priority
               quality={100}
               className="h-auto w-full"
-              style={{ filter: "drop-shadow(0 20px 70px rgba(212,175,55,0.22))" }}
+              style={{
+                filter: "drop-shadow(0 20px 70px rgba(212,175,55,0.22))",
+                WebkitMaskImage:
+                  "radial-gradient(closest-side, #000 78%, transparent 100%)",
+                maskImage:
+                  "radial-gradient(closest-side, #000 78%, transparent 100%)",
+              }}
             />
           </motion.div>
         </motion.div>
@@ -62,23 +67,6 @@ export function Hero() {
           <HoneyCta href="/products">{t.nav.cta}</HoneyCta>
         </motion.div>
       </div>
-
-      {/* Scroll cue */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 1.6, duration: 1 }}
-        className="absolute bottom-7 left-1/2 -translate-x-1/2"
-      >
-        <motion.div
-          animate={{ y: [0, 8, 0] }}
-          transition={{ duration: 1.8, repeat: Infinity, ease: "easeInOut" }}
-          className="flex flex-col items-center gap-1.5 text-white/40"
-        >
-          <span className="text-[10px] uppercase tracking-[0.3em]">Scroll</span>
-          <ChevronDown className="h-4 w-4" />
-        </motion.div>
-      </motion.div>
     </section>
   );
 }

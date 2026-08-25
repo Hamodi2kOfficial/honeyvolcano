@@ -55,7 +55,6 @@ const en = {
     signature: "— The Honey Volcano beekeepers",
   },
   product: {
-    eyebrow: "Liquid Gold",
     heading: "Raw Honey",
     f1t: "100% Raw",
     f2t: "Artisanal Extraction",
@@ -135,7 +134,6 @@ const lt: Dict = {
     signature: "— Honey Volcano bitininkai",
   },
   product: {
-    eyebrow: "Skystas auksas",
     heading: "Žalias medus",
     f1t: "100% žalias",
     f2t: "Rankų darbo išgava",
@@ -213,7 +211,6 @@ const is: Dict = {
     signature: "— Býflugnabændur Honey Volcano",
   },
   product: {
-    eyebrow: "Fljótandi gull",
     heading: "Hrátt hunang",
     f1t: "100% hrátt",
     f2t: "Handverksvinnsla",
@@ -291,7 +288,6 @@ const es: Dict = {
     signature: "— Los apicultores de Honey Volcano",
   },
   product: {
-    eyebrow: "Oro líquido",
     heading: "Miel cruda",
     f1t: "100% cruda",
     f2t: "Extracción artesanal",
@@ -369,7 +365,6 @@ const ru: Dict = {
     signature: "— Пчеловоды Honey Volcano",
   },
   product: {
-    eyebrow: "Жидкое золото",
     heading: "Сырой мёд",
     f1t: "100% сырой",
     f2t: "Ремесленная добыча",
@@ -447,7 +442,6 @@ const pl: Dict = {
     signature: "— Pszczelarze Honey Volcano",
   },
   product: {
-    eyebrow: "Płynne złoto",
     heading: "Surowy miód",
     f1t: "100% surowy",
     f2t: "Rzemieślnicze pozyskiwanie",
