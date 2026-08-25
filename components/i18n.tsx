@@ -14,7 +14,7 @@ export const LANGS: { code: Lang; label: string; name: string }[] = [
 ];
 
 const en = {
-  nav: { story: "Story", honey: "The Honey", products: "Products", cta: "Taste the Volcano" },
+  nav: { story: "Story", honey: "The Honey", products: "Products", cta: "Taste and order" },
   story: {
     eyebrow: "Untamed Origin",
     heading: "Born of wild forests\nand volcanic air",
@@ -56,8 +56,7 @@ const en = {
   },
   product: {
     eyebrow: "Liquid Gold",
-    heading: "Raw Forest Honey",
-    subtitle: "Pure, unfiltered, and alive with the character of the wild.",
+    heading: "Raw Honey",
     f1t: "100% Raw",
     f2t: "Artisanal Extraction",
     f3t: "Untamed Flavor",
@@ -95,7 +94,7 @@ const en = {
 type Dict = typeof en;
 
 const lt: Dict = {
-  nav: { story: "Istorija", honey: "Medus", products: "Produktai", cta: "Paragauk ugnikalnio" },
+  nav: { story: "Istorija", honey: "Medus", products: "Produktai", cta: "Paragauk ir užsisakyk" },
   story: {
     eyebrow: "Laukinė kilmė",
     heading: "Gimęs laukiniuose miškuose\nir ugnikalnių ore",
@@ -137,8 +136,7 @@ const lt: Dict = {
   },
   product: {
     eyebrow: "Skystas auksas",
-    heading: "Žalias miško medus",
-    subtitle: "Grynas, nefiltruotas ir gyvas laukinės gamtos charakteriu.",
+    heading: "Žalias medus",
     f1t: "100% žalias",
     f2t: "Rankų darbo išgava",
     f3t: "Laukinis skonis",
@@ -174,7 +172,7 @@ const lt: Dict = {
 };
 
 const is: Dict = {
-  nav: { story: "Saga", honey: "Hunangið", products: "Vörur", cta: "Smakkaðu eldfjallið" },
+  nav: { story: "Saga", honey: "Hunangið", products: "Vörur", cta: "Smakkaðu og pantaðu" },
   story: {
     eyebrow: "Villtur uppruni",
     heading: "Fætt af villtum skógum\nog eldfjallalofti",
@@ -216,8 +214,7 @@ const is: Dict = {
   },
   product: {
     eyebrow: "Fljótandi gull",
-    heading: "Hrátt skógarhunang",
-    subtitle: "Hreint, ósíað og iðandi af karakter villtrar náttúru.",
+    heading: "Hrátt hunang",
     f1t: "100% hrátt",
     f2t: "Handverksvinnsla",
     f3t: "Villt bragð",
@@ -253,7 +250,7 @@ const is: Dict = {
 };
 
 const es: Dict = {
-  nav: { story: "Historia", honey: "La Miel", products: "Productos", cta: "Prueba el volcán" },
+  nav: { story: "Historia", honey: "La Miel", products: "Productos", cta: "Prueba y pide" },
   story: {
     eyebrow: "Origen indómito",
     heading: "Nacida de bosques salvajes\ny aire volcánico",
@@ -295,8 +292,7 @@ const es: Dict = {
   },
   product: {
     eyebrow: "Oro líquido",
-    heading: "Miel cruda del bosque",
-    subtitle: "Pura, sin filtrar y viva con el carácter de lo salvaje.",
+    heading: "Miel cruda",
     f1t: "100% cruda",
     f2t: "Extracción artesanal",
     f3t: "Sabor indómito",
@@ -332,7 +328,7 @@ const es: Dict = {
 };
 
 const ru: Dict = {
-  nav: { story: "История", honey: "Мёд", products: "Товары", cta: "Попробуй вулкан" },
+  nav: { story: "История", honey: "Мёд", products: "Товары", cta: "Попробуй и закажи" },
   story: {
     eyebrow: "Дикое происхождение",
     heading: "Рождён дикими лесами\nи воздухом вулканов",
@@ -374,8 +370,7 @@ const ru: Dict = {
   },
   product: {
     eyebrow: "Жидкое золото",
-    heading: "Сырой лесной мёд",
-    subtitle: "Чистый, нефильтрованный и живой характером дикой природы.",
+    heading: "Сырой мёд",
     f1t: "100% сырой",
     f2t: "Ремесленная добыча",
     f3t: "Дикий вкус",
@@ -411,7 +406,7 @@ const ru: Dict = {
 };
 
 const pl: Dict = {
-  nav: { story: "Historia", honey: "Miód", products: "Produkty", cta: "Posmakuj wulkanu" },
+  nav: { story: "Historia", honey: "Miód", products: "Produkty", cta: "Posmakuj i zamów" },
   story: {
     eyebrow: "Dzikie pochodzenie",
     heading: "Zrodzony z dzikich lasów\ni wulkanicznego powietrza",
@@ -453,8 +448,7 @@ const pl: Dict = {
   },
   product: {
     eyebrow: "Płynne złoto",
-    heading: "Surowy miód leśny",
-    subtitle: "Czysty, niefiltrowany i żywy charakterem dzikiej natury.",
+    heading: "Surowy miód",
     f1t: "100% surowy",
     f2t: "Rzemieślnicze pozyskiwanie",
     f3t: "Dziki smak",

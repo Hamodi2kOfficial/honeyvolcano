@@ -54,12 +54,9 @@ export function ProductShowcase() {
           <p className="mb-4 text-xs font-medium uppercase tracking-[0.35em] text-accent">
             {t.product.eyebrow}
           </p>
-          <h2 className="font-serif text-4xl font-light text-foreground md:text-5xl">
+          <h2 className="font-serif text-5xl font-light text-foreground md:text-6xl">
             {t.product.heading}
           </h2>
-          <p className="mx-auto mt-4 max-w-md text-base font-light text-foreground-muted">
-            {t.product.subtitle}
-          </p>
         </motion.div>
 
         {/* Jar + features */}
