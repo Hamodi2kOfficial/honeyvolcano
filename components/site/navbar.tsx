@@ -3,7 +3,6 @@
 import { motion } from "motion/react";
 import Link from "next/link";
 
-import { HoneyCta } from "@/components/ui/honey-cta";
 import { LanguageSwitcher } from "@/components/site/controls";
 import { useI18n } from "@/components/i18n";
 import { EASE } from "@/lib/motion";
@@ -19,44 +18,27 @@ export function Navbar() {
       className="fixed inset-x-0 top-0 z-50"
     >
       <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-5 py-3.5 md:px-8">
-        {/* Left: nav links */}
-        <nav className="hidden flex-1 items-center gap-7 md:flex">
-          <a
-            href="#story"
-            className="text-sm font-light tracking-wide text-white/70 transition-colors hover:text-accent"
-          >
-            {t.nav.story}
-          </a>
-          <a
-            href="#honey"
-            className="text-sm font-light tracking-wide text-white/70 transition-colors hover:text-accent"
-          >
-            {t.nav.honey}
-          </a>
+        {/* Left: gallery link */}
+        <nav className="flex flex-1 items-center">
           <Link
-            href="/products"
+            href="/gallery"
             className="text-sm font-light tracking-wide text-white/70 transition-colors hover:text-accent"
           >
-            {t.nav.products}
+            {t.nav.gallery}
           </Link>
         </nav>
 
         {/* Center: wordmark */}
         <a
           href="#top"
-          className="flex-1 text-center font-display text-lg tracking-[0.28em] text-accent md:text-xl"
+          className="flex-1 whitespace-nowrap text-center font-display text-lg tracking-[0.28em] text-accent md:text-xl"
         >
           HONEY&nbsp;VOLCANO
         </a>
 
-        {/* Right: controls */}
+        {/* Right: language */}
         <div className="flex flex-1 items-center justify-end gap-3">
           <LanguageSwitcher />
-          <div className="hidden sm:block">
-            <HoneyCta href="/products" size="sm">
-              {t.nav.cta}
-            </HoneyCta>
-          </div>
         </div>
       </div>
 

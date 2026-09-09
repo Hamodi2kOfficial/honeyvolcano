@@ -20,9 +20,14 @@ export function HoneyCta({
   href: string;
   children: React.ReactNode;
   className?: string;
-  size?: "sm" | "md";
+  size?: "sm" | "md" | "lg";
 }) {
-  const h = size === "sm" ? "h-10 px-6 text-[13px]" : "h-12 px-9 text-[15px]";
+  const h =
+    size === "sm"
+      ? "h-10 px-6 text-[13px]"
+      : size === "lg"
+        ? "h-14 px-12 text-[17px]"
+        : "h-12 px-9 text-[15px]";
 
   return (
     <Link href={href} className={cn("group relative inline-block", className)}>

@@ -1,8 +1,8 @@
 import { Navbar } from "@/components/site/navbar";
 import { Hero } from "@/components/site/hero";
+import { VideoSection } from "@/components/site/video-section";
 import { TrustSection } from "@/components/site/trust-section";
 import { ValuesSection } from "@/components/site/values-section";
-import { HoneyBand } from "@/components/site/honey-band";
 import { BeekeeperLetter } from "@/components/site/beekeeper-letter";
 import { ProductShowcase } from "@/components/site/product-showcase";
 import { FooterCta } from "@/components/site/footer-cta";
@@ -12,7 +12,10 @@ export default function Home() {
   return (
     <main className="relative">
       <Navbar />
+
+      {/* Hero — honeycomb backdrop with the logo, then the film beneath it */}
       <Hero />
+      <VideoSection />
 
       {/* Trust block — reliable source, trustworthy business */}
       <TrustSection />
@@ -21,10 +24,6 @@ export default function Home() {
       <UnderConstruction>
         <ValuesSection />
       </UnderConstruction>
-
-      {/* Picture showcase — kept open */}
-      <HoneyBand />
-
       <UnderConstruction>
         <BeekeeperLetter />
       </UnderConstruction>

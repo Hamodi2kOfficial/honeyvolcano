@@ -1,18 +1,24 @@
+"use client";
+
 import * as React from "react";
+
+import { useI18n } from "@/components/i18n";
 
 /**
  * Wraps a section, blurs its content out of legibility, and lays an
  * "UNDER CONSTRUCTION" plate over it — for sections whose copy the client
  * wants to reveal step by step. The children still render (blurred), so
- * layout/height is preserved.
+ * layout/height is preserved. Plate copy is translated.
  */
 export function UnderConstruction({
   children,
-  label = "Under Construction",
+  label,
 }: {
   children: React.ReactNode;
   label?: string;
 }) {
+  const { t } = useI18n();
+  const plate = label ?? t.uc.label;
   return (
     <div className="relative isolate">
       <div
@@ -51,11 +57,11 @@ export function UnderConstruction({
             <circle cx="12" cy="18" r="1.1" fill="currentColor" />
           </svg>
           <p className="font-display text-sm uppercase tracking-[0.45em] text-accent md:text-base">
-            {label}
+            {plate}
           </p>
           <span className="h-px w-14 bg-accent/40" />
           <p className="text-[10px] uppercase tracking-[0.35em] text-white/40">
-            Coming soon
+            {t.uc.soon}
           </p>
         </div>
       </div>

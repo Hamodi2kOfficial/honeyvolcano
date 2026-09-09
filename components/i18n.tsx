@@ -14,7 +14,10 @@ export const LANGS: { code: Lang; label: string; name: string }[] = [
 ];
 
 const en = {
-  nav: { story: "Story", honey: "The Honey", products: "Products", cta: "Taste and order" },
+  nav: { story: "Story", honey: "The Honey", products: "Products", gallery: "Gallery", cta: "Taste before order" },
+  hero: { tagline: "Raw Honey & All Bee Products" },
+  video: { button: "Try before you order" },
+  uc: { label: "Under Construction", soon: "Coming soon" },
   story: {
     eyebrow: "Untamed Origin",
     heading: "Born of wild forests\nand volcanic air",
@@ -27,10 +30,9 @@ const en = {
     stat3: "Unfiltered",
   },
   trust: {
-    eyebrow: "A source you can trust",
     heading: "Reliable source.\nTrustworthy business.",
-    point1: "Our own hives",
-    point2: "Independently tested",
+    line: "Reliable and trustworthy source",
+    authorized: "Authorized in",
   },
   values: {
     eyebrow: "Real honey, nothing hidden",
@@ -75,6 +77,7 @@ const en = {
   },
   products: {
     badge: "Coming Soon",
+    call: "Call to taste",
     title: "Our first harvest is almost ready.",
     subtitle:
       "We're bottling Honey Volcano raw forest honey right now. Join the list to be first in line when the jars are ready.",
@@ -93,7 +96,10 @@ const en = {
 type Dict = typeof en;
 
 const lt: Dict = {
-  nav: { story: "Istorija", honey: "Medus", products: "Produktai", cta: "Paragauk ir užsisakyk" },
+  nav: { story: "Istorija", honey: "Medus", products: "Produktai", gallery: "Galerija", cta: "Paragauk prieš užsakydamas" },
+  hero: { tagline: "Žalias medus ir visi bičių produktai" },
+  video: { button: "Išbandyk prieš užsakydamas" },
+  uc: { label: "Ruošiama", soon: "Netrukus" },
   story: {
     eyebrow: "Laukinė kilmė",
     heading: "Gimęs laukiniuose miškuose\nir ugnikalnių ore",
@@ -106,10 +112,9 @@ const lt: Dict = {
     stat3: "Nefiltruotas",
   },
   trust: {
-    eyebrow: "Šaltinis, kuriuo galima pasitikėti",
     heading: "Patikimas šaltinis.\nSąžiningas verslas.",
-    point1: "Mūsų pačių aviliai",
-    point2: "Nepriklausomai ištirtas",
+    line: "Patikimas ir sąžiningas šaltinis",
+    authorized: "Autorizuota",
   },
   values: {
     eyebrow: "Tikras medus, nieko paslėpta",
@@ -154,6 +159,7 @@ const lt: Dict = {
   },
   products: {
     badge: "Netrukus",
+    call: "Skambink paragauti",
     title: "Pirmasis derlius beveik paruoštas.",
     subtitle:
       "Šiuo metu pilstome „Honey Volcano“ žalią miško medų. Prisijunkite prie sąrašo ir būkite pirmi, kai stiklainiai bus paruošti.",
@@ -170,7 +176,10 @@ const lt: Dict = {
 };
 
 const is: Dict = {
-  nav: { story: "Saga", honey: "Hunangið", products: "Vörur", cta: "Smakkaðu og pantaðu" },
+  nav: { story: "Saga", honey: "Hunangið", products: "Vörur", gallery: "Gallerí", cta: "Smakkaðu áður en þú pantar" },
+  hero: { tagline: "Hrátt hunang og allar býflugnaafurðir" },
+  video: { button: "Prófaðu áður en þú pantar" },
+  uc: { label: "Í vinnslu", soon: "Kemur bráðum" },
   story: {
     eyebrow: "Villtur uppruni",
     heading: "Fætt af villtum skógum\nog eldfjallalofti",
@@ -183,10 +192,9 @@ const is: Dict = {
     stat3: "Ósíað",
   },
   trust: {
-    eyebrow: "Uppspretta sem þú getur treyst",
     heading: "Áreiðanleg uppspretta.\nTraust fyrirtæki.",
-    point1: "Okkar eigin bú",
-    point2: "Óháð prófað",
+    line: "Áreiðanleg og traust uppspretta",
+    authorized: "Með leyfi í",
   },
   values: {
     eyebrow: "Ekta hunang, ekkert falið",
@@ -231,6 +239,7 @@ const is: Dict = {
   },
   products: {
     badge: "Kemur bráðum",
+    call: "Hringdu til að smakka",
     title: "Fyrsta uppskeran er næstum tilbúin.",
     subtitle:
       "Við erum að setja Honey Volcano hrátt skógarhunang á glas núna. Skráðu þig á listann til að vera fyrst þegar krukkurnar eru tilbúnar.",
@@ -247,7 +256,10 @@ const is: Dict = {
 };
 
 const es: Dict = {
-  nav: { story: "Historia", honey: "La Miel", products: "Productos", cta: "Prueba y pide" },
+  nav: { story: "Historia", honey: "La Miel", products: "Productos", gallery: "Galería", cta: "Prueba antes de pedir" },
+  hero: { tagline: "Miel cruda y todos los productos de la abeja" },
+  video: { button: "Prueba antes de pedir" },
+  uc: { label: "En construcción", soon: "Muy pronto" },
   story: {
     eyebrow: "Origen indómito",
     heading: "Nacida de bosques salvajes\ny aire volcánico",
@@ -260,10 +272,9 @@ const es: Dict = {
     stat3: "Sin filtrar",
   },
   trust: {
-    eyebrow: "Una fuente en la que confiar",
     heading: "Origen fiable.\nNegocio de confianza.",
-    point1: "Nuestras propias colmenas",
-    point2: "Analizada de forma independiente",
+    line: "Fuente fiable y de confianza",
+    authorized: "Autorizado en",
   },
   values: {
     eyebrow: "Miel de verdad, nada oculto",
@@ -308,6 +319,7 @@ const es: Dict = {
   },
   products: {
     badge: "Muy pronto",
+    call: "Llama para degustar",
     title: "Nuestra primera cosecha casi está lista.",
     subtitle:
       "Estamos envasando la miel cruda del bosque de Honey Volcano ahora mismo. Únete a la lista para ser el primero cuando los tarros estén listos.",
@@ -324,7 +336,10 @@ const es: Dict = {
 };
 
 const ru: Dict = {
-  nav: { story: "История", honey: "Мёд", products: "Товары", cta: "Попробуй и закажи" },
+  nav: { story: "История", honey: "Мёд", products: "Товары", gallery: "Галерея", cta: "Попробуй перед заказом" },
+  hero: { tagline: "Сырой мёд и все продукты пчеловодства" },
+  video: { button: "Попробуй перед заказом" },
+  uc: { label: "В разработке", soon: "Скоро" },
   story: {
     eyebrow: "Дикое происхождение",
     heading: "Рождён дикими лесами\nи воздухом вулканов",
@@ -337,10 +352,9 @@ const ru: Dict = {
     stat3: "Нефильтрованный",
   },
   trust: {
-    eyebrow: "Источник, которому можно доверять",
     heading: "Надёжный источник.\nЧестное дело.",
-    point1: "Наши собственные пасеки",
-    point2: "Независимо проверен",
+    line: "Надёжный и достойный доверия источник",
+    authorized: "Авторизовано в",
   },
   values: {
     eyebrow: "Настоящий мёд, ничего не скрыто",
@@ -385,6 +399,7 @@ const ru: Dict = {
   },
   products: {
     badge: "Скоро",
+    call: "Позвони, чтобы попробовать",
     title: "Наш первый сбор почти готов.",
     subtitle:
       "Прямо сейчас мы разливаем сырой лесной мёд Honey Volcano. Присоединяйтесь к списку, чтобы быть первыми, когда банки будут готовы.",
@@ -401,7 +416,10 @@ const ru: Dict = {
 };
 
 const pl: Dict = {
-  nav: { story: "Historia", honey: "Miód", products: "Produkty", cta: "Posmakuj i zamów" },
+  nav: { story: "Historia", honey: "Miód", products: "Produkty", gallery: "Galeria", cta: "Posmakuj przed zamówieniem" },
+  hero: { tagline: "Surowy miód i wszystkie produkty pszczele" },
+  video: { button: "Spróbuj przed zamówieniem" },
+  uc: { label: "W budowie", soon: "Wkrótce" },
   story: {
     eyebrow: "Dzikie pochodzenie",
     heading: "Zrodzony z dzikich lasów\ni wulkanicznego powietrza",
@@ -414,10 +432,9 @@ const pl: Dict = {
     stat3: "Niefiltrowany",
   },
   trust: {
-    eyebrow: "Źródło, któremu możesz zaufać",
     heading: "Pewne źródło.\nGodny zaufania biznes.",
-    point1: "Nasze własne pasieki",
-    point2: "Niezależnie przebadany",
+    line: "Pewne i godne zaufania źródło",
+    authorized: "Autoryzowane w",
   },
   values: {
     eyebrow: "Prawdziwy miód, nic ukrytego",
@@ -462,6 +479,7 @@ const pl: Dict = {
   },
   products: {
     badge: "Wkrótce",
+    call: "Zadzwoń, aby spróbować",
     title: "Nasz pierwszy zbiór jest prawie gotowy.",
     subtitle:
       "Właśnie teraz butelkujemy surowy miód leśny Honey Volcano. Dołącz do listy, aby być pierwszym, gdy słoiki będą gotowe.",

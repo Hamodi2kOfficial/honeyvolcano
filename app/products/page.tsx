@@ -1,6 +1,5 @@
 "use client";
 
-import * as React from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { motion } from "motion/react";
@@ -8,26 +7,13 @@ import { ArrowLeft } from "lucide-react";
 
 import { HoneycombCanvas } from "@/components/ui/honeycomb-canvas";
 import { AuroraBackground } from "@/components/ui/aurora-background";
-import { Input } from "@/components/ui/input";
+import { IcelandFlag } from "@/components/ui/flags";
 import { LanguageSwitcher } from "@/components/site/controls";
 import { useI18n } from "@/components/i18n";
 import { EASE } from "@/lib/motion";
 
-const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
 export default function ProductsPage() {
   const { t } = useI18n();
-  const [email, setEmail] = React.useState("");
-  const [status, setStatus] = React.useState<"idle" | "done" | "error">("idle");
-
-  const onSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!EMAIL_RE.test(email.trim())) {
-      setStatus("error");
-      return;
-    }
-    setStatus("done");
-  };
 
   return (
     <main className="dark relative min-h-[100svh] overflow-hidden bg-[#090405] text-white">
@@ -138,39 +124,18 @@ export default function ProductsPage() {
             {t.products.tasteBody}
           </p>
 
-          {status === "done" ? (
-            <p className="mt-7 font-serif text-lg font-light italic text-accent">
-              {t.products.success}
-            </p>
-          ) : (
-            <form onSubmit={onSubmit} noValidate className="mt-7 flex flex-col gap-3 sm:flex-row">
-              <Input
-                type="email"
-                inputMode="email"
-                aria-label={t.products.placeholder}
-                placeholder={t.products.placeholder}
-                value={email}
-                onChange={(e) => {
-                  setEmail(e.target.value);
-                  if (status === "error") setStatus("idle");
-                }}
-                className="flex-1"
-              />
-              <button
-                type="submit"
-                className="h-12 shrink-0 rounded-xl px-7 font-semibold text-[#1c1206] shadow-[0_10px_28px_-10px_rgba(212,175,55,0.6)] ring-1 ring-[#f0d38a]/40 transition-transform duration-300 hover:scale-[1.03]"
-                style={{
-                  backgroundImage:
-                    "linear-gradient(135deg, #F3CE72 0%, #E5B869 42%, #C79A3B 100%)",
-                }}
-              >
-                {t.products.button}
-              </button>
-            </form>
-          )}
-          {status === "error" && (
-            <p className="mt-3 text-sm font-light text-red-400">{t.products.invalid}</p>
-          )}
+          <a
+            href="tel:8340999"
+            className="mt-7 inline-flex items-center gap-3 rounded-xl px-7 py-4 text-lg font-semibold text-[#1c1206] shadow-[0_10px_28px_-10px_rgba(212,175,55,0.6)] ring-1 ring-[#f0d38a]/40 transition-transform duration-300 hover:scale-[1.03]"
+            style={{
+              backgroundImage:
+                "linear-gradient(135deg, #F3CE72 0%, #E5B869 42%, #C79A3B 100%)",
+            }}
+          >
+            <span>{t.products.call}</span>
+            <IcelandFlag className="h-5" />
+            <span className="tracking-wide">8340999</span>
+          </a>
 
           {/* the reassurance line */}
           <div className="mt-6 flex items-center gap-2.5 border-t border-white/10 pt-5">

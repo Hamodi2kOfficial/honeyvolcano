@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { motion } from "motion/react";
 
+import { EruptMark } from "@/components/ui/erupt-mark";
 import { useI18n } from "@/components/i18n";
 import { EASE } from "@/lib/motion";
 
@@ -42,7 +43,8 @@ export function ProductShowcase() {
       id="honey"
       className="relative overflow-hidden bg-bg-soft py-24 md:py-36"
     >
-      <div className="mx-auto max-w-6xl px-6">
+      <EruptMark className="top-6 left-1/2 -translate-x-1/2 text-4xl text-accent/[0.045] sm:text-6xl md:text-8xl" />
+      <div className="relative mx-auto max-w-6xl px-6">
         {/* Heading */}
         <motion.div
           initial={{ opacity: 0, y: 24 }}
@@ -93,14 +95,19 @@ export function ProductShowcase() {
                 className="absolute left-1/2 top-1/2 -z-10 h-[70%] w-[70%] -translate-x-1/2 -translate-y-1/2 rounded-full opacity-40 blur-3xl"
                 style={{ background: "radial-gradient(circle, #D4AF37 0%, transparent 70%)" }}
               />
-              <Image
-                src="/jar-clear.png"
-                alt="Honey Volcano raw forest honey jar"
-                width={696}
-                height={1024}
-                priority={false}
-                className="relative h-auto w-full drop-shadow-[0_40px_70px_rgba(0,0,0,0.45)]"
-              />
+              <div
+                className="relative overflow-hidden rounded-[26px] ring-1 ring-accent/25 drop-shadow-[0_40px_70px_rgba(0,0,0,0.5)]"
+                style={{ background: "linear-gradient(180deg,#f7f4ee 0%,#efe7d6 100%)" }}
+              >
+                <Image
+                  src="/product-jar.png"
+                  alt="Honey Volcano raw honey jar"
+                  width={1360}
+                  height={2048}
+                  priority={false}
+                  className="relative h-auto w-full"
+                />
+              </div>
             </motion.div>
           </motion.div>
 
