@@ -10,15 +10,17 @@ import { EASE } from "@/lib/motion";
 
 type Slide = { src: string; alt: string; text?: string };
 
+// Phrases only on the generated / promo art — never on the plain product shots.
 const SLIDES: Slide[] = [
   { src: "/gallery/g-mountain.jpg", alt: "Honey Volcano jar in a lupine mountain meadow", text: "Let energy erupt" },
   { src: "/gallery/1.jpg", alt: "Honey Volcano" },
   { src: "/gallery/g-comb.jpg", alt: "Golden honeycomb dripping raw honey", text: "Let happiness erupt" },
+  { src: "/gallery/polenandcomb.jpg", alt: "Bee pollen and honeycomb in the mountains" },
   { src: "/gallery/2.jpg", alt: "Honey Volcano" },
   { src: "/gallery/g-pour.jpg", alt: "Raw honey drizzling into a jar" },
+  { src: "/gallery/3faces.jpg", alt: "Honey Volcano — Let happiness erupt" },
   { src: "/gallery/g-spread.jpg", alt: "Honey jar with honeycomb and wildflowers", text: "Natural & Real" },
   { src: "/gallery/3.jpg", alt: "Honey Volcano" },
-  { src: "/gallery/g-beekeeper.jpg", alt: "Beekeeper holding a honeycomb frame at golden hour" },
   { src: "/gallery/snack1s.jpg", alt: "Honey delicacy" },
   { src: "/gallery/4.jpg", alt: "Honey Volcano" },
 ];
@@ -83,6 +85,16 @@ export default function GalleryPage() {
       onTouchStart={onTouchStart}
       onTouchEnd={onTouchEnd}
     >
+      {/* warm brand glow so the page reads as part of the site */}
+      <div
+        aria-hidden
+        className="absolute inset-0"
+        style={{
+          background:
+            "radial-gradient(120% 80% at 50% 0%, rgba(212,175,55,0.10) 0%, transparent 55%)",
+        }}
+      />
+
       {SLIDES.map((slide, i) => {
         const active = i === idx;
         return (
@@ -92,7 +104,7 @@ export default function GalleryPage() {
             initial={false}
             animate={{ opacity: active ? 1 : 0 }}
             transition={{ duration: 1, ease: EASE }}
-            className="absolute inset-0 flex items-center justify-center p-5 pt-16 pb-20 md:p-14"
+            className="absolute inset-0 flex items-center justify-center p-5 pt-20 pb-20 md:p-16"
             style={{ zIndex: active ? 1 : 0 }}
           >
             <motion.div
@@ -126,14 +138,29 @@ export default function GalleryPage() {
         );
       })}
 
-      {/* back home */}
-      <Link
-        href="/"
-        aria-label="Back to home"
-        className="absolute left-4 top-4 z-20 grid h-10 w-10 place-items-center rounded-full border border-white/20 bg-black/40 text-white/80 backdrop-blur-md transition-colors hover:border-accent/60 hover:text-accent"
-      >
-        <ArrowLeft className="h-4 w-4" />
-      </Link>
+      {/* Branded header — same look as the site navbar */}
+      <header className="absolute inset-x-0 top-0 z-30">
+        <div className="relative flex items-center justify-between px-5 py-3.5 md:px-8">
+          <Link
+            href="/"
+            aria-label="Back to home"
+            className="grid h-10 w-10 place-items-center rounded-full border border-white/20 bg-black/30 text-white/80 backdrop-blur-md transition-colors hover:border-accent/60 hover:text-accent"
+          >
+            <ArrowLeft className="h-4 w-4" />
+          </Link>
+          <Link
+            href="/"
+            className="absolute left-1/2 -translate-x-1/2 whitespace-nowrap font-display text-lg tracking-[0.28em] text-accent md:text-xl"
+          >
+            HONEY&nbsp;VOLCANO
+          </Link>
+          <span className="h-10 w-10" />
+        </div>
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-0 -z-10 border-b border-white/5 bg-[#0e0c0a]/40 backdrop-blur-md"
+        />
+      </header>
 
       {/* arrows */}
       <button

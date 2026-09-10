@@ -18,7 +18,7 @@ export function Navbar() {
       transition={{ duration: 0.8, ease: EASE, delay: 0.1 }}
       className="fixed inset-x-0 top-0 z-50"
     >
-      <div className="mx-auto flex max-w-7xl items-center justify-between gap-3 px-4 py-3.5 md:px-8">
+      <div className="relative mx-auto flex max-w-7xl items-center justify-between gap-3 px-4 py-3.5 md:px-8">
         {/* Left: gallery link */}
         <nav className="flex shrink-0 items-center">
           <Link
@@ -29,10 +29,10 @@ export function Navbar() {
           </Link>
         </nav>
 
-        {/* Center: wordmark (hidden on small screens to make room for the CTA) */}
+        {/* Center: wordmark — absolutely centered so side widths can't pull it off-centre (hidden on small screens) */}
         <a
           href="#top"
-          className="hidden flex-1 whitespace-nowrap text-center font-display text-lg tracking-[0.28em] text-accent sm:block md:text-xl"
+          className="absolute left-1/2 hidden -translate-x-1/2 whitespace-nowrap font-display text-lg tracking-[0.28em] text-accent sm:block md:text-xl"
         >
           HONEY&nbsp;VOLCANO
         </a>

@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { motion } from "motion/react";
 
+import { HoneyCta } from "@/components/ui/honey-cta";
 import { EruptMark } from "@/components/ui/erupt-mark";
 import { useI18n } from "@/components/i18n";
 import { EASE } from "@/lib/motion";
@@ -111,6 +112,19 @@ export function ProductShowcase() {
             <Feature title={t.product.f3t} align="left" delay={0.3} />
           </div>
         </div>
+
+        {/* Call to taste */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.6 }}
+          transition={{ duration: 0.8, ease: EASE }}
+          className="mt-16 flex justify-center"
+        >
+          <HoneyCta href="/products" size="lg">
+            {t.products.call}
+          </HoneyCta>
+        </motion.div>
       </div>
     </section>
   );

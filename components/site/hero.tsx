@@ -99,7 +99,7 @@ function EruptWatermark() {
   return (
     <span
       aria-hidden
-      className="pointer-events-none absolute bottom-[8%] left-1/2 -translate-x-1/2 select-none whitespace-nowrap font-display text-4xl uppercase leading-none tracking-[0.3em] text-white/[0.13] sm:text-6xl md:text-8xl"
+      className="pointer-events-none absolute top-[13%] left-1/2 -translate-x-1/2 select-none whitespace-nowrap font-display text-4xl uppercase leading-none tracking-[0.3em] text-white/[0.13] sm:text-6xl md:text-8xl"
     >
       Let happiness erupt
     </span>
