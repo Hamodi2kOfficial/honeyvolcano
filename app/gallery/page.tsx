@@ -6,18 +6,22 @@ import Link from "next/link";
 import { motion } from "motion/react";
 import { ArrowLeft, ChevronLeft, ChevronRight } from "lucide-react";
 
+import { HoneyCta } from "@/components/ui/honey-cta";
+import { useI18n } from "@/components/i18n";
 import { EASE } from "@/lib/motion";
 
 type Slide = { src: string; alt: string; text?: string };
 
-// Phrases only on the generated / promo art — never on the plain product shots.
+// Two kinds of slide: plain PRODUCT shots (no phrase) and GENERAL / generated
+// atmosphere shots (each carries a brand phrase). 3faces already has its phrase
+// baked into the image.
 const SLIDES: Slide[] = [
   { src: "/gallery/g-mountain.jpg", alt: "Honey Volcano jar in a lupine mountain meadow", text: "Let energy erupt" },
   { src: "/gallery/1.jpg", alt: "Honey Volcano" },
   { src: "/gallery/g-comb.jpg", alt: "Golden honeycomb dripping raw honey", text: "Let happiness erupt" },
-  { src: "/gallery/polenandcomb.jpg", alt: "Bee pollen and honeycomb in the mountains" },
+  { src: "/gallery/polenandcomb.jpg", alt: "Bee pollen and honeycomb in the mountains", text: "Let energy erupt" },
   { src: "/gallery/2.jpg", alt: "Honey Volcano" },
-  { src: "/gallery/g-pour.jpg", alt: "Raw honey drizzling into a jar" },
+  { src: "/gallery/g-pour.jpg", alt: "Raw honey drizzling into a jar", text: "Natural & Real" },
   { src: "/gallery/3faces.jpg", alt: "Honey Volcano — Let happiness erupt" },
   { src: "/gallery/g-spread.jpg", alt: "Honey jar with honeycomb and wildflowers", text: "Natural & Real" },
   { src: "/gallery/3.jpg", alt: "Honey Volcano" },
@@ -28,6 +32,7 @@ const SLIDES: Slide[] = [
 const DURATION = 5000;
 
 export default function GalleryPage() {
+  const { t } = useI18n();
   const [idx, setIdx] = useState(0);
   const n = SLIDES.length;
   const timer = useRef<ReturnType<typeof setInterval> | null>(null);
@@ -150,11 +155,13 @@ export default function GalleryPage() {
           </Link>
           <Link
             href="/"
-            className="absolute left-1/2 -translate-x-1/2 whitespace-nowrap font-display text-lg tracking-[0.28em] text-accent md:text-xl"
+            className="absolute left-1/2 hidden -translate-x-1/2 whitespace-nowrap font-display text-lg tracking-[0.28em] text-accent sm:block md:text-xl"
           >
             HONEY&nbsp;VOLCANO
           </Link>
-          <span className="h-10 w-10" />
+          <HoneyCta href="/products" size="sm">
+            {t.products.call}
+          </HoneyCta>
         </div>
         <div
           aria-hidden
