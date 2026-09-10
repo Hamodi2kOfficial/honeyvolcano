@@ -33,7 +33,7 @@ export function HoneyCta({
     <Link href={href} className={cn("group relative inline-block", className)}>
       <span
         className={cn(
-          "relative z-10 inline-flex items-center justify-center overflow-hidden rounded-full font-semibold tracking-[0.02em] text-[#1c1206]",
+          "relative z-10 inline-flex items-center justify-center overflow-hidden whitespace-nowrap rounded-full font-semibold tracking-[0.02em] text-[#1c1206]",
           "shadow-[0_12px_34px_-10px_rgba(212,175,55,0.6)] ring-1 ring-[#f0d38a]/40",
           "transition-transform duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.04]",
           h

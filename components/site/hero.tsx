@@ -59,6 +59,15 @@ export function Hero() {
             transition={{ duration: 7, ease: "easeInOut", repeat: Infinity }}
             className="relative w-[280px] md:w-[420px]"
           >
+            {/* dark backdrop so the emblem reads on the bright comb */}
+            <div
+              aria-hidden
+              className="absolute left-1/2 top-1/2 -z-10 h-[150%] w-[150%] -translate-x-1/2 -translate-y-1/2 rounded-full"
+              style={{
+                background:
+                  "radial-gradient(circle, rgba(5,3,2,0.9) 0%, rgba(5,3,2,0.62) 42%, transparent 72%)",
+              }}
+            />
             <Image
               src="/logo-home.png"
               alt="Honey Volcano"

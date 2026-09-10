@@ -16,7 +16,6 @@ const SLIDES: Slide[] = [
   { src: "/gallery/2.png", alt: "Honey Volcano" },
   { src: "/gallery/snack1.jpg", alt: "Honey delicacy" },
   { src: "/gallery/lupine-jar.png", alt: "Honey among the mountains", text: "Let energy erupt" },
-  { src: "/gallery/3faces.png", alt: "Let happiness erupt" },
   { src: "/gallery/3.png", alt: "Honey Volcano", text: "Natural & Real" },
   { src: "/gallery/snack2.jpg", alt: "Honey delicacy" },
   { src: "/gallery/4.png", alt: "Honey Volcano" },
@@ -58,7 +57,6 @@ export default function GalleryPage() {
     [schedule]
   );
 
-  // keyboard
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
       if (e.key === "ArrowRight") next();
@@ -68,7 +66,6 @@ export default function GalleryPage() {
     return () => window.removeEventListener("keydown", onKey);
   }, [next, prev]);
 
-  // swipe
   const touchX = useRef<number | null>(null);
   const onTouchStart = (e: React.TouchEvent) => (touchX.current = e.touches[0].clientX);
   const onTouchEnd = (e: React.TouchEvent) => {
@@ -85,7 +82,6 @@ export default function GalleryPage() {
       onTouchStart={onTouchStart}
       onTouchEnd={onTouchEnd}
     >
-      {/* slides */}
       {SLIDES.map((slide, i) => {
         const active = i === idx;
         return (
@@ -94,15 +90,15 @@ export default function GalleryPage() {
             aria-hidden={!active}
             initial={false}
             animate={{ opacity: active ? 1 : 0 }}
-            transition={{ duration: 1.1, ease: EASE }}
-            className="absolute inset-0"
+            transition={{ duration: 1, ease: EASE }}
+            className="absolute inset-0 flex items-center justify-center p-5 pt-16 pb-20 md:p-14"
             style={{ zIndex: active ? 1 : 0 }}
           >
             <motion.div
-              className="absolute inset-0"
-              initial={{ scale: 1.02 }}
-              animate={{ scale: active ? 1.1 : 1.02 }}
+              initial={{ scale: 1 }}
+              animate={{ scale: active ? 1.04 : 1 }}
               transition={{ duration: 7, ease: "linear" }}
+              className="relative h-full w-full max-w-4xl"
             >
               <Image
                 src={slide.src}
@@ -110,22 +106,21 @@ export default function GalleryPage() {
                 fill
                 sizes="100vw"
                 priority={i === 0}
-                className="object-cover"
+                className="rounded-2xl object-contain"
               />
+              {slide.text && (
+                <div className="absolute inset-0 grid place-items-center px-6">
+                  <motion.span
+                    initial={{ opacity: 0, y: 16 }}
+                    animate={active ? { opacity: 1, y: 0 } : { opacity: 0, y: 16 }}
+                    transition={{ duration: 0.9, ease: EASE, delay: 0.2 }}
+                    className="text-center font-display text-3xl uppercase leading-tight tracking-[0.16em] text-white drop-shadow-[0_4px_30px_rgba(0,0,0,0.95)] sm:text-5xl md:text-6xl"
+                  >
+                    {slide.text}
+                  </motion.span>
+                </div>
+              )}
             </motion.div>
-            <div aria-hidden className="absolute inset-0 bg-black/25" />
-            {slide.text && (
-              <div className="absolute inset-0 grid place-items-center px-6">
-                <motion.span
-                  initial={{ opacity: 0, y: 18 }}
-                  animate={active ? { opacity: 1, y: 0 } : { opacity: 0, y: 18 }}
-                  transition={{ duration: 0.9, ease: EASE, delay: 0.2 }}
-                  className="text-center font-display text-4xl uppercase leading-tight tracking-[0.18em] text-white drop-shadow-[0_4px_30px_rgba(0,0,0,0.8)] sm:text-6xl md:text-7xl"
-                >
-                  {slide.text}
-                </motion.span>
-              </div>
-            )}
           </motion.div>
         );
       })}
@@ -144,7 +139,7 @@ export default function GalleryPage() {
         type="button"
         onClick={prev}
         aria-label="Previous"
-        className="absolute left-3 top-1/2 z-20 grid h-11 w-11 -translate-y-1/2 place-items-center rounded-full border border-white/20 bg-black/30 text-white/80 backdrop-blur-md transition-colors hover:border-accent/60 hover:text-accent"
+        className="absolute left-2 top-1/2 z-20 grid h-10 w-10 -translate-y-1/2 place-items-center rounded-full border border-white/20 bg-black/40 text-white/80 backdrop-blur-md transition-colors hover:border-accent/60 hover:text-accent md:left-4 md:h-11 md:w-11"
       >
         <ChevronLeft className="h-5 w-5" />
       </button>
@@ -152,13 +147,13 @@ export default function GalleryPage() {
         type="button"
         onClick={next}
         aria-label="Next"
-        className="absolute right-3 top-1/2 z-20 grid h-11 w-11 -translate-y-1/2 place-items-center rounded-full border border-white/20 bg-black/30 text-white/80 backdrop-blur-md transition-colors hover:border-accent/60 hover:text-accent"
+        className="absolute right-2 top-1/2 z-20 grid h-10 w-10 -translate-y-1/2 place-items-center rounded-full border border-white/20 bg-black/40 text-white/80 backdrop-blur-md transition-colors hover:border-accent/60 hover:text-accent md:right-4 md:h-11 md:w-11"
       >
         <ChevronRight className="h-5 w-5" />
       </button>
 
       {/* dots */}
-      <div className="absolute bottom-6 left-1/2 z-20 flex -translate-x-1/2 items-center gap-2.5">
+      <div className="absolute bottom-6 left-1/2 z-20 flex -translate-x-1/2 items-center gap-2">
         {SLIDES.map((s, i) => (
           <button
             key={s.src}

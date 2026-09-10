@@ -18,9 +18,9 @@ export function Navbar() {
       transition={{ duration: 0.8, ease: EASE, delay: 0.1 }}
       className="fixed inset-x-0 top-0 z-50"
     >
-      <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-5 py-3.5 md:px-8">
+      <div className="mx-auto flex max-w-7xl items-center justify-between gap-3 px-4 py-3.5 md:px-8">
         {/* Left: gallery link */}
-        <nav className="flex flex-1 items-center">
+        <nav className="flex shrink-0 items-center">
           <Link
             href="/gallery"
             className="text-sm font-light tracking-wide text-white/70 transition-colors hover:text-accent"
@@ -38,7 +38,7 @@ export function Navbar() {
         </a>
 
         {/* Right: call-to-taste + language */}
-        <div className="flex flex-1 items-center justify-end gap-3">
+        <div className="flex shrink-0 items-center gap-2.5">
           <HoneyCta href="/products" size="sm">
             {t.products.call}
           </HoneyCta>

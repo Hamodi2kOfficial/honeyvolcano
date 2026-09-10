@@ -2,6 +2,7 @@
 
 import { motion } from "motion/react";
 
+import { HoneyCta } from "@/components/ui/honey-cta";
 import { EruptMark } from "@/components/ui/erupt-mark";
 import { useI18n } from "@/components/i18n";
 import { EASE } from "@/lib/motion";
@@ -16,7 +17,20 @@ export function FooterCta() {
     <footer className="relative overflow-hidden bg-background">
       <EruptMark className="left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-4xl text-accent/[0.04] sm:text-6xl md:text-7xl" />
 
-      <div className="relative mx-auto max-w-4xl border-t border-border px-6 py-12">
+      {/* Call-to-taste at the very bottom */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, amount: 0.6 }}
+        transition={{ duration: 0.8, ease: EASE }}
+        className="relative flex flex-col items-center px-6 pb-4 pt-20 md:pt-28"
+      >
+        <HoneyCta href="/products" size="lg">
+          {t.products.call}
+        </HoneyCta>
+      </motion.div>
+
+      <div className="relative mx-auto mt-14 max-w-4xl border-t border-border px-6 py-10">
         <motion.p
           initial={{ opacity: 0, y: 14 }}
           whileInView={{ opacity: 1, y: 0 }}
