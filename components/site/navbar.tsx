@@ -3,6 +3,7 @@
 import { motion } from "motion/react";
 import Link from "next/link";
 
+import { HoneyCta } from "@/components/ui/honey-cta";
 import { LanguageSwitcher } from "@/components/site/controls";
 import { useI18n } from "@/components/i18n";
 import { EASE } from "@/lib/motion";
@@ -28,16 +29,19 @@ export function Navbar() {
           </Link>
         </nav>
 
-        {/* Center: wordmark */}
+        {/* Center: wordmark (hidden on small screens to make room for the CTA) */}
         <a
           href="#top"
-          className="flex-1 whitespace-nowrap text-center font-display text-lg tracking-[0.28em] text-accent md:text-xl"
+          className="hidden flex-1 whitespace-nowrap text-center font-display text-lg tracking-[0.28em] text-accent sm:block md:text-xl"
         >
           HONEY&nbsp;VOLCANO
         </a>
 
-        {/* Right: language */}
+        {/* Right: call-to-taste + language */}
         <div className="flex flex-1 items-center justify-end gap-3">
+          <HoneyCta href="/products" size="sm">
+            {t.products.call}
+          </HoneyCta>
           <LanguageSwitcher />
         </div>
       </div>

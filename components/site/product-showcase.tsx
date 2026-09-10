@@ -72,7 +72,7 @@ export function ProductShowcase() {
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true, amount: 0.4 }}
             transition={{ duration: 1, ease: EASE }}
-            className="mx-auto w-[240px] md:w-[300px]"
+            className="mx-auto w-[300px] md:w-[420px]"
           >
             <motion.div
               animate={{ y: [0, -14, 0] }}
@@ -95,19 +95,14 @@ export function ProductShowcase() {
                 className="absolute left-1/2 top-1/2 -z-10 h-[70%] w-[70%] -translate-x-1/2 -translate-y-1/2 rounded-full opacity-40 blur-3xl"
                 style={{ background: "radial-gradient(circle, #D4AF37 0%, transparent 70%)" }}
               />
-              <div
-                className="relative overflow-hidden rounded-[26px] ring-1 ring-accent/25 drop-shadow-[0_40px_70px_rgba(0,0,0,0.5)]"
-                style={{ background: "linear-gradient(180deg,#f7f4ee 0%,#efe7d6 100%)" }}
-              >
-                <Image
-                  src="/product-jar.png"
-                  alt="Honey Volcano raw honey jar"
-                  width={1360}
-                  height={2048}
-                  priority={false}
-                  className="relative h-auto w-full"
-                />
-              </div>
+              <Image
+                src="/product-jar-cut.png"
+                alt="Honey Volcano raw honey jar"
+                width={1360}
+                height={2048}
+                priority={false}
+                className="relative h-auto w-full drop-shadow-[0_40px_70px_rgba(0,0,0,0.55)]"
+              />
             </motion.div>
           </motion.div>
 

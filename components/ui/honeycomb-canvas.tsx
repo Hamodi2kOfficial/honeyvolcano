@@ -71,7 +71,7 @@ export function HoneycombCanvas({ className = "" }: { className?: string }) {
       ctx.lineWidth = 1;
       for (const cell of cells) {
         const amb = 0.5 + 0.5 * Math.sin(t * 0.0006 + cell.ph);
-        let a = 0.045 + 0.05 * amb;
+        let a = 0.08 + 0.07 * amb;
         const dx = cell.x - mouse.x;
         const dy = cell.y - mouse.y;
         const d = Math.sqrt(dx * dx + dy * dy);

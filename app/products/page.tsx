@@ -89,24 +89,6 @@ export default function ProductsPage() {
           </span>
         </motion.div>
 
-        <motion.h1
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.35, duration: 1, ease: EASE }}
-          className="mt-7 font-serif text-4xl font-light leading-[1.12] md:text-6xl"
-        >
-          {t.products.title}
-        </motion.h1>
-
-        <motion.p
-          initial={{ opacity: 0, y: 18 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.5, duration: 1, ease: EASE }}
-          className="mx-auto mt-5 max-w-xl text-base font-light leading-relaxed text-white/70"
-        >
-          {t.products.subtitle}
-        </motion.p>
-
         {/* Taste request card */}
         <motion.div
           initial={{ opacity: 0, y: 26 }}

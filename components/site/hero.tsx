@@ -40,7 +40,7 @@ export function Hero() {
         className="absolute inset-0"
         style={{
           background:
-            "radial-gradient(120% 90% at 50% 45%, rgba(6,4,3,0.82) 0%, rgba(6,4,3,0.6) 42%, rgba(6,4,3,0.72) 100%)",
+            "radial-gradient(125% 95% at 50% 44%, rgba(6,4,3,0.5) 0%, rgba(6,4,3,0.3) 46%, rgba(6,4,3,0.58) 100%)",
         }}
       />
 
@@ -90,7 +90,7 @@ function EruptWatermark() {
   return (
     <span
       aria-hidden
-      className="pointer-events-none absolute bottom-[8%] left-1/2 -translate-x-1/2 select-none whitespace-nowrap font-display text-4xl uppercase leading-none tracking-[0.3em] text-white/[0.05] sm:text-6xl md:text-8xl"
+      className="pointer-events-none absolute bottom-[8%] left-1/2 -translate-x-1/2 select-none whitespace-nowrap font-display text-4xl uppercase leading-none tracking-[0.3em] text-white/[0.13] sm:text-6xl md:text-8xl"
     >
       Let happiness erupt
     </span>

@@ -59,8 +59,8 @@ const en = {
   product: {
     heading: "Raw Honey",
     f1t: "100% Raw",
-    f2t: "Artisanal Extraction",
-    f3t: "Untamed Flavor",
+    f2t: "Let happiness erupt",
+    f3t: "Natural & Real",
   },
   cta: {
     heading: "Taste the Wild.",
@@ -141,8 +141,8 @@ const lt: Dict = {
   product: {
     heading: "Žalias medus",
     f1t: "100% žalias",
-    f2t: "Rankų darbo išgava",
-    f3t: "Laukinis skonis",
+    f2t: "Let happiness erupt",
+    f3t: "Natural & Real",
   },
   cta: {
     heading: "Paragauk laukinės gamtos.",
@@ -221,8 +221,8 @@ const is: Dict = {
   product: {
     heading: "Hrátt hunang",
     f1t: "100% hrátt",
-    f2t: "Handverksvinnsla",
-    f3t: "Villt bragð",
+    f2t: "Let happiness erupt",
+    f3t: "Natural & Real",
   },
   cta: {
     heading: "Smakkaðu villta náttúru.",
@@ -301,8 +301,8 @@ const es: Dict = {
   product: {
     heading: "Miel cruda",
     f1t: "100% cruda",
-    f2t: "Extracción artesanal",
-    f3t: "Sabor indómito",
+    f2t: "Let happiness erupt",
+    f3t: "Natural & Real",
   },
   cta: {
     heading: "Prueba lo salvaje.",
@@ -381,8 +381,8 @@ const ru: Dict = {
   product: {
     heading: "Сырой мёд",
     f1t: "100% сырой",
-    f2t: "Ремесленная добыча",
-    f3t: "Дикий вкус",
+    f2t: "Let happiness erupt",
+    f3t: "Natural & Real",
   },
   cta: {
     heading: "Почувствуй дикое.",
@@ -461,8 +461,8 @@ const pl: Dict = {
   product: {
     heading: "Surowy miód",
     f1t: "100% surowy",
-    f2t: "Rzemieślnicze pozyskiwanie",
-    f3t: "Dziki smak",
+    f2t: "Let happiness erupt",
+    f3t: "Natural & Real",
   },
   cta: {
     heading: "Posmakuj dzikości.",

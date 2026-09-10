@@ -65,7 +65,7 @@ export function VideoSection() {
       {/* Catch-phrase watermark */}
       <span
         aria-hidden
-        className="pointer-events-none absolute left-1/2 top-6 -translate-x-1/2 select-none whitespace-nowrap font-display text-3xl uppercase leading-none tracking-[0.3em] text-white/[0.05] sm:text-5xl md:text-7xl"
+        className="pointer-events-none absolute left-1/2 top-6 -translate-x-1/2 select-none whitespace-nowrap font-display text-3xl uppercase leading-none tracking-[0.3em] text-white/[0.13] sm:text-5xl md:text-7xl"
       >
         Let happiness erupt
       </span>

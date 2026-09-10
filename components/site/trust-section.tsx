@@ -80,8 +80,8 @@ export function TrustSection() {
             className="relative aspect-[4/5] w-full overflow-hidden rounded-2xl ring-1 ring-accent/20"
           >
             <Image
-              src="/jar-lupine.jpg"
-              alt="A jar of Honey Volcano raw forest honey among wild lupine and mountains"
+              src="/trust-jar.png"
+              alt="A jar of Honey Volcano raw honey among wild lupine and mountains"
               fill
               sizes="(max-width: 768px) 100vw, 50vw"
               className="object-cover"
