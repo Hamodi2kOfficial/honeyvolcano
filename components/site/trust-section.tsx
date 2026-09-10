@@ -49,16 +49,9 @@ export function TrustSection() {
           >
             {t.trust.heading}
           </motion.h2>
-          <motion.p
-            variants={rise}
-            custom={1}
-            className="mt-7 text-base font-light uppercase tracking-[0.2em] text-foreground/80"
-          >
-            {t.trust.line}
-          </motion.p>
           <motion.div
             variants={rise}
-            custom={2}
+            custom={1}
             className="mt-8 flex items-center gap-3 border-t border-border pt-6 text-sm font-light uppercase tracking-[0.2em] text-foreground/70"
           >
             <span>{t.trust.authorized}</span>

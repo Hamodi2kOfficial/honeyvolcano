@@ -31,7 +31,6 @@ const en = {
   },
   trust: {
     heading: "Reliable source.\nTrustworthy business.",
-    line: "Reliable and trustworthy source",
     authorized: "Authorized in",
   },
   values: {
@@ -113,7 +112,6 @@ const lt: Dict = {
   },
   trust: {
     heading: "Patikimas šaltinis.\nSąžiningas verslas.",
-    line: "Patikimas ir sąžiningas šaltinis",
     authorized: "Autorizuota",
   },
   values: {
@@ -193,7 +191,6 @@ const is: Dict = {
   },
   trust: {
     heading: "Áreiðanleg uppspretta.\nTraust fyrirtæki.",
-    line: "Áreiðanleg og traust uppspretta",
     authorized: "Með leyfi í",
   },
   values: {
@@ -273,7 +270,6 @@ const es: Dict = {
   },
   trust: {
     heading: "Origen fiable.\nNegocio de confianza.",
-    line: "Fuente fiable y de confianza",
     authorized: "Autorizado en",
   },
   values: {
@@ -353,7 +349,6 @@ const ru: Dict = {
   },
   trust: {
     heading: "Надёжный источник.\nЧестное дело.",
-    line: "Надёжный и достойный доверия источник",
     authorized: "Авторизовано в",
   },
   values: {
@@ -433,7 +428,6 @@ const pl: Dict = {
   },
   trust: {
     heading: "Pewne źródło.\nGodny zaufania biznes.",
-    line: "Pewne i godne zaufania źródło",
     authorized: "Autoryzowane w",
   },
   values: {
