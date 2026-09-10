@@ -11,15 +11,16 @@ import { EASE } from "@/lib/motion";
 type Slide = { src: string; alt: string; text?: string };
 
 const SLIDES: Slide[] = [
-  { src: "/gallery/1.png", alt: "Honey Volcano" },
-  { src: "/gallery/honeycomb-macro.png", alt: "Honeycomb", text: "Let happiness erupt" },
-  { src: "/gallery/2.png", alt: "Honey Volcano" },
-  { src: "/gallery/snack1.jpg", alt: "Honey delicacy" },
-  { src: "/gallery/lupine-jar.png", alt: "Honey among the mountains", text: "Let energy erupt" },
-  { src: "/gallery/3.png", alt: "Honey Volcano", text: "Natural & Real" },
-  { src: "/gallery/snack2.jpg", alt: "Honey delicacy" },
-  { src: "/gallery/4.png", alt: "Honey Volcano" },
-  { src: "/gallery/snack3.jpg", alt: "Honey delicacy" },
+  { src: "/gallery/g-mountain.jpg", alt: "Honey Volcano jar in a lupine mountain meadow", text: "Let energy erupt" },
+  { src: "/gallery/1.jpg", alt: "Honey Volcano" },
+  { src: "/gallery/g-comb.jpg", alt: "Golden honeycomb dripping raw honey", text: "Let happiness erupt" },
+  { src: "/gallery/2.jpg", alt: "Honey Volcano" },
+  { src: "/gallery/g-pour.jpg", alt: "Raw honey drizzling into a jar" },
+  { src: "/gallery/g-spread.jpg", alt: "Honey jar with honeycomb and wildflowers", text: "Natural & Real" },
+  { src: "/gallery/3.jpg", alt: "Honey Volcano" },
+  { src: "/gallery/g-beekeeper.jpg", alt: "Beekeeper holding a honeycomb frame at golden hour" },
+  { src: "/gallery/snack1s.jpg", alt: "Honey delicacy" },
+  { src: "/gallery/4.jpg", alt: "Honey Volcano" },
 ];
 
 const DURATION = 5000;
