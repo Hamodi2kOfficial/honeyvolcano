@@ -109,14 +109,29 @@ export default function GalleryPage() {
             initial={false}
             animate={{ opacity: active ? 1 : 0 }}
             transition={{ duration: 1, ease: EASE }}
-            className="absolute inset-0 flex items-center justify-center p-5 pt-20 pb-20 md:p-16"
+            className="absolute inset-0 flex flex-col items-center px-5 pb-14 pt-[4.75rem] md:px-16 md:pb-16 md:pt-[6.5rem]"
             style={{ zIndex: active ? 1 : 0 }}
           >
+            {/* Phrase sits above the photo (on the dark ground) so it never covers the image */}
+            {slide.text && (
+              <motion.div
+                initial={{ opacity: 0, y: -10 }}
+                animate={active ? { opacity: 1, y: 0 } : { opacity: 0, y: -10 }}
+                transition={{ duration: 0.8, ease: EASE, delay: 0.15 }}
+                className="mb-4 flex shrink-0 flex-col items-center gap-2.5"
+              >
+                <span className="text-center font-display text-2xl uppercase leading-tight tracking-[0.18em] text-[#F3CE72] sm:text-3xl md:text-4xl">
+                  {slide.text}
+                </span>
+                <span aria-hidden className="h-px w-12 bg-accent/50" />
+              </motion.div>
+            )}
+
             <motion.div
               initial={{ scale: 1 }}
               animate={{ scale: active ? 1.04 : 1 }}
               transition={{ duration: 7, ease: "linear" }}
-              className="relative h-full w-full max-w-4xl"
+              className="relative w-full max-w-4xl flex-1"
             >
               <Image
                 src={slide.src}
@@ -124,20 +139,8 @@ export default function GalleryPage() {
                 fill
                 sizes="100vw"
                 priority={i === 0}
-                className="rounded-2xl object-contain"
+                className="rounded-2xl object-contain object-center"
               />
-              {slide.text && (
-                <div className="absolute inset-0 grid place-items-center px-6">
-                  <motion.span
-                    initial={{ opacity: 0, y: 16 }}
-                    animate={active ? { opacity: 1, y: 0 } : { opacity: 0, y: 16 }}
-                    transition={{ duration: 0.9, ease: EASE, delay: 0.2 }}
-                    className="text-center font-display text-3xl uppercase leading-tight tracking-[0.16em] text-white drop-shadow-[0_4px_30px_rgba(0,0,0,0.95)] sm:text-5xl md:text-6xl"
-                  >
-                    {slide.text}
-                  </motion.span>
-                </div>
-              )}
             </motion.div>
           </motion.div>
         );
