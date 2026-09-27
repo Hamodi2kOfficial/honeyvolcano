@@ -5,6 +5,7 @@ import { motion } from "motion/react";
 
 import { HoneyCta } from "@/components/ui/honey-cta";
 import { EruptMark } from "@/components/ui/erupt-mark";
+import { RevealWords } from "@/components/ui/reveal-words";
 import { useI18n } from "@/components/i18n";
 import { EASE } from "@/lib/motion";
 
@@ -47,17 +48,13 @@ export function ProductShowcase() {
       <EruptMark className="top-6 left-1/2 -translate-x-1/2 text-4xl text-accent/[0.045] sm:text-6xl md:text-8xl" />
       <div className="relative mx-auto max-w-6xl px-6">
         {/* Heading */}
-        <motion.div
-          initial={{ opacity: 0, y: 24 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.5 }}
-          transition={{ duration: 0.9, ease: EASE }}
-          className="mx-auto max-w-2xl text-center"
-        >
-          <h2 className="font-serif text-5xl font-light text-foreground md:text-6xl">
-            {t.product.heading}
-          </h2>
-        </motion.div>
+        <div className="mx-auto max-w-2xl text-center">
+          <RevealWords
+            as="h2"
+            text={t.product.heading}
+            className="font-serif text-5xl font-light text-foreground md:text-6xl"
+          />
+        </div>
 
         {/* Jar + features */}
         <div className="mt-16 grid items-center gap-10 md:grid-cols-[1fr_auto_1fr] md:gap-6">

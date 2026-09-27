@@ -7,7 +7,8 @@ import { ArrowLeft } from "lucide-react";
 
 import { HoneycombCanvas } from "@/components/ui/honeycomb-canvas";
 import { AuroraBackground } from "@/components/ui/aurora-background";
-import { IcelandFlag } from "@/components/ui/flags";
+import { CallToTaste } from "@/components/ui/call-to-taste";
+import { RevealWords } from "@/components/ui/reveal-words";
 import { ProductCatalog } from "@/components/site/product-catalog";
 import { LanguageSwitcher } from "@/components/site/controls";
 import { useI18n } from "@/components/i18n";
@@ -100,25 +101,18 @@ export default function ProductsPage() {
           <p className="text-[11px] font-medium uppercase tracking-[0.35em] text-accent">
             {t.products.tasteEyebrow}
           </p>
-          <h2 className="mt-3 font-serif text-3xl font-light text-white">
-            {t.products.tasteHeading}
-          </h2>
+          <RevealWords
+            as="h2"
+            text={t.products.tasteHeading}
+            className="mt-3 font-serif text-3xl font-light text-white"
+          />
           <p className="mt-3 text-sm font-light leading-relaxed text-white/70">
             {t.products.tasteBody}
           </p>
 
-          <a
-            href="tel:8340999"
-            className="mt-7 inline-flex items-center gap-3 rounded-xl px-7 py-4 text-lg font-semibold text-[#1c1206] shadow-[0_10px_28px_-10px_rgba(212,175,55,0.6)] ring-1 ring-[#f0d38a]/40 transition-transform duration-300 hover:scale-[1.03]"
-            style={{
-              backgroundImage:
-                "linear-gradient(135deg, #F3CE72 0%, #E5B869 42%, #C79A3B 100%)",
-            }}
-          >
-            <span>{t.products.call}</span>
-            <IcelandFlag className="h-5" />
-            <span className="tracking-wide">8340999</span>
-          </a>
+          <div className="mt-7">
+            <CallToTaste label={t.products.call} />
+          </div>
 
           {/* the reassurance line */}
           <div className="mt-6 flex items-center gap-2.5 border-t border-white/10 pt-5">
