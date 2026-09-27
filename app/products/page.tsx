@@ -8,6 +8,7 @@ import { ArrowLeft } from "lucide-react";
 import { HoneycombCanvas } from "@/components/ui/honeycomb-canvas";
 import { AuroraBackground } from "@/components/ui/aurora-background";
 import { IcelandFlag } from "@/components/ui/flags";
+import { ProductCatalog } from "@/components/site/product-catalog";
 import { LanguageSwitcher } from "@/components/site/controls";
 import { useI18n } from "@/components/i18n";
 import { EASE } from "@/lib/motion";
@@ -141,6 +142,9 @@ export default function ProductsPage() {
           </div>
         </motion.div>
       </section>
+
+      {/* Product catalog */}
+      <ProductCatalog />
     </main>
   );
 }
