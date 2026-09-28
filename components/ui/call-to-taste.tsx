@@ -1,7 +1,6 @@
 "use client";
 
 import * as React from "react";
-import { AnimatePresence, motion } from "motion/react";
 
 import { IcelandFlag } from "@/components/ui/flags";
 import { cn } from "@/lib/utils";
@@ -9,9 +8,11 @@ import { cn } from "@/lib/utils";
 const PHONE = "8340999";
 
 /**
- * Call-to-taste button. On press it simply *reveals* the phone number in place
- * — no tel: link, no launching a dialer or other app. The number appears so the
- * person can read it and call. Press again to hide it.
+ * Call-to-taste button. On press it reveals the phone number in place — no
+ * tel: link, no launching a dialer. Both states are always rendered and simply
+ * cross-fade with CSS, so the toggle is bulletproof: it never depends on an
+ * animation completing (works even if the tab was briefly backgrounded).
+ * Press again to hide.
  */
 export function CallToTaste({
   label,
@@ -36,31 +37,27 @@ export function CallToTaste({
           "linear-gradient(135deg, #F3CE72 0%, #E5B869 42%, #C79A3B 100%)",
       }}
     >
-      <AnimatePresence mode="wait" initial={false}>
-        {shown ? (
-          <motion.span
-            key="num"
-            initial={{ opacity: 0, y: 8 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -8 }}
-            transition={{ duration: 0.28, ease: [0.16, 1, 0.3, 1] }}
-            className="flex items-center gap-2.5"
-          >
-            <IcelandFlag className="h-5" />
-            <span className="select-all tracking-[0.12em] tabular-nums">{PHONE}</span>
-          </motion.span>
-        ) : (
-          <motion.span
-            key="label"
-            initial={{ opacity: 0, y: 8 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -8 }}
-            transition={{ duration: 0.28, ease: [0.16, 1, 0.3, 1] }}
-          >
-            {label}
-          </motion.span>
+      {/* label */}
+      <span
+        className={cn(
+          "flex items-center transition-all duration-300 ease-out",
+          shown ? "-translate-y-2 opacity-0" : "translate-y-0 opacity-100"
         )}
-      </AnimatePresence>
+      >
+        {label}
+      </span>
+
+      {/* phone number — cross-fades in over the label */}
+      <span
+        aria-hidden
+        className={cn(
+          "absolute inset-0 flex items-center justify-center gap-2.5 transition-all duration-300 ease-out",
+          shown ? "translate-y-0 opacity-100" : "translate-y-2 opacity-0"
+        )}
+      >
+        <IcelandFlag className="h-5" />
+        <span className="select-all tracking-[0.12em] tabular-nums">{PHONE}</span>
+      </span>
     </button>
   );
 }

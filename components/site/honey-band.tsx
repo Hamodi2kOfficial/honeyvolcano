@@ -19,7 +19,7 @@ export function HoneyBand() {
     >
       <motion.div style={{ y }} className="absolute inset-x-0 -top-[14%] h-[128%]">
         <Image
-          src="/honeycomb.png"
+          src="/honeycomb.jpg"
           alt="Golden honeycomb dripping with raw amber honey"
           fill
           sizes="100vw"

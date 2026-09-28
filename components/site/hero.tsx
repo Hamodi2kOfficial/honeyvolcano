@@ -25,7 +25,7 @@ export function Hero() {
       {/* Honeycomb backdrop (the former picture band, now the hero) */}
       <motion.div style={{ y: bgY }} className="absolute inset-0 -top-[9%] h-[118%]">
         <Image
-          src="/honeycomb.png"
+          src="/honeycomb.jpg"
           alt="Golden honeycomb dripping with raw amber honey"
           fill
           priority
