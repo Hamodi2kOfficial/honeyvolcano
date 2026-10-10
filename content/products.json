@@ -1,0 +1,11 @@
+{
+  "products": [
+    { "id": "raw-honey-500", "name": "Raw honey 500 g", "priceISK": 2299, "tba": false },
+    { "id": "raw-honey-1kg", "name": "Raw honey 1 kg", "priceISK": 3499, "tba": false },
+    { "id": "honeycomb-300", "name": "Honeycomb 300 g", "priceISK": 2299, "tba": false },
+    { "id": "delicacies-220", "name": "Honey delicacies 220 g", "priceISK": 2199, "tba": false },
+    { "id": "multicoloured-220", "name": "Honey multicoloured 220 g", "priceISK": 2499, "tba": false },
+    { "id": "pollen-100", "name": "Pollen 100 g", "priceISK": 1499, "tba": false },
+    { "id": "bee-bread-100", "name": "Bee bread 100 g", "priceISK": null, "tba": true }
+  ]
+}

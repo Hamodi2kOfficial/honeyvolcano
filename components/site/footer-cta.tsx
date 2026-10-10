@@ -4,10 +4,11 @@ import { motion } from "motion/react";
 
 import { EruptMark } from "@/components/ui/erupt-mark";
 import { useI18n } from "@/components/i18n";
+import { site } from "@/lib/content";
 import { EASE } from "@/lib/motion";
 
-const PHONE = "+3548340999";
-const EMAIL = "golovinasjordanas@gmail.com";
+const PHONE = site.phoneIntl;
+const EMAIL = site.email;
 
 export function FooterCta() {
   const { t } = useI18n();

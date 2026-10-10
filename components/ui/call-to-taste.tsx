@@ -3,9 +3,10 @@
 import * as React from "react";
 
 import { IcelandFlag } from "@/components/ui/flags";
+import { site } from "@/lib/content";
 import { cn } from "@/lib/utils";
 
-const PHONE = "8340999";
+const PHONE = site.phone;
 
 /**
  * Call-to-taste button. On press it reveals the phone number in place — no

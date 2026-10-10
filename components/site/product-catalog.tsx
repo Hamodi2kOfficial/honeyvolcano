@@ -5,29 +5,8 @@ import { motion } from "motion/react";
 
 import { CallToTaste } from "@/components/ui/call-to-taste";
 import { RevealWords } from "@/components/ui/reveal-words";
+import { products, site, formatPrice, type Product } from "@/lib/content";
 import { EASE } from "@/lib/motion";
-
-// Business note — shown verbatim, exactly as provided. Do not edit.
-const BUSINESS_NOTE =
-  "Some combined purchasings or for small business entities can be discounted 15 procent from retail prices.";
-
-type Product = {
-  name: string;
-  price: string;
-  /** Drop a photo path here later, e.g. "/products/raw-honey-500.png" — the
-   *  card already renders it in place of the placeholder, no layout change. */
-  image?: string;
-};
-
-const PRODUCTS: Product[] = [
-  { name: "Raw honey 500 g", price: "2299 ISK" },
-  { name: "Raw honey 1 kg", price: "3499 ISK" },
-  { name: "Honey comb 300 g", price: "2299 ISK" },
-  { name: "Honey delicacies 220 g", price: "2199 ISK" },
-  { name: "Honey multicoloured 220 g", price: "2499 ISK" },
-  { name: "Pollen 100 g", price: "1499 ISK" },
-  { name: "Bee bred 100 g", price: "Price TBA" },
-];
 
 /** Faint jar silhouette shown while a product photo is still to come. */
 function JarPlaceholder() {
@@ -78,7 +57,7 @@ function ProductCard({ product, index }: { product: Product; index: number }) {
             {product.name}
           </h3>
           <span className="mt-0.5 shrink-0 whitespace-nowrap font-display text-sm tracking-wide text-accent">
-            {product.price}
+            {formatPrice(product)}
           </span>
         </div>
 
@@ -105,12 +84,12 @@ export function ProductCatalog() {
         transition={{ duration: 0.7, ease: EASE, delay: 0.1 }}
         className="mx-auto mt-7 max-w-3xl rounded-2xl border border-accent/40 bg-accent/[0.1] px-6 py-5 text-center text-lg font-semibold leading-relaxed text-accent md:text-xl"
       >
-        {BUSINESS_NOTE}
+        {site.businessNote}
       </motion.p>
 
       <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-        {PRODUCTS.map((product, i) => (
-          <ProductCard key={product.name} product={product} index={i} />
+        {products.map((product, i) => (
+          <ProductCard key={product.id} product={product} index={i} />
         ))}
       </div>
     </section>
