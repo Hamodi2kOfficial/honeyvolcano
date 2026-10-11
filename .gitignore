@@ -48,3 +48,6 @@ scripts/make-invoice-pdf.js
 
 # Stray root asset, not part of the site
 WhatsApp Image*.jpeg
+
+# Local Netlify folder
+.netlify
