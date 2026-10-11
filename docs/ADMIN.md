@@ -1,54 +1,95 @@
-# Honey Volcano — Owner's Guide (Admin)
+# Honey Volcano — Owner's Guide
 
-The dashboard lets you edit the website yourself. It lives at **`/admin`**
-(e.g. `https://honeyvolcano.com/admin`). No developer needed.
+Your website has its own manager at **`/admin`** (e.g.
+`https://honeyvolcano.com/admin`). One sign-in, no accounts to create, no
+developer tools, nothing technical.
 
-## How it works (plain language)
+**Sign in:** username `admin`, password `admin`.
 
-Your editable content lives as files in your GitHub repository
-(`content/products.json`, `content/site.json`). When you save in the dashboard,
-it writes those files to GitHub, and Netlify automatically rebuilds the site.
-**Your changes appear live in about 1–2 minutes.** Because it's all in GitHub,
-you also get free version history — every change is recorded and can be undone.
+## What you can do
 
-## One-time setup: get your access token
+### Home page
 
-The dashboard signs you in with a GitHub token (so only you can edit).
+The home page is a stack of sections, top to bottom. You decide what is in it
+and in which order.
 
-1. Sign in to GitHub (the account that owns the `honeyvolcano` repository).
-2. Go to **Settings → Developer settings → Fine-grained tokens → Generate new token**.
-3. **Token name:** anything, e.g. "Honey Volcano admin". **Expiration:** your choice (e.g. 1 year).
-4. **Repository access → Only select repositories →** choose **honeyvolcano**.
-5. **Permissions → Repository permissions → Contents → Read and write.**
-6. Click **Generate token** and **copy it** (you won't see it again).
-7. Open `/admin`, paste the token, and click **Sign in**.
+- **Move** anything up or down with the arrows.
+- **Hide** a section with the eye — it stays here, visitors just don't see it.
+- **Add a section** — pick from:
 
-The token is stored only in your browser. To sign out, click **Log out** (this
-removes the token from that browser). On a new device, sign in again.
+| Section | What it is |
+|---|---|
+| **Text** | A heading with a paragraph. |
+| **Picture + text** | A photo on one side, words and a button on the other. |
+| **Pictures** | A grid, or a sliding row, of photos. |
+| **Cards** | 2–4 cards with a picture, a title and a short text. |
+| **Quote** | One large sentence with who said it. |
+| **Reviews** | What customers say, with stars. |
+| **Call to action** | A bold band with a heading and one or two buttons. |
+| **Numbers** | Three or four figures you are proud of. |
+| **Gold ribbon** | A thin scrolling strip of words. |
+| **Video** | A film with a heading and a caption. |
 
-> Keep the token private — anyone who has it can edit the site. If it ever leaks,
-> delete it in GitHub (Developer settings) and generate a new one.
+- **Preview** (top right of the Home page tab) shows the page exactly as
+  visitors will see it — the same components draw both.
 
-## What you can edit today
+**Designed sections** (hero, the film, "Reliable source", the four promises,
+the beekeeper letter, the product pictures, the waitlist footer) carry a gold
+*Designed* label. You can move them, hide them, and switch the "under
+construction" plate on or off. Their words live in the translation files so all
+six languages stay in step — that is why there is no text box for them. New
+sections you add are written by you, in English.
 
-- **Products** — add, remove, reorder, rename, set the price in ISK, or mark a
-  price as "TBA" (to be announced). Shown on the products / "Call to taste" page.
-- **Contact & business note** — the phone number on the taste button, the phone
-  and email in the footer, and the B2B discount note on the products page.
+### Pictures
 
-Click **Save** in a section; a "Saved ✓" message confirms it. Use **View site**
-to open the live site in a new tab (refresh after ~1–2 minutes to see changes).
+- **Gallery slideshow** — the pictures at `/gallery`: reorder them, write the
+  gold phrase that appears above a photo, describe each picture for search
+  engines, remove what you don't want.
+- **Picture library** — every photo you can use anywhere on the site. Upload
+  from your phone or computer (photos are automatically shrunk to a sensible
+  size), or paste a link. Upload once, then pick it in any section.
 
-## What's not built yet (planned)
+### Products & Contact
 
-This is Phase 1 of the larger plan. Still to come: editing the home-page
-sections/text and images, a media library, orders, inventory, customers, the
-tasting pipeline, discounts/marketing, analytics, and multi-language editing.
+Names, prices in ISK, display order, "price TBA", plus the phone number on the
+taste button, the footer phone and email, and the B2B discount note.
 
-## Things only you can provide (for later phases)
+### Backup & publish
 
-- Payment provider account/keys (e.g. Stripe/Teya/Rapyd) — for online orders.
-- Email provider (e.g. Resend/Brevo) — for customer emails/newsletter.
-- Exact Icelandic VAT rate for food products — for invoices.
+Everything you arrange is **saved in this browser automatically** — there is no
+Save button to forget.
+
+- **Download a backup** — one file with the whole site. Keep it safe; it can be
+  loaded back here, or on another computer or phone.
+- **The four content files** (`home.json`, `gallery.json`, `products.json`,
+  `site.json`) — these are what the public website is built from. Download them
+  and send them over, and the next deploy puts your page live.
+- **Reset everything** — throws away your changes and returns to the site as it
+  is published today.
+
+## The one honest limitation
+
+Your changes live in your browser until those files reach the website. There is
+no "publish" button yet, because publishing needs somewhere for the site to
+store content. Two ways to get it, whenever you want:
+
+1. **A small free helper on Netlify** (Netlify Functions + Blobs) — adds a real
+   Publish button to this dashboard. No GitHub, no database, free.
+2. **Supabase** (free tier) — needed anyway for online orders, stock and
+   customers; publishing comes with it.
+
+Until then: Backup & publish → download → send the files.
+
+> **About the password.** `admin`/`admin` is a simple door, and this dashboard
+> cannot publish anything on its own, so a stranger finding it could only
+> rearrange a copy in their own browser. Before publishing is switched on, the
+> password must be replaced with a proper one.
+
+## Things only you can provide (for later)
+
+- Netlify or Supabase account — for the Publish button.
+- Payment provider (e.g. Stripe/Teya/Rapyd) — for online orders.
+- Email provider (e.g. Resend/Brevo) — for customer emails.
+- Icelandic VAT rate for food products — for invoices.
 - Legal texts (privacy policy, terms, cookie notice).
-- Any domain/email DNS changes.
+- Translations, if you want new sections to appear in all six languages.

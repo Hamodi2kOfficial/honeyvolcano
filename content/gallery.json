@@ -1,0 +1,15 @@
+{
+  "slides": [
+    { "id": "g1", "src": "/gallery/g-mountain.jpg", "alt": "Honey Volcano jar in a lupine mountain meadow", "text": "Let energy erupt" },
+    { "id": "g2", "src": "/gallery/1.jpg", "alt": "Honey Volcano", "text": "" },
+    { "id": "g3", "src": "/gallery/g-comb.jpg", "alt": "Golden honeycomb dripping raw honey", "text": "Let happiness erupt" },
+    { "id": "g4", "src": "/gallery/polenandcomb.jpg", "alt": "Bee pollen and honeycomb in the mountains", "text": "Let energy erupt" },
+    { "id": "g5", "src": "/gallery/2.jpg", "alt": "Honey Volcano", "text": "" },
+    { "id": "g6", "src": "/gallery/g-pour.jpg", "alt": "Raw honey drizzling into a jar", "text": "Natural & Real" },
+    { "id": "g7", "src": "/gallery/3faces.jpg", "alt": "Honey Volcano — Let happiness erupt", "text": "" },
+    { "id": "g8", "src": "/gallery/g-spread.jpg", "alt": "Honey jar with honeycomb and wildflowers", "text": "Natural & Real" },
+    { "id": "g9", "src": "/gallery/3.jpg", "alt": "Honey Volcano", "text": "" },
+    { "id": "g10", "src": "/gallery/snack1s.jpg", "alt": "Honey delicacy", "text": "" },
+    { "id": "g11", "src": "/gallery/4.jpg", "alt": "Honey Volcano", "text": "" }
+  ]
+}

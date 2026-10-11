@@ -9,25 +9,11 @@ import { ArrowLeft, ChevronLeft, ChevronRight } from "lucide-react";
 import { HoneyCta } from "@/components/ui/honey-cta";
 import { useI18n } from "@/components/i18n";
 import { EASE } from "@/lib/motion";
+import { gallerySlides } from "@/lib/content";
 
-type Slide = { src: string; alt: string; text?: string };
-
-// Two kinds of slide: plain PRODUCT shots (no phrase) and GENERAL / generated
-// atmosphere shots (each carries a brand phrase). 3faces already has its phrase
-// baked into the image.
-const SLIDES: Slide[] = [
-  { src: "/gallery/g-mountain.jpg", alt: "Honey Volcano jar in a lupine mountain meadow", text: "Let energy erupt" },
-  { src: "/gallery/1.jpg", alt: "Honey Volcano" },
-  { src: "/gallery/g-comb.jpg", alt: "Golden honeycomb dripping raw honey", text: "Let happiness erupt" },
-  { src: "/gallery/polenandcomb.jpg", alt: "Bee pollen and honeycomb in the mountains", text: "Let energy erupt" },
-  { src: "/gallery/2.jpg", alt: "Honey Volcano" },
-  { src: "/gallery/g-pour.jpg", alt: "Raw honey drizzling into a jar", text: "Natural & Real" },
-  { src: "/gallery/3faces.jpg", alt: "Honey Volcano — Let happiness erupt" },
-  { src: "/gallery/g-spread.jpg", alt: "Honey jar with honeycomb and wildflowers", text: "Natural & Real" },
-  { src: "/gallery/3.jpg", alt: "Honey Volcano" },
-  { src: "/gallery/snack1s.jpg", alt: "Honey delicacy" },
-  { src: "/gallery/4.jpg", alt: "Honey Volcano" },
-];
+// Slides live in content/gallery.json so the owner can reorder them, change the
+// phrase over a photo, or add new pictures from the dashboard.
+const SLIDES = gallerySlides;
 
 const DURATION = 5000;
 

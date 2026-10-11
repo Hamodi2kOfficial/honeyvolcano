@@ -1,10 +1,14 @@
+import galleryData from "@/content/gallery.json";
+import homeData from "@/content/home.json";
 import productsData from "@/content/products.json";
 import siteData from "@/content/site.json";
+
+import type { HomeContent } from "@/lib/home-model";
 
 /**
  * Single source of truth for owner-editable content. These JSON files live in
  * the repo (content/), so the public site reads them at build time (fully
- * static) and the /admin dashboard edits them by committing back to GitHub.
+ * static) and the /admin dashboard is where the owner edits them.
  */
 
 export type Product = {
@@ -31,3 +35,9 @@ export function formatPrice(p: Product): string {
   if (p.tba || p.priceISK == null) return "Price TBA";
   return `${p.priceISK} ISK`;
 }
+
+/** The home page layout (section order, visibility, owner-built blocks). */
+export const home: HomeContent = homeData as unknown as HomeContent;
+
+export type GallerySlide = { id: string; src: string; alt: string; text: string };
+export const gallerySlides: GallerySlide[] = galleryData.slides as GallerySlide[];
