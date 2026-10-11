@@ -41,3 +41,19 @@ export const home: HomeContent = homeData as unknown as HomeContent;
 
 export type GallerySlide = { id: string; src: string; alt: string; text: string };
 export const gallerySlides: GallerySlide[] = galleryData.slides as GallerySlide[];
+
+/** Everything the owner can edit, in one bundle (see components/live-content). */
+export type SiteBundle = {
+  home: HomeContent;
+  gallery: { slides: GallerySlide[] };
+  products: Product[];
+  site: SiteContent;
+};
+
+/** The content baked into this build — the starting point and the fallback. */
+export const buildTimeContent: SiteBundle = {
+  home,
+  gallery: { slides: gallerySlides },
+  products,
+  site,
+};

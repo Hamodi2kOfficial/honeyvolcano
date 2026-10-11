@@ -3,10 +3,9 @@
 import * as React from "react";
 
 import { IcelandFlag } from "@/components/ui/flags";
-import { site } from "@/lib/content";
+import { useLiveContent } from "@/components/live-content";
 import { cn } from "@/lib/utils";
 
-const PHONE = site.phone;
 
 /**
  * Call-to-taste button. On press it reveals the phone number in place — no
@@ -23,6 +22,7 @@ export function CallToTaste({
   className?: string;
 }) {
   const [shown, setShown] = React.useState(false);
+  const PHONE = useLiveContent().site.phone;
 
   return (
     <button

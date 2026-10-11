@@ -3,6 +3,7 @@ import { Cinzel, Cormorant_Garamond, Lato } from "next/font/google";
 import "./globals.css";
 import { I18nProvider } from "@/components/i18n";
 import { SmoothScroll } from "@/components/smooth-scroll";
+import { LiveContentProvider } from "@/components/live-content";
 
 const cinzel = Cinzel({
   subsets: ["latin"],
@@ -40,9 +41,11 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       className={`dark ${cinzel.variable} ${cormorant.variable} ${lato.variable} h-full antialiased`}
     >
       <body className="min-h-full">
-        <I18nProvider>
-          <SmoothScroll>{children}</SmoothScroll>
-        </I18nProvider>
+        <LiveContentProvider>
+          <I18nProvider>
+            <SmoothScroll>{children}</SmoothScroll>
+          </I18nProvider>
+        </LiveContentProvider>
       </body>
     </html>
   );

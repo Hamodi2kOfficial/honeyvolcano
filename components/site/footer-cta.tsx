@@ -4,14 +4,14 @@ import { motion } from "motion/react";
 
 import { EruptMark } from "@/components/ui/erupt-mark";
 import { useI18n } from "@/components/i18n";
-import { site } from "@/lib/content";
+import { useLiveContent } from "@/components/live-content";
 import { EASE } from "@/lib/motion";
-
-const PHONE = site.phoneIntl;
-const EMAIL = site.email;
 
 export function FooterCta() {
   const { t } = useI18n();
+  const { site } = useLiveContent();
+  const PHONE = site.phoneIntl;
+  const EMAIL = site.email;
 
   return (
     <footer className="relative overflow-hidden bg-background">

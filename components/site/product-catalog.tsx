@@ -5,7 +5,8 @@ import { motion } from "motion/react";
 
 import { CallToTaste } from "@/components/ui/call-to-taste";
 import { RevealWords } from "@/components/ui/reveal-words";
-import { products, site, formatPrice, type Product } from "@/lib/content";
+import { formatPrice, type Product } from "@/lib/content";
+import { useLiveContent } from "@/components/live-content";
 import { EASE } from "@/lib/motion";
 
 /** Faint jar silhouette shown while a product photo is still to come. */
@@ -68,6 +69,8 @@ function ProductCard({ product, index }: { product: Product; index: number }) {
 }
 
 export function ProductCatalog() {
+  const { products, site } = useLiveContent();
+
   return (
     <section id="catalog" className="relative z-10 mx-auto w-full max-w-6xl px-6 pb-28">
       <RevealWords

@@ -6,6 +6,13 @@
   command = "npm run build"
   publish = "out"
 
+# The owner publishes content from /admin into Netlify Blobs through these
+# functions (see netlify/functions). Writing requires the ADMIN_PASSWORD
+# environment variable — without it, publishing stays switched off.
+[functions]
+  directory = "netlify/functions"
+  node_bundler = "esbuild"
+
 [build.environment]
   # Next.js 16 / React 19 need a modern Node runtime.
   NODE_VERSION = "20"

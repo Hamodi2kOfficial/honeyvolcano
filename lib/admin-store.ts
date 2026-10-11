@@ -20,6 +20,8 @@ export const ADMIN_USER = "admin";
 export const ADMIN_PASS = "admin";
 
 const SESSION_KEY = "hv-admin-session";
+const PASSWORD_KEY = "hv-admin-key";
+const PUBLISHED_KEY = "hv-admin-published";
 const WORKSPACE_KEY = "hv-admin-workspace";
 
 export type Product = {
@@ -176,4 +178,82 @@ export function workspaceSize(ws: Workspace): string {
   if (bytes < 1024) return `${bytes} B`;
   if (bytes < 1024 * 1024) return `${Math.round(bytes / 1024)} KB`;
   return `${(bytes / (1024 * 1024)).toFixed(1)} MB`;
+}
+
+// ------------------------------------------------------- live publishing
+
+/**
+ * The owner's password for this site, kept in their own browser so they do not
+ * retype it on every edit. It is only ever sent to this site's own API.
+ */
+export function getPassword(): string {
+  try {
+    return localStorage.getItem(PASSWORD_KEY) ?? "";
+  } catch {
+    return "";
+  }
+}
+export function setPassword(password: string) {
+  try {
+    localStorage.setItem(PASSWORD_KEY, password);
+  } catch {}
+}
+export function clearPassword() {
+  try {
+    localStorage.removeItem(PASSWORD_KEY);
+  } catch {}
+}
+
+/** Exactly what gets published: the site's content plus the picture library. */
+export function publishableBundle(ws: Workspace) {
+  return {
+    home: ws.home,
+    gallery: ws.gallery,
+    products: ws.products,
+    site: ws.site,
+    media: ws.media,
+  };
+}
+
+/** A fingerprint of the published state, so the dashboard can say "not yet live". */
+export function fingerprint(ws: Workspace): string {
+  return JSON.stringify(publishableBundle(ws));
+}
+
+export function getPublishedMark(): string {
+  try {
+    return localStorage.getItem(PUBLISHED_KEY) ?? "";
+  } catch {
+    return "";
+  }
+}
+export function setPublishedMark(mark: string) {
+  try {
+    localStorage.setItem(PUBLISHED_KEY, mark);
+  } catch {}
+}
+
+/** Builds a workspace from whatever the site is currently serving. */
+export function workspaceFromPublished(
+  published: Partial<Workspace> | null | undefined
+): Workspace {
+  const base = freshWorkspace();
+  if (!published) return base;
+  return {
+    ...base,
+    ...published,
+    // Keep the pictures that ship with the site available alongside uploads.
+    media: mergeMedia(published.media ?? [], base.media),
+  };
+}
+
+function mergeMedia(first: Img[], second: Img[]): Img[] {
+  const seen = new Set<string>();
+  const out: Img[] = [];
+  for (const img of [...first, ...second]) {
+    if (!img?.src || seen.has(img.src)) continue;
+    seen.add(img.src);
+    out.push(img);
+  }
+  return out;
 }

@@ -1,7 +1,15 @@
 "use client";
 
 import { useRef, useState } from "react";
-import { Download, FileJson, FolderDown, RotateCcw, Upload } from "lucide-react";
+import {
+  Check,
+  CloudUpload,
+  Download,
+  FileJson,
+  FolderDown,
+  RotateCcw,
+  Upload,
+} from "lucide-react";
 
 import {
   contentFiles,
@@ -10,19 +18,32 @@ import {
   workspaceSize,
   type Workspace,
 } from "@/lib/admin-store";
-import { Card, GhostButton, GoldButton } from "@/components/admin/ui";
+import type { ApiStatus } from "@/lib/live-api";
+import { Badge, Card, GhostButton, GoldButton } from "@/components/admin/ui";
 
 /**
- * Where the owner takes their work out of the browser: a backup they can keep,
- * or the exact content files the website reads.
+ * Publishing: the button that puts the owner's work on the live website, plus
+ * backups and the raw content files for anyone who wants them.
  */
 export function PublishSection({
   workspace,
+  status,
+  publishedAt,
+  unpublished,
+  publishing,
+  onPublish,
+  onReloadFromLive,
   onImport,
   onReset,
   flash,
 }: {
   workspace: Workspace;
+  status: ApiStatus;
+  publishedAt: string | null;
+  unpublished: boolean;
+  publishing: boolean;
+  onPublish: () => void;
+  onReloadFromLive: () => void;
   onImport: (ws: Workspace) => void;
   onReset: () => void;
   flash: (msg: string) => void;
@@ -31,6 +52,7 @@ export function PublishSection({
   const [error, setError] = useState("");
   const files = contentFiles(workspace);
   const uploads = uploadedImages(workspace);
+  const live = status.kind === "live";
 
   const importPack = async (file: File | undefined) => {
     if (!file) return;
@@ -47,12 +69,90 @@ export function PublishSection({
 
   return (
     <div className="space-y-5">
-      <Card title="Your work" hint={`Everything you have arranged is kept in this browser · ${workspaceSize(workspace)} used.`}>
+      {live ? (
+        <Card
+          title="Your live website"
+          hint={
+            publishedAt
+              ? `Last published ${formatWhen(publishedAt)}.`
+              : "Nothing has been published from here yet — the site is showing the version it was built with."
+          }
+          action={
+            <Badge tone={unpublished ? "warn" : "good"}>
+              {unpublished ? "Changes not live yet" : "Everything is live"}
+            </Badge>
+          }
+        >
+          <p className="text-sm leading-relaxed text-foreground-muted">
+            Press publish and your home page, pictures, prices and contact details are
+            updated on honeyvolcano.com within a few seconds. Visitors always see the last
+            thing you published — nothing you do here shows up before that.
+          </p>
+          <div className="mt-4 flex flex-wrap gap-2">
+            <GoldButton onClick={onPublish} disabled={publishing || !unpublished} className="h-10">
+              <span className="inline-flex items-center gap-2">
+                {unpublished ? (
+                  <CloudUpload className="h-4 w-4" />
+                ) : (
+                  <Check className="h-4 w-4" />
+                )}
+                {publishing
+                  ? "Publishing…"
+                  : unpublished
+                    ? "Publish changes"
+                    : "Everything is live"}
+              </span>
+            </GoldButton>
+            <GhostButton
+              onClick={() => {
+                if (
+                  !unpublished ||
+                  window.confirm(
+                    "Throw away the changes you have not published and load the live version?"
+                  )
+                ) {
+                  onReloadFromLive();
+                }
+              }}
+            >
+              <RotateCcw className="h-4 w-4" /> Load the live version
+            </GhostButton>
+          </div>
+        </Card>
+      ) : (
+        <Card title="Live publishing is not switched on yet" hint="A five-minute job, once.">
+          <p className="text-sm leading-relaxed text-foreground-muted">
+            Right now this dashboard saves everything in this browser only. To publish
+            straight to the website, the site needs one password of its own:
+          </p>
+          <ol className="mt-3 list-decimal space-y-1.5 pl-5 text-sm leading-relaxed text-foreground-muted">
+            <li>
+              Open Netlify → the honeyvolcano site → <span className="text-foreground">Site configuration</span> →{" "}
+              <span className="text-foreground">Environment variables</span>.
+            </li>
+            <li>
+              Add a variable called{" "}
+              <code className="rounded bg-background px-1.5 py-0.5 text-accent">ADMIN_PASSWORD</code>{" "}
+              and set it to the password you want to use.
+            </li>
+            <li>Deploy once more, then sign in here with that password.</li>
+          </ol>
+          <p className="mt-3 text-xs leading-relaxed text-foreground-muted">
+            Until then, everything below still works: keep a backup, and send the content
+            files over whenever you want them on the site.
+          </p>
+        </Card>
+      )}
+
+      <Card
+        title="Backups"
+        hint={`Everything you have arranged · ${workspaceSize(workspace)} in this browser.`}
+      >
         <div className="grid gap-3 sm:grid-cols-2">
           <Action
             icon={<FolderDown className="h-4 w-4" />}
             title="Download a backup"
-            body="One file with the whole site: pages, pictures, products, contact details. Keep it safe — it can be loaded back here any time."
+            body="One file with the whole site: pages, pictures, products, contact details. It can be loaded back here at any time."
             button={
               <GoldButton
                 onClick={() => {
@@ -91,14 +191,9 @@ export function PublishSection({
       </Card>
 
       <Card
-        title="Put it on the live site"
-        hint="The public website is built from four small files. Download them here and they go live with the next deploy."
+        title="The content files"
+        hint="The same content as plain files, for the developer or for your records."
       >
-        <ol className="mb-4 list-decimal space-y-1.5 pl-5 text-sm leading-relaxed text-foreground-muted">
-          <li>Download the files below (or just the backup above — it holds the same content).</li>
-          <li>Send them over, or drop them into the site&rsquo;s <code className="text-accent">content/</code> folder.</li>
-          <li>The site rebuilds and your new home page is live.</li>
-        </ol>
         <div className="grid gap-2 sm:grid-cols-2">
           {files.map((f) => (
             <button
@@ -125,24 +220,22 @@ export function PublishSection({
         {uploads.length > 0 && (
           <p className="mt-4 rounded-xl border border-amber-500/30 bg-amber-500/[0.06] px-4 py-3 text-xs leading-relaxed text-foreground-muted">
             <span className="font-semibold text-amber-500">
-              {uploads.length} picture{uploads.length === 1 ? "" : "s"} uploaded from your device
+              {uploads.length} picture{uploads.length === 1 ? "" : "s"} uploaded from your
+              device
             </span>{" "}
-            {uploads.length === 1 ? "is" : "are"} carried inside these files. That works,
-            but it makes them large — for the fastest site, those photos are better saved
-            as real image files. Mention it when you send the files over.
+            {uploads.length === 1 ? "is" : "are"} stored inside this browser rather than on
+            the website. {live ? "Pictures added from now on are uploaded to the site automatically." : "They travel with the backup file."}
           </p>
         )}
       </Card>
 
       <Card
         title="Start over"
-        hint="Throws away everything you changed here and returns the dashboard to the site as it is published today."
+        hint="Throws away everything in this browser and returns to the site as it was built."
       >
         <GhostButton
           onClick={() => {
-            if (window.confirm("Discard all your changes and start from the live site?")) {
-              onReset();
-            }
+            if (window.confirm("Discard all your changes and start again?")) onReset();
           }}
         >
           <RotateCcw className="h-4 w-4" /> Reset everything
@@ -150,6 +243,17 @@ export function PublishSection({
       </Card>
     </div>
   );
+}
+
+/** "today at 14:05" / "12 Oct 2026 at 14:05" — readable, never a raw timestamp. */
+function formatWhen(iso: string): string {
+  const date = new Date(iso);
+  if (Number.isNaN(date.getTime())) return "recently";
+  const time = date.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
+  const sameDay = new Date().toDateString() === date.toDateString();
+  return sameDay
+    ? `today at ${time}`
+    : `${date.toLocaleDateString([], { day: "numeric", month: "short", year: "numeric" })} at ${time}`;
 }
 
 function Action({

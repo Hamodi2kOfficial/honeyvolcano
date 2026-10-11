@@ -101,7 +101,13 @@ export function HomeEditor({
 
   const add = (kind: SectionKind) => {
     const section = createSection(kind);
-    setSections([...sections, section]);
+    // Land the new section above the footer, never underneath it — the footer
+    // is the end of the page, so appending after it looks broken.
+    const footerAt = sections.findIndex(
+      (s) => s.kind === "builtin" && s.builtin === "cta"
+    );
+    const at = footerAt === -1 ? sections.length : footerAt;
+    setSections([...sections.slice(0, at), section, ...sections.slice(at)]);
     setOpenId(section.id);
     setPicking(false);
     setMode("build");

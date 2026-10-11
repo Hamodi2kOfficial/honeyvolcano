@@ -9,22 +9,23 @@ import { ArrowLeft, ChevronLeft, ChevronRight } from "lucide-react";
 import { HoneyCta } from "@/components/ui/honey-cta";
 import { useI18n } from "@/components/i18n";
 import { EASE } from "@/lib/motion";
-import { gallerySlides } from "@/lib/content";
-
-// Slides live in content/gallery.json so the owner can reorder them, change the
-// phrase over a photo, or add new pictures from the dashboard.
-const SLIDES = gallerySlides;
+import { useLiveContent } from "@/components/live-content";
 
 const DURATION = 5000;
 
 export default function GalleryPage() {
   const { t } = useI18n();
-  const [idx, setIdx] = useState(0);
+  // The slideshow is owner-managed: order, pictures and phrases come from /admin.
+  const SLIDES = useLiveContent().gallery.slides;
+  const [rawIdx, setIdx] = useState(0);
   const n = SLIDES.length;
+  // The owner can publish a shorter slideshow while someone is looking at it.
+  const idx = n > 0 ? rawIdx % n : 0;
   const timer = useRef<ReturnType<typeof setInterval> | null>(null);
 
   const schedule = useCallback(() => {
     if (timer.current) clearInterval(timer.current);
+    if (n < 2) return;
     timer.current = setInterval(() => setIdx((i) => (i + 1) % n), DURATION);
   }, [n]);
 
@@ -36,10 +37,12 @@ export default function GalleryPage() {
   }, [schedule]);
 
   const next = useCallback(() => {
+    if (n === 0) return;
     setIdx((i) => (i + 1) % n);
     schedule();
   }, [n, schedule]);
   const prev = useCallback(() => {
+    if (n === 0) return;
     setIdx((i) => (i - 1 + n) % n);
     schedule();
   }, [n, schedule]);
@@ -90,7 +93,7 @@ export default function GalleryPage() {
         const active = i === idx;
         return (
           <motion.div
-            key={slide.src}
+            key={slide.id}
             aria-hidden={!active}
             initial={false}
             animate={{ opacity: active ? 1 : 0 }}
@@ -119,14 +122,25 @@ export default function GalleryPage() {
               transition={{ duration: 7, ease: "linear" }}
               className="relative w-full max-w-4xl flex-1"
             >
-              <Image
-                src={slide.src}
-                alt={slide.alt}
-                fill
-                sizes="100vw"
-                priority={i === 0}
-                className="rounded-2xl object-contain object-center"
-              />
+              {slide.src.startsWith("data:") ? (
+                // A picture added in the dashboard before it was uploaded —
+                // next/image cannot take an inline image, a plain one can.
+                // eslint-disable-next-line @next/next/no-img-element
+                <img
+                  src={slide.src}
+                  alt={slide.alt}
+                  className="absolute inset-0 h-full w-full rounded-2xl object-contain object-center"
+                />
+              ) : (
+                <Image
+                  src={slide.src}
+                  alt={slide.alt}
+                  fill
+                  sizes="100vw"
+                  priority={i === 0}
+                  className="rounded-2xl object-contain object-center"
+                />
+              )}
             </motion.div>
           </motion.div>
         );
@@ -180,7 +194,7 @@ export default function GalleryPage() {
       <div className="absolute bottom-6 left-1/2 z-20 flex -translate-x-1/2 items-center gap-2">
         {SLIDES.map((s, i) => (
           <button
-            key={s.src}
+            key={s.id}
             type="button"
             onClick={() => goTo(i)}
             aria-label={`Slide ${i + 1}`}

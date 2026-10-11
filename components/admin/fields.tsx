@@ -15,6 +15,7 @@ import {
 
 import type { Img } from "@/lib/home-model";
 import { GhostButton, GoldButton, inputClass } from "@/components/admin/ui";
+import { useAdminSession } from "@/components/admin/session";
 import { cn } from "@/lib/utils";
 
 /* ------------------------------------------------------------------ inputs */
@@ -148,7 +149,10 @@ export function ListEditor<T>({
       </div>
       <div className="space-y-2">
         {items.map((item, i) => (
-          <div key={i} className="rounded-xl border border-border bg-background">
+          <div
+            key={(item as { id?: string }).id ?? i}
+            className="rounded-xl border border-border bg-background"
+          >
             <div className="flex items-center gap-1 px-3 py-2">
               <button
                 type="button"
@@ -368,6 +372,7 @@ export function MediaDialog({
   const [url, setUrl] = useState("");
   const [busy, setBusy] = useState("");
   const fileRef = useRef<HTMLInputElement>(null);
+  const { mode, storePicture } = useAdminSession();
 
   const take = (img: Img) => {
     onPick(img);
@@ -376,10 +381,19 @@ export function MediaDialog({
 
   const onFiles = async (files: FileList | null) => {
     if (!files?.length) return;
-    setBusy("Adding…");
+    const list = Array.from(files);
     try {
-      for (const file of Array.from(files)) {
-        const img = await fileToImage(file);
+      for (const [i, file] of list.entries()) {
+        setBusy(
+          list.length > 1
+            ? `Adding picture ${i + 1} of ${list.length}…`
+            : mode === "live"
+              ? "Uploading…"
+              : "Adding…"
+        );
+        const shrunk = await fileToImage(file);
+        const src = await storePicture(shrunk.src);
+        const img = { ...shrunk, src };
         onAddMedia(img);
         onPick(img);
       }

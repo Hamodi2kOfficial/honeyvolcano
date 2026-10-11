@@ -4,7 +4,10 @@ Your website has its own manager at **`/admin`** (e.g.
 `https://honeyvolcano.com/admin`). One sign-in, no accounts to create, no
 developer tools, nothing technical.
 
-**Sign in:** username `admin`, password `admin`.
+**Sign in:** with the site's own password once live publishing is switched on
+(see *Publishing* below) — or with `admin` / `admin` while it is not, in which
+case the dashboard saves your work in your browser without touching the live
+site. The sign-in screen always tells you which of the two you are in.
 
 ## What you can do
 
@@ -67,27 +70,45 @@ Save button to forget.
 - **Reset everything** — throws away your changes and returns to the site as it
   is published today.
 
-## The one honest limitation
+## Publishing
 
-Your changes live in your browser until those files reach the website. There is
-no "publish" button yet, because publishing needs somewhere for the site to
-store content. Two ways to get it, whenever you want:
+Everything you arrange is **saved in this browser automatically** — there is no
+Save button to forget. When you are happy, press **Publish changes** (top right,
+or in the Publishing tab) and the website updates within seconds: home page,
+pictures, prices, contact details, everything.
 
-1. **A small free helper on Netlify** (Netlify Functions + Blobs) — adds a real
-   Publish button to this dashboard. No GitHub, no database, free.
-2. **Supabase** (free tier) — needed anyway for online orders, stock and
-   customers; publishing comes with it.
+- A gold banner says when you have changes visitors cannot see yet.
+- **Load the live version** throws away your unpublished edits and brings back
+  exactly what the site is showing.
+- **Download a backup** keeps a copy of everything in one file, which can be
+  loaded back here or on another device.
 
-Until then: Backup & publish → download → send the files.
+Pictures you upload are stored on the website itself, so they load fast and
+work for everyone — not just on your own phone.
 
-> **About the password.** `admin`/`admin` is a simple door, and this dashboard
-> cannot publish anything on its own, so a stranger finding it could only
-> rearrange a copy in their own browser. Before publishing is switched on, the
-> password must be replaced with a proper one.
+### Switching publishing on (one time, by the site owner)
+
+Live publishing needs one password of its own, kept in Netlify and never in the
+code:
+
+1. Netlify → the honeyvolcano site → **Site configuration → Environment variables**.
+2. Add `ADMIN_PASSWORD` and set it to the password you want to use for /admin.
+3. **Deploys → Trigger deploy → Deploy site**, then sign in at /admin with that password.
+
+Until that variable exists, the dashboard still works, but in browser-only mode:
+it signs in with `admin` / `admin`, saves your work in your browser, and the
+live site is not touched. The Publishing tab shows these same steps.
+
+### How it works, in one paragraph
+
+The website is static — fast, cheap, always up. The content you publish is kept
+in Netlify Blobs (free, included), and every page asks for it as it loads, so a
+change is live without rebuilding anything. If that service were ever
+unavailable, visitors simply see the version the site was built with: the page
+never breaks.
 
 ## Things only you can provide (for later)
 
-- Netlify or Supabase account — for the Publish button.
 - Payment provider (e.g. Stripe/Teya/Rapyd) — for online orders.
 - Email provider (e.g. Resend/Brevo) — for customer emails.
 - Icelandic VAT rate for food products — for invoices.
