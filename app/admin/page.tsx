@@ -123,9 +123,7 @@ export default function AdminPage() {
         if (cancelled) return;
         setPublishedAt(published.updatedAt);
         if (published.content) {
-          const mark = fingerprint(
-            workspaceFromPublished(published.content as Partial<Workspace>)
-          );
+          const mark = JSON.stringify(published.content);
           setPublishedMark(mark);
           setMark(mark);
         }
@@ -165,7 +163,7 @@ export default function AdminPage() {
       setWs(next);
       setPublishedAt(published.updatedAt);
       if (published.content) {
-        const mark = fingerprint(next);
+        const mark = JSON.stringify(published.content);
         setPublishedMark(mark);
         setMark(mark);
       }
@@ -226,7 +224,7 @@ export default function AdminPage() {
       ? workspaceFromPublished(published.content as Partial<Workspace>)
       : freshWorkspace();
     update(next);
-    const mark = fingerprint(next);
+    const mark = published.content ? JSON.stringify(published.content) : fingerprint(next);
     setPublishedMark(mark);
     setMark(mark);
     setPublishedAt(published.updatedAt);
