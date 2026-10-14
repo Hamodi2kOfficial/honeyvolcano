@@ -46,7 +46,7 @@ export function LanguageBar({
             onClick={() => state.setLang(l.code)}
             title={l.name}
             className={cn(
-              "rounded-lg border px-2.5 py-1 text-xs transition-colors",
+              "min-h-10 min-w-10 rounded-lg border px-2.5 py-1 text-xs transition-colors sm:min-h-0 sm:min-w-0",
               state.lang === l.code
                 ? "border-accent/60 bg-accent/15 text-accent"
                 : "border-border text-foreground-muted hover:text-foreground"
