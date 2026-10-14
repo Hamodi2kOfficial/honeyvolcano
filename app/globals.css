@@ -149,3 +149,11 @@ html.lenis body {
     animation: none;
   }
 }
+
+/* Dashboard on a phone: a tick box you can actually hit with a thumb. */
+@media (pointer: coarse) {
+  .hv-admin input[type="checkbox"] {
+    width: 1.2rem;
+    height: 1.2rem;
+  }
+}

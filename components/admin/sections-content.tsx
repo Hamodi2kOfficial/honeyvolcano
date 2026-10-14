@@ -3,7 +3,7 @@
 import { ArrowDown, ArrowUp, Plus, Trash2 } from "lucide-react";
 
 import type { Product, SiteFile } from "@/lib/admin-store";
-import { Card, Field, GhostButton, inputClass } from "@/components/admin/ui";
+import { Card, Field, GhostButton, IconButton, inputClass } from "@/components/admin/ui";
 
 /** Products editor — the live catalogue (name, ISK price, order, TBA flag). */
 export function ProductsSection({
@@ -154,28 +154,3 @@ export function ContentSection({
   );
 }
 
-function IconButton({
-  label,
-  onClick,
-  danger,
-  children,
-}: {
-  label: string;
-  onClick: () => void;
-  danger?: boolean;
-  children: React.ReactNode;
-}) {
-  return (
-    <button
-      type="button"
-      onClick={onClick}
-      aria-label={label}
-      title={label}
-      className={`rounded-md p-1.5 text-foreground-muted ${
-        danger ? "hover:text-red-400" : "hover:text-accent"
-      }`}
-    >
-      {children}
-    </button>
-  );
-}

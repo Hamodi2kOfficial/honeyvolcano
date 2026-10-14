@@ -27,6 +27,19 @@ const BUILTINS: Record<BuiltinKind, React.ComponentType> = {
   cta: FooterCta,
 };
 
+/** Hides a section on phones or on desktops, when the owner asked for that. */
+function DeviceGate({
+  devices,
+  children,
+}: {
+  devices?: "all" | "desktop" | "mobile";
+  children: React.ReactNode;
+}) {
+  if (devices === "desktop") return <div className="hidden md:block">{children}</div>;
+  if (devices === "mobile") return <div className="md:hidden">{children}</div>;
+  return <>{children}</>;
+}
+
 export function HomeSections() {
   const { home } = useLiveContent();
 
@@ -40,16 +53,24 @@ export function HomeSections() {
         if (section.kind === "builtin") {
           const Component = BUILTINS[section.builtin];
           if (!Component) return null;
-          return section.underConstruction ? (
-            <UnderConstruction key={section.id}>
-              <Component />
-            </UnderConstruction>
-          ) : (
-            <Component key={section.id} />
+          return (
+            <DeviceGate key={section.id} devices={section.devices}>
+              {section.underConstruction ? (
+                <UnderConstruction>
+                  <Component />
+                </UnderConstruction>
+              ) : (
+                <Component />
+              )}
+            </DeviceGate>
           );
         }
 
-        return <Block key={section.id} section={section} />;
+        return (
+          <DeviceGate key={section.id} devices={section.devices}>
+            <Block section={section} />
+          </DeviceGate>
+        );
       })}
     </>
   );

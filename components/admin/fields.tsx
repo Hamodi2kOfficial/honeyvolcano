@@ -14,7 +14,7 @@ import {
 } from "lucide-react";
 
 import type { Img } from "@/lib/home-model";
-import { GhostButton, GoldButton, inputClass } from "@/components/admin/ui";
+import { GhostButton, GoldButton, IconButton, inputClass } from "@/components/admin/ui";
 import { useAdminSession } from "@/components/admin/session";
 import { cn } from "@/lib/utils";
 
@@ -161,25 +161,25 @@ export function ListEditor<T>({
               >
                 {titleOf(item, i) || `Item ${i + 1}`}
               </button>
-              <MiniButton label="Move up" onClick={() => move(i, -1)}>
+              <IconButton label="Move up" onClick={() => move(i, -1)}>
                 <ArrowUp className="h-3.5 w-3.5" />
-              </MiniButton>
-              <MiniButton label="Move down" onClick={() => move(i, 1)}>
+              </IconButton>
+              <IconButton label="Move down" onClick={() => move(i, 1)}>
                 <ArrowDown className="h-3.5 w-3.5" />
-              </MiniButton>
-              <MiniButton
+              </IconButton>
+              <IconButton
                 label="Duplicate"
                 onClick={() => onChange([...items.slice(0, i + 1), { ...item }, ...items.slice(i + 1)])}
               >
                 <Copy className="h-3.5 w-3.5" />
-              </MiniButton>
-              <MiniButton
+              </IconButton>
+              <IconButton
                 label="Remove"
                 danger
                 onClick={() => onChange(items.filter((_, idx) => idx !== i))}
               >
                 <Trash2 className="h-3.5 w-3.5" />
-              </MiniButton>
+              </IconButton>
             </div>
             {open === i && (
               <div className="space-y-3 border-t border-border/70 p-3">
@@ -206,32 +206,6 @@ export function ListEditor<T>({
   );
 }
 
-function MiniButton({
-  label,
-  onClick,
-  danger,
-  children,
-}: {
-  label: string;
-  onClick: () => void;
-  danger?: boolean;
-  children: React.ReactNode;
-}) {
-  return (
-    <button
-      type="button"
-      onClick={onClick}
-      aria-label={label}
-      title={label}
-      className={cn(
-        "rounded-md p-1.5 text-foreground-muted transition-colors",
-        danger ? "hover:text-red-400" : "hover:text-accent"
-      )}
-    >
-      {children}
-    </button>
-  );
-}
 
 /* ------------------------------------------------------------------ images */
 
@@ -407,11 +381,11 @@ export function MediaDialog({
 
   return (
     <div
-      className="fixed inset-0 z-50 grid place-items-center bg-black/70 p-4"
+      className="fixed inset-0 z-50 flex items-end justify-center bg-black/70 sm:items-center sm:p-4"
       role="dialog"
       aria-modal="true"
     >
-      <div className="flex max-h-[85vh] w-full max-w-3xl flex-col overflow-hidden rounded-2xl border border-border bg-bg-soft">
+      <div className="flex max-h-[85vh] w-full max-w-3xl flex-col overflow-hidden rounded-t-2xl border border-border bg-bg-soft sm:rounded-2xl">
         <div className="flex items-center justify-between border-b border-border px-5 py-3.5">
           <h3 className="font-serif text-lg font-light">Pictures</h3>
           <button

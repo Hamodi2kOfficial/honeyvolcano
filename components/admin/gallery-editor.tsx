@@ -7,7 +7,7 @@ import type { Img } from "@/lib/home-model";
 import { uid } from "@/lib/home-model";
 import type { GallerySlide } from "@/lib/admin-store";
 import { MediaDialog, TextInput, Thumb } from "@/components/admin/fields";
-import { Card, GhostButton, GoldButton } from "@/components/admin/ui";
+import { Card, GhostButton, GoldButton, IconButton } from "@/components/admin/ui";
 
 /**
  * The gallery page (the full-screen slideshow) and the picture library that
@@ -72,19 +72,19 @@ export function GalleryEditor({
                     {s.alt || "No description"}
                   </span>
                 </button>
-                <IconBtn label="Move up" onClick={() => move(i, -1)}>
+                <IconButton label="Move up" onClick={() => move(i, -1)}>
                   <ArrowUp className="h-4 w-4" />
-                </IconBtn>
-                <IconBtn label="Move down" onClick={() => move(i, 1)}>
+                </IconButton>
+                <IconButton label="Move down" onClick={() => move(i, 1)}>
                   <ArrowDown className="h-4 w-4" />
-                </IconBtn>
-                <IconBtn
+                </IconButton>
+                <IconButton
                   label="Remove from the slideshow"
                   danger
                   onClick={() => setSlides(slides.filter((x) => x.id !== s.id))}
                 >
                   <Trash2 className="h-4 w-4" />
-                </IconBtn>
+                </IconButton>
               </div>
               {openId === s.id && (
                 <div className="space-y-3 border-t border-border/70 p-3">
@@ -129,7 +129,7 @@ export function GalleryEditor({
             >
               <Thumb src={img.src} />
               <div className="absolute inset-x-0 bottom-0 flex justify-center gap-1 bg-black/60 py-1 opacity-0 transition-opacity group-hover:opacity-100">
-                <IconBtn
+                <IconButton
                   label="Add to the slideshow"
                   onClick={() =>
                     setSlides([
@@ -139,10 +139,10 @@ export function GalleryEditor({
                   }
                 >
                   <Plus className="h-3.5 w-3.5" />
-                </IconBtn>
-                <IconBtn label="Remove from the library" danger onClick={() => removeMedia(img.src)}>
+                </IconButton>
+                <IconButton label="Remove from the library" danger onClick={() => removeMedia(img.src)}>
                   <Trash2 className="h-3.5 w-3.5" />
-                </IconBtn>
+                </IconButton>
               </div>
             </div>
           ))}
@@ -172,28 +172,3 @@ export function GalleryEditor({
   );
 }
 
-function IconBtn({
-  label,
-  onClick,
-  danger,
-  children,
-}: {
-  label: string;
-  onClick: () => void;
-  danger?: boolean;
-  children: React.ReactNode;
-}) {
-  return (
-    <button
-      type="button"
-      onClick={onClick}
-      aria-label={label}
-      title={label}
-      className={`rounded-md p-1.5 text-foreground-muted transition-colors ${
-        danger ? "hover:text-red-400" : "hover:text-accent"
-      }`}
-    >
-      {children}
-    </button>
-  );
-}

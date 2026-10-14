@@ -14,14 +14,20 @@ import {
   HardHat,
   Images,
   CalendarClock,
+  GripVertical,
+  HelpCircle,
   LayoutGrid,
   Lock,
   Mail,
+  Monitor,
   MousePointerClick,
   Plus,
   Quote as QuoteIcon,
+  RotateCcw,
+  Smartphone,
   Sparkles,
   Star,
+  Tablet,
   Trash2,
   Type as TypeIcon,
   X,
@@ -52,11 +58,12 @@ import {
   TextInput,
   Thumb,
 } from "@/components/admin/fields";
-import { Badge, Card, GhostButton, GoldButton, inputClass } from "@/components/admin/ui";
+import { Badge, Card, GhostButton, GoldButton, IconButton, inputClass } from "@/components/admin/ui";
 import { cn } from "@/lib/utils";
 
 const ICONS: Record<string, React.ComponentType<{ className?: string }>> = {
   Mail,
+  HelpCircle,
   Sparkles,
   Type: TypeIcon,
   Columns2,
@@ -92,6 +99,9 @@ export function HomeEditor({
   const [openId, setOpenId] = useState<string | null>(null);
   const [picking, setPicking] = useState(false);
   const [mode, setMode] = useState<"build" | "preview">("build");
+  const [dragging, setDragging] = useState<string | null>(null);
+  const [dropTarget, setDropTarget] = useState<string | null>(null);
+  const [device, setDevice] = useState<"desktop" | "tablet" | "mobile">("desktop");
 
   const sections = home.sections;
   const setSections = (next: Section[]) => setHome({ ...home, sections: next });
@@ -104,6 +114,18 @@ export function HomeEditor({
     if (j < 0 || j >= sections.length) return;
     const next = [...sections];
     [next[i], next[j]] = [next[j], next[i]];
+    setSections(next);
+  };
+
+  const dropOn = (targetId: string) => {
+    setDropTarget(null);
+    if (!dragging || dragging === targetId) return;
+    const from = sections.findIndex((x) => x.id === dragging);
+    const to = sections.findIndex((x) => x.id === targetId);
+    if (from < 0 || to < 0) return;
+    const next = [...sections];
+    const [moved] = next.splice(from, 1);
+    next.splice(to, 0, moved);
     setSections(next);
   };
 
@@ -147,13 +169,72 @@ export function HomeEditor({
         }
       >
         {mode === "preview" ? (
-          <PagePreview sections={sections} />
+          <>
+            <div className="mb-4 flex items-center justify-center gap-1 rounded-lg border border-border p-1">
+              {([
+                ["desktop", Monitor, "Desktop"],
+                ["tablet", Tablet, "Tablet"],
+                ["mobile", Smartphone, "Phone"],
+              ] as const).map(([id, Icon, label]) => (
+                <button
+                  key={id}
+                  type="button"
+                  onClick={() => setDevice(id)}
+                  className={cn(
+                    "inline-flex min-h-11 items-center gap-2 rounded-md px-3 py-1.5 text-xs transition-colors sm:min-h-0",
+                    device === id
+                      ? "bg-accent/15 text-accent"
+                      : "text-foreground-muted hover:text-foreground"
+                  )}
+                >
+                  <Icon className="h-4 w-4" /> {label}
+                </button>
+              ))}
+            </div>
+            <div
+              className="mx-auto transition-[max-width] duration-300"
+              style={{
+                maxWidth:
+                  device === "mobile" ? "390px" : device === "tablet" ? "768px" : "100%",
+              }}
+            >
+              <PagePreview sections={sections} onSelect={(id) => {
+                setMode("build");
+                setOpenId(id);
+              }} />
+            </div>
+          </>
         ) : (
           <>
             <ol className="space-y-2">
               {sections.map((s, i) => (
-                <li key={s.id} className="rounded-xl border border-border bg-background">
+                <li
+                  key={s.id}
+                  onDragOver={(e) => {
+                    e.preventDefault();
+                    if (dragging && dragging !== s.id) setDropTarget(s.id);
+                  }}
+                  onDragLeave={() => setDropTarget((t) => (t === s.id ? null : t))}
+                  onDrop={() => dropOn(s.id)}
+                  className={cn(
+                    "rounded-xl border bg-background transition-colors",
+                    dropTarget === s.id ? "border-accent" : "border-border",
+                    dragging === s.id && "opacity-50"
+                  )}
+                >
                   <div className="flex items-center gap-2 px-3 py-2.5">
+                    <span
+                      draggable
+                      onDragStart={() => setDragging(s.id)}
+                      onDragEnd={() => {
+                        setDragging(null);
+                        setDropTarget(null);
+                      }}
+                      title="Drag to reorder"
+                      className="hidden h-7 w-5 shrink-0 cursor-grab place-items-center text-foreground-muted active:cursor-grabbing sm:grid"
+                    >
+                      <GripVertical className="h-4 w-4" />
+                    </span>
                     <span className="grid h-7 w-7 shrink-0 place-items-center rounded-md border border-border text-foreground-muted">
                       <KindIcon kind={s.kind} className="h-3.5 w-3.5" />
                     </span>
@@ -182,7 +263,7 @@ export function HomeEditor({
                       </span>
                     )}
 
-                    <RowButton
+                    <IconButton
                       label={s.visible ? "Hide from the page" : "Show on the page"}
                       onClick={() => patch(s.id, { visible: !s.visible })}
                     >
@@ -191,13 +272,13 @@ export function HomeEditor({
                       ) : (
                         <EyeOff className="h-4 w-4" />
                       )}
-                    </RowButton>
-                    <RowButton label="Move up" onClick={() => move(i, -1)}>
+                    </IconButton>
+                    <IconButton label="Move up" onClick={() => move(i, -1)}>
                       <ArrowUp className="h-4 w-4" />
-                    </RowButton>
-                    <RowButton label="Move down" onClick={() => move(i, 1)}>
+                    </IconButton>
+                    <IconButton label="Move down" onClick={() => move(i, 1)}>
                       <ArrowDown className="h-4 w-4" />
-                    </RowButton>
+                    </IconButton>
                     {s.kind === "builtin" ? (
                       <span
                         title="Built-in sections can be hidden or moved, but not deleted"
@@ -207,7 +288,7 @@ export function HomeEditor({
                       </span>
                     ) : (
                       <>
-                        <RowButton
+                        <IconButton
                           label="Duplicate"
                           onClick={() => {
                             const copy = { ...s, id: uid() } as Section;
@@ -219,8 +300,8 @@ export function HomeEditor({
                           }}
                         >
                           <Copy className="h-4 w-4" />
-                        </RowButton>
-                        <RowButton
+                        </IconButton>
+                        <IconButton
                           label="Delete section"
                           danger
                           onClick={() => {
@@ -229,13 +310,45 @@ export function HomeEditor({
                           }}
                         >
                           <Trash2 className="h-4 w-4" />
-                        </RowButton>
+                        </IconButton>
                       </>
                     )}
                   </div>
 
                   {openId === s.id && (
                     <div className="space-y-4 border-t border-border/70 p-4">
+                      <div className="flex flex-wrap items-center justify-between gap-3">
+                        <Choice
+                          label="Show on"
+                          value={s.devices ?? "all"}
+                          options={[
+                            { value: "all" as const, label: "All screens" },
+                            { value: "desktop" as const, label: "Computers only" },
+                            { value: "mobile" as const, label: "Phones only" },
+                          ]}
+                          onChange={(v) =>
+                            patch(s.id, { devices: v === "all" ? undefined : v } as Partial<Section>)
+                          }
+                        />
+                        {s.kind !== "builtin" && (
+                          <GhostButton
+                            className="self-end text-xs"
+                            onClick={() => {
+                              if (
+                                window.confirm("Put this section back to how it started?")
+                              ) {
+                                patch(s.id, {
+                                  ...createSection(s.kind),
+                                  id: s.id,
+                                  visible: s.visible,
+                                } as Partial<Section>);
+                              }
+                            }}
+                          >
+                            <RotateCcw className="h-3.5 w-3.5" /> Reset section
+                          </GhostButton>
+                        )}
+                      </div>
                       <ScheduleRow
                         from={s.from ?? ""}
                         until={s.until ?? ""}
@@ -338,32 +451,6 @@ function ScheduleRow({
   );
 }
 
-function RowButton({
-  label,
-  onClick,
-  danger,
-  children,
-}: {
-  label: string;
-  onClick: () => void;
-  danger?: boolean;
-  children: React.ReactNode;
-}) {
-  return (
-    <button
-      type="button"
-      onClick={onClick}
-      aria-label={label}
-      title={label}
-      className={cn(
-        "rounded-md p-1.5 text-foreground-muted transition-colors",
-        danger ? "hover:text-red-400" : "hover:text-accent"
-      )}
-    >
-      {children}
-    </button>
-  );
-}
 
 /* ------------------------------------------------------------ add section */
 
@@ -375,8 +462,12 @@ function SectionPicker({
   onClose: () => void;
 }) {
   return (
-    <div className="fixed inset-0 z-50 grid place-items-center bg-black/70 p-4" role="dialog" aria-modal="true">
-      <div className="flex max-h-[85vh] w-full max-w-2xl flex-col overflow-hidden rounded-2xl border border-border bg-bg-soft">
+    <div
+      className="fixed inset-0 z-50 flex items-end justify-center bg-black/70 sm:items-center sm:p-4"
+      role="dialog"
+      aria-modal="true"
+    >
+      <div className="flex max-h-[85vh] w-full max-w-2xl flex-col overflow-hidden rounded-t-2xl border border-border bg-bg-soft sm:rounded-2xl">
         <div className="flex items-center justify-between border-b border-border px-5 py-3.5">
           <div>
             <h3 className="font-serif text-lg font-light">Add a section</h3>
@@ -420,7 +511,14 @@ function SectionPicker({
 
 /* --------------------------------------------------------------- preview */
 
-function PagePreview({ sections }: { sections: Section[] }) {
+function PagePreview({
+  sections,
+  onSelect,
+}: {
+  sections: Section[];
+  /** Clicking a section in the preview opens it in the builder. */
+  onSelect?: (id: string) => void;
+}) {
   const visible = sections.filter((s) => s.visible);
   return (
     <div className="overflow-hidden rounded-xl border border-border bg-background">
@@ -431,9 +529,11 @@ function PagePreview({ sections }: { sections: Section[] }) {
       )}
       {visible.map((s) =>
         s.kind === "builtin" ? (
-          <div
+          <button
             key={s.id}
-            className="flex items-center gap-3 border-b border-border bg-bg-soft px-5 py-6"
+            type="button"
+            onClick={() => onSelect?.(s.id)}
+            className="flex w-full items-center gap-3 border-b border-border bg-bg-soft px-5 py-6 text-left transition-colors hover:bg-accent/[0.06]"
           >
             <Sparkles className="h-4 w-4 shrink-0 text-accent" />
             <div className="min-w-0">
@@ -443,9 +543,13 @@ function PagePreview({ sections }: { sections: Section[] }) {
                 {s.underConstruction && " · wearing the “under construction” plate"}
               </p>
             </div>
-          </div>
+          </button>
         ) : (
-          <div key={s.id} className="border-b border-border last:border-b-0">
+          <div
+            key={s.id}
+            onClick={() => onSelect?.(s.id)}
+            className="relative border-b border-border last:border-b-0 after:absolute after:inset-0 after:cursor-pointer after:transition-colors hover:after:bg-accent/[0.06]"
+          >
             <Block section={s} compact />
           </div>
         )
@@ -710,6 +814,27 @@ function SectionFields({
         />
       );
 
+    case "faq":
+      return (
+        <>
+          <TextInput label="Heading" value={section.heading} onChange={(v) => set({ heading: v })} />
+          <ListEditor
+            label="Questions"
+            items={section.items}
+            onChange={(items) => set({ items })}
+            onAdd={() => ({ id: uid("q"), question: "A new question", answer: "" })}
+            addLabel="Add a question"
+            titleOf={(q) => q.question}
+            renderItem={(q, update) => (
+              <>
+                <TextInput label="Question" value={q.question} onChange={(v) => update({ question: v })} />
+                <TextArea label="Answer" value={q.answer} rows={3} onChange={(v) => update({ answer: v })} />
+              </>
+            )}
+          />
+        </>
+      );
+
     case "form":
       return (
         <>
@@ -782,19 +907,19 @@ function GalleryImages({
           >
             <Thumb src={img.src} />
             <div className="absolute inset-x-0 bottom-0 flex justify-center gap-0.5 bg-black/60 py-1 opacity-0 transition-opacity group-hover:opacity-100">
-              <RowButton label="Move left" onClick={() => move(i, -1)}>
+              <IconButton label="Move left" onClick={() => move(i, -1)}>
                 <ArrowUp className="h-3 w-3 -rotate-90" />
-              </RowButton>
-              <RowButton label="Move right" onClick={() => move(i, 1)}>
+              </IconButton>
+              <IconButton label="Move right" onClick={() => move(i, 1)}>
                 <ArrowDown className="h-3 w-3 -rotate-90" />
-              </RowButton>
-              <RowButton
+              </IconButton>
+              <IconButton
                 label="Remove"
                 danger
                 onClick={() => onChange(images.filter((_, idx) => idx !== i))}
               >
                 <Trash2 className="h-3 w-3" />
-              </RowButton>
+              </IconButton>
             </div>
           </div>
         ))}

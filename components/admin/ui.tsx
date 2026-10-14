@@ -58,7 +58,7 @@ export function GhostButton({
     <button
       type="button"
       className={cn(
-        "inline-flex items-center gap-1.5 rounded-lg border border-border px-3 py-2 text-sm transition-colors hover:border-accent/60 hover:text-accent",
+        "inline-flex min-h-11 items-center gap-1.5 rounded-lg border border-border px-3 py-2 text-sm transition-colors hover:border-accent/60 hover:text-accent sm:min-h-0",
         className
       )}
       {...rest}
@@ -128,5 +128,43 @@ export function Stat({
       <p className="mt-1.5 font-serif text-2xl font-light text-accent">{value}</p>
       {sub && <p className="mt-0.5 text-xs text-foreground-muted">{sub}</p>}
     </div>
+  );
+}
+
+/**
+ * The one icon button for the whole dashboard. Comfortably tappable on a
+ * phone (44px, the accessibility minimum) and tighter on a mouse-driven
+ * screen, so the editors stay dense where there is room.
+ */
+export function IconButton({
+  label,
+  onClick,
+  danger,
+  disabled,
+  className,
+  children,
+}: {
+  label: string;
+  onClick: () => void;
+  danger?: boolean;
+  disabled?: boolean;
+  className?: string;
+  children: React.ReactNode;
+}) {
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      aria-label={label}
+      title={label}
+      disabled={disabled}
+      className={cn(
+        "inline-grid h-11 w-11 shrink-0 place-items-center rounded-lg text-foreground-muted transition-colors disabled:opacity-40 sm:h-9 sm:w-9",
+        danger ? "hover:text-red-400" : "hover:text-accent",
+        className
+      )}
+    >
+      {children}
+    </button>
   );
 }

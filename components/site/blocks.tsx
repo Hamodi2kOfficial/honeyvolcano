@@ -261,6 +261,39 @@ export function Block({ section, compact }: { section: Section; compact?: boolea
         </section>
       );
 
+    case "faq":
+      return (
+        <section className={cn("bg-background px-6", pad)}>
+          <div className="mx-auto max-w-3xl">
+            {section.heading && (
+              <Heading compact={compact} className="text-center">
+                {section.heading}
+              </Heading>
+            )}
+            <div className="mt-8 divide-y divide-border rounded-2xl border border-border bg-bg-soft">
+              {section.items.map((item) => (
+                <details key={item.id} className="group px-5 py-4">
+                  <summary className="cursor-pointer list-none text-[15px] text-foreground marker:hidden">
+                    <span className="flex items-center justify-between gap-4">
+                      {item.question}
+                      <span
+                        aria-hidden
+                        className="shrink-0 text-accent transition-transform group-open:rotate-45"
+                      >
+                        +
+                      </span>
+                    </span>
+                  </summary>
+                  <p className="mt-2.5 whitespace-pre-line text-sm leading-relaxed text-foreground-muted">
+                    {item.answer}
+                  </p>
+                </details>
+              ))}
+            </div>
+          </div>
+        </section>
+      );
+
     case "form":
       return (
         <section className={cn("bg-bg-soft px-6", pad)}>

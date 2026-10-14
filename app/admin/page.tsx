@@ -12,9 +12,12 @@ import {
   LogOut,
   Package,
   Languages,
+  LifeBuoy,
   Megaphone,
   Phone,
+  Redo2,
   Save,
+  Undo2,
   UploadCloud,
 } from "lucide-react";
 
@@ -58,8 +61,15 @@ import { originalText, type Lang } from "@/components/i18n";
 import { GalleryEditor } from "@/components/admin/gallery-editor";
 import { PublishSection } from "@/components/admin/publish";
 import { MarketingEditor } from "@/components/admin/marketing-editor";
+import {
+  HelpButton,
+  HelpCenter,
+  OnboardingTour,
+  markTourSeen,
+  tourSeen,
+} from "@/components/admin/help-center";
 import { ContentSection, ProductsSection } from "@/components/admin/sections-content";
-import { Badge, GhostButton, GoldButton } from "@/components/admin/ui";
+import { Badge, GhostButton, GoldButton, IconButton } from "@/components/admin/ui";
 import { cn } from "@/lib/utils";
 
 const NAV = [
@@ -71,6 +81,7 @@ const NAV = [
   { id: "content", label: "Contact", icon: Phone },
   { id: "marketing", label: "Marketing", icon: Megaphone },
   { id: "publish", label: "Publishing", icon: UploadCloud },
+  { id: "help", label: "Help", icon: LifeBuoy },
 ] as const;
 type SectionId = (typeof NAV)[number]["id"];
 
@@ -88,6 +99,11 @@ export default function AdminPage() {
   const [publishedAt, setPublishedAt] = useState<string | null>(null);
   const [publishing, setPublishing] = useState(false);
   const [lang, setLang] = useState<Lang>("en");
+  // Undo/redo for the whole workspace: small enough to snapshot, and far
+  // simpler than per-field history. ponytail: 30 steps, plenty for an editor.
+  const [tour, setTour] = useState(false);
+  const [past, setPast] = useState<Workspace[]>([]);
+  const [future, setFuture] = useState<Workspace[]>([]);
 
   const live = status.kind === "live";
 
@@ -115,6 +131,8 @@ export default function AdminPage() {
       const local = loadWorkspace();
       setWs(local);
       setPhase("ready");
+      // Also for a session that was simply resumed, not only a fresh sign-in.
+      if (!tourSeen()) setTour(true);
 
       if (apiStatus.kind === "live") {
         // Compare against what the site is really serving, so the dashboard is
@@ -137,6 +155,10 @@ export default function AdminPage() {
   /** Every edit goes through here: state first, then straight to storage. */
   const update = useCallback(
     (next: Workspace) => {
+      // One state change per call: updaters must stay pure, or React running
+      // them twice (as it does in development) corrupts the history.
+      if (ws) setPast((stack) => [...stack.slice(-29), ws]);
+      setFuture([]);
       setWs(next);
       const ok = saveWorkspace(next);
       setSaved(ok);
@@ -146,8 +168,41 @@ export default function AdminPage() {
         );
       }
     },
-    [flash]
+    [ws, flash]
   );
+
+  const undo = useCallback(() => {
+    if (!ws || past.length === 0) return;
+    const previous = past[past.length - 1];
+    setPast(past.slice(0, -1));
+    setFuture([ws, ...future].slice(0, 30));
+    setWs(previous);
+    saveWorkspace(previous);
+  }, [ws, past, future]);
+
+  const redo = useCallback(() => {
+    if (!ws || future.length === 0) return;
+    const next = future[0];
+    setFuture(future.slice(1));
+    setPast([...past.slice(-29), ws]);
+    setWs(next);
+    saveWorkspace(next);
+  }, [ws, past, future]);
+
+  // Ctrl/Cmd+Z and Ctrl/Cmd+Shift+Z, as everyone expects.
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      if (!(e.ctrlKey || e.metaKey) || e.key.toLowerCase() !== "z") return;
+      const target = e.target as HTMLElement | null;
+      // Let the browser handle undo inside a text box.
+      if (target && /^(INPUT|TEXTAREA)$/.test(target.tagName)) return;
+      e.preventDefault();
+      if (e.shiftKey) redo();
+      else undo();
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [undo, redo]);
 
   const signIn = async (user: string, password: string) => {
     if (live) {
@@ -175,6 +230,7 @@ export default function AdminPage() {
     }
     setSection("overview");
     setPhase("ready");
+    if (!tourSeen()) setTour(true);
   };
 
   const signOut = () => {
@@ -267,6 +323,14 @@ export default function AdminPage() {
     [ws, lang, update]
   );
 
+  // A closed tab must never look like a lost afternoon.
+  useEffect(() => {
+    if (!unpublished) return;
+    const onLeave = (e: BeforeUnloadEvent) => e.preventDefault();
+    window.addEventListener("beforeunload", onLeave);
+    return () => window.removeEventListener("beforeunload", onLeave);
+  }, [unpublished]);
+
   const addMedia = (img: Img) => {
     if (!ws || ws.media.some((m) => m.src === img.src)) return;
     update({ ...ws, media: [img, ...ws.media] });
@@ -290,7 +354,7 @@ export default function AdminPage() {
 
   return (
     <AdminSessionProvider value={{ mode: live ? "live" : "local", storePicture }}>
-      <main className="min-h-[100svh] bg-background text-foreground">
+      <main className="hv-admin min-h-[100svh] bg-background text-foreground">
         <header className="sticky top-0 z-20 border-b border-border bg-bg-soft/90 backdrop-blur">
           <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-3 px-5 py-3.5">
             <div className="flex items-center gap-3">
@@ -314,6 +378,23 @@ export default function AdminPage() {
                 {saved ? "Saved automatically" : "Could not save — publish or back up"}
               </span>
 
+              <IconButton
+                label="Undo"
+                onClick={undo}
+                disabled={past.length === 0}
+                className="border border-border"
+              >
+                <Undo2 className="h-4 w-4" />
+              </IconButton>
+              <IconButton
+                label="Redo"
+                onClick={redo}
+                disabled={future.length === 0}
+                className="border border-border"
+              >
+                <Redo2 className="h-4 w-4" />
+              </IconButton>
+
               {live && (
                 <GoldButton onClick={publish} disabled={publishing || !unpublished}>
                   <span className="inline-flex items-center gap-1.5">
@@ -334,7 +415,7 @@ export default function AdminPage() {
               <Link
                 href="/"
                 target="_blank"
-                className="inline-flex items-center gap-1.5 rounded-lg border border-border px-3 py-2 text-xs transition-colors hover:border-accent/60 hover:text-accent"
+                className="inline-flex min-h-11 items-center gap-1.5 rounded-lg border border-border px-3 py-2 text-xs transition-colors hover:border-accent/60 hover:text-accent sm:min-h-0"
               >
                 <ExternalLink className="h-3.5 w-3.5" /> View site
               </Link>
@@ -425,6 +506,10 @@ export default function AdminPage() {
             />
           )}
 
+          {section === "help" && (
+            <HelpCenter onStartTour={() => setTour(true)} />
+          )}
+
           {section === "publish" && (
             <PublishSection
               workspace={ws}
@@ -444,6 +529,15 @@ export default function AdminPage() {
             />
           )}
         </div>
+
+        <HelpButton screen={section} />
+        <OnboardingTour
+          run={tour}
+          onClose={() => {
+            setTour(false);
+            markTourSeen();
+          }}
+        />
 
         {toast && (
           <div className="fixed bottom-5 left-1/2 z-[60] w-[min(92vw,32rem)] -translate-x-1/2 rounded-xl border border-accent/40 bg-bg-soft px-5 py-3 text-center text-sm text-foreground shadow-lg">

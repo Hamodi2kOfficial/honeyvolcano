@@ -33,6 +33,8 @@ type Base = {
   /** Optional campaign window — the section only shows between these dates. */
   from?: string;
   until?: string;
+  /** Which screens show this section. Everything, unless narrowed. */
+  devices?: "all" | "desktop" | "mobile";
 };
 
 export type Section = Base &
@@ -83,6 +85,11 @@ export type Section = Base &
     | { kind: "stats"; items: { id: string; value: string; label: string }[] }
     | { kind: "banner"; text: string }
     | { kind: "video"; src: string; heading: string; caption: string }
+    | {
+        kind: "faq";
+        heading: string;
+        items: { id: string; question: string; answer: string }[];
+      }
     | {
         kind: "form";
         heading: string;
@@ -155,6 +162,11 @@ export const SECTION_META: Record<
     icon: "Film",
     description: "A film with an optional heading and caption.",
   },
+  faq: {
+    label: "Questions & answers",
+    icon: "HelpCircle",
+    description: "Answer the things customers always ask, in a tidy list.",
+  },
   form: {
     label: "Enquiry form",
     icon: "Mail",
@@ -174,6 +186,7 @@ export const ADDABLE_KINDS: SectionKind[] = [
   "stats",
   "banner",
   "video",
+  "faq",
   "form",
 ];
 
@@ -306,6 +319,26 @@ export function createSection(kind: SectionKind): Section {
         heading: "",
         caption: "",
       };
+    case "faq":
+      return {
+        id,
+        visible: true,
+        kind: "faq",
+        heading: "Questions & answers",
+        items: [
+          {
+            id: uid("q"),
+            question: "How should I store the honey?",
+            answer: "Somewhere dark and dry at room temperature. Never in the fridge.",
+          },
+          {
+            id: uid("q"),
+            question: "Why has my honey crystallised?",
+            answer:
+              "That is raw honey behaving exactly as it should. Stand the jar in warm water and it turns golden again.",
+          },
+        ],
+      };
     case "form":
       return {
         id,
@@ -346,6 +379,8 @@ export function sectionTitle(s: Section): string {
       return s.text || "Gold ribbon";
     case "video":
       return s.heading || "Video";
+    case "faq":
+      return `${s.heading || "Questions & answers"} · ${s.items.length}`;
     case "form":
       return s.heading || "Enquiry form";
   }
