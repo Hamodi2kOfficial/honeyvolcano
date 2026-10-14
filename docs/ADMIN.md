@@ -32,6 +32,7 @@ and in which order.
 | **Numbers** | Three or four figures you are proud of. |
 | **Gold ribbon** | A thin scrolling strip of words. |
 | **Video** | A film with a heading and a caption. |
+| **Enquiry form** | Visitors leave their details; they arrive in Marketing → Enquiries. |
 
 - **Preview** (top right of the Home page tab) shows the page exactly as
   visitors will see it — the same components draw both.
@@ -42,6 +43,44 @@ the beekeeper letter, the product pictures, the waitlist footer) carry a gold
 construction" plate on or off. Their words live in the translation files so all
 six languages stay in step — that is why there is no text box for them. New
 sections you add are written by you, in English.
+
+### The designed sections
+
+Hero, the film, 'Reliable source', the four promises, the beekeeper letter,
+the product pictures and the footer are no longer fixed. Open one in the Home
+page tab and you get its own words and pictures:
+
+- **One language at a time.** A language bar (EN / LT / IS / ES / RU / PL) sits
+  above the words. You edit the language you are in; the other five keep their
+  existing translation. A dot marks the languages you have rewritten.
+- **"original"** next to a field you changed puts the shipped wording back.
+- **Pictures and the film** are slots: choose another picture from your
+  library, or paste a link. "Original picture" restores the one that ships.
+
+**Pages & menus** does the same for everything outside the home page: the menu,
+the buttons, the whole products page and the "under construction" plate.
+
+### Marketing
+
+- **Enquiries** — the forms on the site send straight to this inbox: unread
+  count, reply by email, mark read, delete, export everything as CSV. Forms
+  appear in the taste block of the products page (switchable) and anywhere you
+  add an "Enquiry form" section to the home page.
+- **Announcement** — a gold strip across the top of the site, with optional
+  start and end dates so a campaign switches itself on and off. A preview shows
+  exactly how it will look.
+- **Offers** — codes with a percentage and validity dates, shown with the
+  catalogue for customers to mention when they order.
+- **Share preview** — the title, description and picture people see when your
+  link is sent on WhatsApp or posted on Facebook. Applied the moment you
+  publish, no rebuild needed.
+- **Visitors** — page views, taste-button presses and enquiries, counted by the
+  site itself. No Google, no cookies, nothing for visitors to accept. (Two
+  people arriving in the very same instant can cost one count — a fair trade
+  for having no analytics service at all.)
+
+Any home-page section can also be given **campaign dates**: open it and choose
+"Show only between two dates".
 
 ### Pictures
 
