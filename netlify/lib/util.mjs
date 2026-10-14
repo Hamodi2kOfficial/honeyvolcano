@@ -16,17 +16,24 @@ export const CONTENT_KEY = "current";
 export const LEADS_STORE = "site-leads";
 export const STATS_STORE = "site-stats";
 
+/**
+ * Blob stores default to eventual consistency: a read moments after a write
+ * can still return the previous value. For anything the owner acts on — the
+ * published site, their inbox, their numbers — we ask for strong consistency
+ * so what they see is always what is really stored. Pictures stay eventual:
+ * they never change once uploaded.
+ */
 export function contentStore() {
-  return getStore(CONTENT_STORE);
+  return getStore({ name: CONTENT_STORE, consistency: "strong" });
 }
 export function mediaStore() {
   return getStore(MEDIA_STORE);
 }
 export function leadsStore() {
-  return getStore(LEADS_STORE);
+  return getStore({ name: LEADS_STORE, consistency: "strong" });
 }
 export function statsStore() {
-  return getStore(STATS_STORE);
+  return getStore({ name: STATS_STORE, consistency: "strong" });
 }
 
 /** Today as yyyy-mm-dd, the key one day of statistics is stored under. */

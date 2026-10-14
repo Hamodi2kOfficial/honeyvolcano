@@ -23,7 +23,7 @@ const handler = async (request: Request, context: { next: () => Promise<Response
     const type = response.headers.get("content-type") ?? "";
     if (!type.includes("text/html")) return response;
 
-    const store = getStore("site-content");
+    const store = getStore({ name: "site-content", consistency: "strong" });
     const saved = (await store.get("current", { type: "json" })) as
       | { content?: { marketing?: { share?: { title?: string; description?: string; image?: string } } } }
       | null;
