@@ -8,6 +8,7 @@ import { EruptMark } from "@/components/ui/erupt-mark";
 import { RevealWords } from "@/components/ui/reveal-words";
 import { useI18n } from "@/components/i18n";
 import { EASE } from "@/lib/motion";
+import { useAsset } from "@/components/live-content";
 
 function Feature({
   title,
@@ -38,6 +39,7 @@ function Feature({
 }
 
 export function ProductShowcase() {
+  const jar = useAsset("showcase.jar", "/product-jar-cut.png");
   const { t } = useI18n();
 
   return (
@@ -94,7 +96,7 @@ export function ProductShowcase() {
                 style={{ background: "radial-gradient(circle, #D4AF37 0%, transparent 70%)" }}
               />
               <Image
-                src="/product-jar-cut.png"
+                src={jar}
                 alt="Honey Volcano raw honey jar"
                 width={1360}
                 height={2048}

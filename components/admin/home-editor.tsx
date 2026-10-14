@@ -13,8 +13,10 @@ import {
   Hash,
   HardHat,
   Images,
+  CalendarClock,
   LayoutGrid,
   Lock,
+  Mail,
   MousePointerClick,
   Plus,
   Quote as QuoteIcon,
@@ -25,6 +27,8 @@ import {
   X,
 } from "lucide-react";
 
+import { BUILTIN_CONTENT } from "@/lib/site-copy";
+import { CopyFields, LanguageBar, type CopyState } from "@/components/admin/copy-editor";
 import {
   ADDABLE_KINDS,
   BUILTIN_LABEL,
@@ -48,10 +52,11 @@ import {
   TextInput,
   Thumb,
 } from "@/components/admin/fields";
-import { Badge, Card, GhostButton, GoldButton } from "@/components/admin/ui";
+import { Badge, Card, GhostButton, GoldButton, inputClass } from "@/components/admin/ui";
 import { cn } from "@/lib/utils";
 
 const ICONS: Record<string, React.ComponentType<{ className?: string }>> = {
+  Mail,
   Sparkles,
   Type: TypeIcon,
   Columns2,
@@ -75,11 +80,14 @@ export function HomeEditor({
   setHome,
   media,
   addMedia,
+  copyTools,
 }: {
   home: HomeContent;
   setHome: (next: HomeContent) => void;
   media: Img[];
   addMedia: (img: Img) => void;
+  /** Lets the designed sections' own words and pictures be edited here too. */
+  copyTools?: CopyState;
 }) {
   const [openId, setOpenId] = useState<string | null>(null);
   const [picking, setPicking] = useState(false);
@@ -228,11 +236,22 @@ export function HomeEditor({
 
                   {openId === s.id && (
                     <div className="space-y-4 border-t border-border/70 p-4">
+                      <ScheduleRow
+                        from={s.from ?? ""}
+                        until={s.until ?? ""}
+                        onChange={(from, until) =>
+                          patch(s.id, {
+                            from: from || undefined,
+                            until: until || undefined,
+                          } as Partial<Section>)
+                        }
+                      />
                       <SectionFields
                         section={s}
                         patch={(p) => patch(s.id, p)}
                         media={media}
                         addMedia={addMedia}
+                        copyTools={copyTools}
                       />
                     </div>
                   )}
@@ -250,6 +269,71 @@ export function HomeEditor({
       </Card>
 
       {picking && <SectionPicker onPick={add} onClose={() => setPicking(false)} />}
+    </div>
+  );
+}
+
+/** Optional campaign window: the section only appears between these dates. */
+function ScheduleRow({
+  from,
+  until,
+  onChange,
+}: {
+  from: string;
+  until: string;
+  onChange: (from: string, until: string) => void;
+}) {
+  const [open, setOpen] = useState(Boolean(from || until));
+  if (!open) {
+    return (
+      <button
+        type="button"
+        onClick={() => setOpen(true)}
+        className="inline-flex items-center gap-1.5 text-[11px] text-foreground-muted transition-colors hover:text-accent"
+      >
+        <CalendarClock className="h-3.5 w-3.5" /> Show only between two dates
+      </button>
+    );
+  }
+  return (
+    <div className="rounded-xl border border-border bg-background p-3">
+      <div className="mb-2 flex items-center justify-between">
+        <span className="inline-flex items-center gap-1.5 text-xs text-foreground-muted">
+          <CalendarClock className="h-3.5 w-3.5 text-accent" /> Campaign dates
+        </span>
+        {(from || until) && (
+          <button
+            type="button"
+            onClick={() => {
+              onChange("", "");
+              setOpen(false);
+            }}
+            className="text-[11px] text-foreground-muted hover:text-accent"
+          >
+            always show
+          </button>
+        )}
+      </div>
+      <div className="grid gap-3 sm:grid-cols-2">
+        <label className="block">
+          <span className="mb-1.5 block text-[11px] text-foreground-muted">From</span>
+          <input
+            type="date"
+            value={from}
+            onChange={(e) => onChange(e.target.value, until)}
+            className={inputClass}
+          />
+        </label>
+        <label className="block">
+          <span className="mb-1.5 block text-[11px] text-foreground-muted">Until</span>
+          <input
+            type="date"
+            value={until}
+            onChange={(e) => onChange(from, e.target.value)}
+            className={inputClass}
+          />
+        </label>
+      </div>
     </div>
   );
 }
@@ -377,24 +461,21 @@ function SectionFields({
   patch,
   media,
   addMedia,
+  copyTools,
 }: {
   section: Section;
   patch: (p: Partial<Section>) => void;
   media: Img[];
   addMedia: (img: Img) => void;
+  copyTools?: CopyState;
 }) {
   const set = (p: Record<string, unknown>) => patch(p as Partial<Section>);
 
   switch (section.kind) {
-    case "builtin":
+    case "builtin": {
+      const group = BUILTIN_CONTENT[section.builtin];
       return (
-        <div className="space-y-3">
-          <p className="text-xs leading-relaxed text-foreground-muted">
-            This is one of the designed sections of your site. Its words live in the
-            translation files so all six languages stay in step — here you decide{" "}
-            <span className="text-foreground">where it sits</span>, whether it shows,
-            and whether it is marked as still being worked on.
-          </p>
+        <div className="space-y-4">
           <label className="inline-flex cursor-pointer items-center gap-2 text-sm">
             <input
               type="checkbox"
@@ -405,8 +486,21 @@ function SectionFields({
             <HardHat className="h-4 w-4 text-amber-500" />
             Show the &ldquo;under construction&rdquo; plate over it
           </label>
+
+          {copyTools && (group.text.length > 0 || group.assets.length > 0) ? (
+            <>
+              <LanguageBar state={copyTools} keys={group.text.map((f) => f.key)} />
+              <CopyFields group={group} state={copyTools} />
+            </>
+          ) : (
+            <p className="text-xs leading-relaxed text-foreground-muted">
+              This designed section has no words of its own to change — move it, hide
+              it, or mark it as under construction.
+            </p>
+          )}
         </div>
       );
+    }
 
     case "text":
       return (
@@ -614,6 +708,27 @@ function SectionFields({
           onChange={(v) => set({ text: v })}
           hint="Separate words with ·  for the classic ribbon look."
         />
+      );
+
+    case "form":
+      return (
+        <>
+          <TextInput label="Heading" value={section.heading} onChange={(v) => set({ heading: v })} />
+          <TextArea label="Text above the form" value={section.body} rows={2} onChange={(v) => set({ body: v })} />
+          <TextInput label="Button text" value={section.buttonLabel} onChange={(v) => set({ buttonLabel: v })} />
+          <Choice
+            label="Ask for a phone number"
+            value={section.askPhone ? "yes" : "no"}
+            options={[
+              { value: "yes" as const, label: "Yes" },
+              { value: "no" as const, label: "Email only" },
+            ]}
+            onChange={(v) => set({ askPhone: v === "yes" })}
+          />
+          <p className="rounded-lg border border-border bg-background px-3 py-2.5 text-[11px] leading-relaxed text-foreground-muted">
+            Everything sent through this form lands in <span className="text-accent">Marketing → Enquiries</span>.
+          </p>
+        </>
       );
 
     case "video":

@@ -11,6 +11,7 @@ import { UnderConstruction } from "@/components/site/under-construction";
 import { Block } from "@/components/site/blocks";
 import { useLiveContent } from "@/components/live-content";
 import type { BuiltinKind } from "@/lib/home-model";
+import { isWithinWindow } from "@/lib/marketing";
 
 /**
  * The home page, assembled from the owner's section list: the designed
@@ -33,6 +34,8 @@ export function HomeSections() {
     <>
       {home.sections.map((section) => {
         if (!section.visible) return null;
+        // Sections can be given a start and end date in the dashboard.
+        if (!isWithinWindow(section.from, section.until)) return null;
 
         if (section.kind === "builtin") {
           const Component = BUILTINS[section.builtin];

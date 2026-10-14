@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import {
   Check,
@@ -11,6 +11,8 @@ import {
   LayoutDashboard,
   LogOut,
   Package,
+  Languages,
+  Megaphone,
   Phone,
   Save,
   UploadCloud,
@@ -50,8 +52,12 @@ import { AdminLogin } from "@/components/admin/login";
 import { AdminSessionProvider } from "@/components/admin/session";
 import { OverviewSection } from "@/components/admin/section-overview";
 import { HomeEditor } from "@/components/admin/home-editor";
+import { PagesEditor } from "@/components/admin/pages-editor";
+import type { CopyState } from "@/components/admin/copy-editor";
+import { originalText, type Lang } from "@/components/i18n";
 import { GalleryEditor } from "@/components/admin/gallery-editor";
 import { PublishSection } from "@/components/admin/publish";
+import { MarketingEditor } from "@/components/admin/marketing-editor";
 import { ContentSection, ProductsSection } from "@/components/admin/sections-content";
 import { Badge, GhostButton, GoldButton } from "@/components/admin/ui";
 import { cn } from "@/lib/utils";
@@ -59,12 +65,17 @@ import { cn } from "@/lib/utils";
 const NAV = [
   { id: "overview", label: "Dashboard", icon: LayoutDashboard },
   { id: "home", label: "Home page", icon: Home },
+  { id: "pages", label: "Pages & menus", icon: Languages },
   { id: "gallery", label: "Pictures", icon: Images },
   { id: "products", label: "Products", icon: Package },
   { id: "content", label: "Contact", icon: Phone },
+  { id: "marketing", label: "Marketing", icon: Megaphone },
   { id: "publish", label: "Publishing", icon: UploadCloud },
 ] as const;
 type SectionId = (typeof NAV)[number]["id"];
+
+/** One dashboard per page, so the toast timer can live beside it. */
+let toastTimer: number | undefined;
 
 export default function AdminPage() {
   const [phase, setPhase] = useState<"checking" | "login" | "ready">("checking");
@@ -76,16 +87,16 @@ export default function AdminPage() {
   const [publishedMark, setMark] = useState("");
   const [publishedAt, setPublishedAt] = useState<string | null>(null);
   const [publishing, setPublishing] = useState(false);
+  const [lang, setLang] = useState<Lang>("en");
 
   const live = status.kind === "live";
 
-  const toastTimer = useRef<number | undefined>(undefined);
   const flash = useCallback((msg: string) => {
     setToast(msg);
-    window.clearTimeout(toastTimer.current);
-    toastTimer.current = window.setTimeout(() => setToast(""), 5000);
+    window.clearTimeout(toastTimer);
+    toastTimer = window.setTimeout(() => setToast(""), 5000);
   }, []);
-  useEffect(() => () => window.clearTimeout(toastTimer.current), []);
+  useEffect(() => () => window.clearTimeout(toastTimer), []);
 
   // Find out what this site can do, then resume any sign-in. Both happen after
   // mount so the server-rendered markup and the first client render match.
@@ -236,6 +247,28 @@ export default function AdminPage() {
     [live, ws, publishedMark]
   );
 
+  /** Shared by the home-page and pages editors. */
+  const copyTools = useMemo<CopyState | undefined>(
+    () =>
+      ws
+        ? {
+            lang,
+            setLang,
+            copy: ws.copy ?? {},
+            setCopy: (copy) => update({ ...ws, copy }),
+            assets: ws.assets ?? {},
+            setAssets: (assets) => update({ ...ws, assets }),
+            original: originalText,
+            media: ws.media,
+            addMedia: (img) => {
+              if (ws.media.some((m) => m.src === img.src)) return;
+              update({ ...ws, media: [img, ...ws.media] });
+            },
+          }
+        : undefined,
+    [ws, lang, update]
+  );
+
   const addMedia = (img: Img) => {
     if (!ws || ws.media.some((m) => m.src === img.src)) return;
     update({ ...ws, media: [img, ...ws.media] });
@@ -355,8 +388,11 @@ export default function AdminPage() {
               setHome={(home) => update({ ...ws, home })}
               media={ws.media}
               addMedia={addMedia}
+              copyTools={copyTools}
             />
           )}
+
+          {section === "pages" && copyTools ? <PagesEditor state={copyTools} /> : null}
 
           {section === "gallery" && (
             <GalleryEditor
@@ -377,6 +413,18 @@ export default function AdminPage() {
 
           {section === "content" && (
             <ContentSection site={ws.site} setSite={(site) => update({ ...ws, site })} />
+          )}
+
+          {section === "marketing" && (
+            <MarketingEditor
+              marketing={ws.marketing}
+              setMarketing={(marketing) => update({ ...ws, marketing })}
+              media={ws.media}
+              addMedia={addMedia}
+              live={live}
+              password={getPassword()}
+              flash={flash}
+            />
           )}
 
           {section === "publish" && (

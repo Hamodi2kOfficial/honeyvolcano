@@ -3,6 +3,7 @@
 import { createContext, useContext, useEffect, useState } from "react";
 
 import { buildTimeContent, type SiteBundle } from "@/lib/content";
+import { track } from "@/lib/track";
 
 /**
  * Live content.
@@ -25,6 +26,11 @@ export function useLiveContent(): SiteBundle {
 
 export function LiveContentProvider({ children }: { children: React.ReactNode }) {
   const [content, setContent] = useState<SiteBundle>(buildTimeContent);
+
+  // One anonymous page view per load.
+  useEffect(() => {
+    track("view");
+  }, []);
 
   useEffect(() => {
     const controller = new AbortController();
@@ -49,4 +55,14 @@ export function LiveContentProvider({ children }: { children: React.ReactNode })
   return (
     <LiveContentContext.Provider value={content}>{children}</LiveContentContext.Provider>
   );
+}
+
+/**
+ * A picture or film the owner may have replaced from the dashboard.
+ * `fallback` is what the site ships with, so the page is always complete.
+ */
+export function useAsset(key: string, fallback: string): string {
+  const { assets } = useLiveContent();
+  const chosen = assets?.[key];
+  return chosen && chosen.trim() !== "" ? chosen : fallback;
 }

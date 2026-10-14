@@ -15,6 +15,7 @@ import productsData from "@/content/products.json";
 import siteData from "@/content/site.json";
 
 import type { HomeContent, Img, Section } from "@/lib/home-model";
+import { defaultMarketing, type Marketing } from "@/lib/marketing";
 
 export const ADMIN_USER = "admin";
 export const ADMIN_PASS = "admin";
@@ -46,6 +47,12 @@ export type Workspace = {
   media: Img[];
   products: Product[];
   site: SiteFile;
+  /** Rewrites of the designed sections' words, by language then key. */
+  copy: Record<string, Record<string, string>>;
+  /** Replacements for the designed sections' pictures and film. */
+  assets: Record<string, string>;
+  /** Announcement strip, offers, share preview and form settings. */
+  marketing: Marketing;
 };
 
 /** Pictures that ship with the site, offered first in every picture picker. */
@@ -75,6 +82,9 @@ export function freshWorkspace(): Workspace {
     media: BUNDLED_MEDIA.map((m) => ({ ...m })),
     products: JSON.parse(JSON.stringify(productsData.products)) as Product[],
     site: { ...(siteData as SiteFile) },
+    copy: {},
+    assets: {},
+    marketing: defaultMarketing(),
   };
 }
 
@@ -136,6 +146,8 @@ export function contentFiles(ws: Workspace): { name: string; json: string }[] {
     { name: "gallery.json", json: pretty(ws.gallery) },
     { name: "products.json", json: pretty({ products: ws.products }) },
     { name: "site.json", json: pretty(ws.site) },
+    { name: "copy.json", json: pretty({ copy: ws.copy, assets: ws.assets }) },
+    { name: "marketing.json", json: pretty(ws.marketing) },
   ];
 }
 
@@ -212,6 +224,9 @@ export function publishableBundle(ws: Workspace) {
     products: ws.products,
     site: ws.site,
     media: ws.media,
+    copy: ws.copy,
+    assets: ws.assets,
+    marketing: ws.marketing,
   };
 }
 
@@ -244,6 +259,9 @@ export function workspaceFromPublished(
     ...published,
     // Keep the pictures that ship with the site available alongside uploads.
     media: mergeMedia(published.media ?? [], base.media),
+    copy: published.copy ?? {},
+    assets: published.assets ?? {},
+    marketing: { ...defaultMarketing(), ...(published.marketing ?? {}) },
   };
 }
 

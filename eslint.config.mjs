@@ -12,6 +12,8 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    // Local output of `netlify build` — not our source.
+    ".netlify/**",
     // Node utility scripts (CommonJS, run outside the app build).
     "scripts/**",
   ]),

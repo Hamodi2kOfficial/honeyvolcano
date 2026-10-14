@@ -8,6 +8,7 @@
  */
 import type { SiteBundle } from "@/lib/content";
 import type { Img } from "@/lib/home-model";
+import type { Lead, StatsDay } from "@/lib/marketing";
 
 export type ApiStatus =
   /** The API answered and publishing is ready to use. */
@@ -143,4 +144,44 @@ export function replaceInlinePictures<T>(value: T, replacements: Map<string, str
     return out as T;
   }
   return value;
+}
+
+// ------------------------------------------------- enquiries & statistics
+
+export async function fetchLeads(password: string): Promise<Lead[]> {
+  const res = await call("/api/leads", {
+    method: "POST",
+    headers: { "content-type": "application/json" },
+    body: JSON.stringify({ password, action: "list" }),
+  });
+  if (!res.ok) throw new Error(await errorOf(res, "Could not load the enquiries."));
+  return ((await res.json()) as { leads: Lead[] }).leads ?? [];
+}
+
+export async function setLeadRead(password: string, id: string, read: boolean) {
+  const res = await call("/api/leads", {
+    method: "POST",
+    headers: { "content-type": "application/json" },
+    body: JSON.stringify({ password, action: read ? "read" : "unread", id }),
+  });
+  if (!res.ok) throw new Error(await errorOf(res, "Could not update that enquiry."));
+}
+
+export async function deleteLead(password: string, id: string) {
+  const res = await call("/api/leads", {
+    method: "POST",
+    headers: { "content-type": "application/json" },
+    body: JSON.stringify({ password, action: "delete", id }),
+  });
+  if (!res.ok) throw new Error(await errorOf(res, "Could not delete that enquiry."));
+}
+
+export async function fetchStats(password: string): Promise<StatsDay[]> {
+  const res = await call("/api/stats", {
+    method: "POST",
+    headers: { "content-type": "application/json" },
+    body: JSON.stringify({ password }),
+  });
+  if (!res.ok) throw new Error(await errorOf(res, "Could not load the numbers."));
+  return ((await res.json()) as { days: StatsDay[] }).days ?? [];
 }

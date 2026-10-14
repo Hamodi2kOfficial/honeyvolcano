@@ -8,6 +8,7 @@ import { EruptMark } from "@/components/ui/erupt-mark";
 import { IcelandFlag, LithuaniaFlag } from "@/components/ui/flags";
 import { useI18n } from "@/components/i18n";
 import { EASE } from "@/lib/motion";
+import { useAsset } from "@/components/live-content";
 
 const rise = {
   hidden: { opacity: 0, y: 32 },
@@ -19,6 +20,7 @@ const rise = {
 };
 
 export function TrustSection() {
+  const photo = useAsset("trust.image", "/trust-jar.jpg");
   const { t } = useI18n();
   const sectionRef = useRef<HTMLElement>(null);
   const { scrollYProgress } = useScroll({
@@ -73,7 +75,7 @@ export function TrustSection() {
             className="relative aspect-[4/5] w-full overflow-hidden rounded-2xl ring-1 ring-accent/20"
           >
             <Image
-              src="/trust-jar.jpg"
+              src={photo}
               alt="A jar of Honey Volcano raw honey among wild lupine and mountains"
               fill
               sizes="(max-width: 768px) 100vw, 50vw"

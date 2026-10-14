@@ -27,7 +27,13 @@ export type BuiltinKind =
   | "showcase"
   | "cta";
 
-type Base = { id: string; visible: boolean };
+type Base = {
+  id: string;
+  visible: boolean;
+  /** Optional campaign window — the section only shows between these dates. */
+  from?: string;
+  until?: string;
+};
 
 export type Section = Base &
   (
@@ -77,6 +83,13 @@ export type Section = Base &
     | { kind: "stats"; items: { id: string; value: string; label: string }[] }
     | { kind: "banner"; text: string }
     | { kind: "video"; src: string; heading: string; caption: string }
+    | {
+        kind: "form";
+        heading: string;
+        body: string;
+        buttonLabel: string;
+        askPhone: boolean;
+      }
   );
 
 export type SectionKind = Section["kind"];
@@ -142,6 +155,11 @@ export const SECTION_META: Record<
     icon: "Film",
     description: "A film with an optional heading and caption.",
   },
+  form: {
+    label: "Enquiry form",
+    icon: "Mail",
+    description: "Visitors leave their name and email — you read it in the dashboard.",
+  },
 };
 
 /** What the owner can add from the picker (built-ins are placed by us). */
@@ -156,6 +174,7 @@ export const ADDABLE_KINDS: SectionKind[] = [
   "stats",
   "banner",
   "video",
+  "form",
 ];
 
 export const BUILTIN_LABEL: Record<BuiltinKind, string> = {
@@ -287,6 +306,16 @@ export function createSection(kind: SectionKind): Section {
         heading: "",
         caption: "",
       };
+    case "form":
+      return {
+        id,
+        visible: true,
+        kind: "form",
+        heading: "Ask for a taste",
+        body: "Leave your details and we will get back to you about a tasting.",
+        buttonLabel: "Send",
+        askPhone: true,
+      };
     case "builtin":
       return { id, visible: true, kind: "builtin", builtin: "trust" };
   }
@@ -317,5 +346,7 @@ export function sectionTitle(s: Section): string {
       return s.text || "Gold ribbon";
     case "video":
       return s.heading || "Video";
+    case "form":
+      return s.heading || "Enquiry form";
   }
 }

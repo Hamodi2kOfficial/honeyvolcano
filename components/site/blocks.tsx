@@ -6,6 +6,7 @@ import { Star } from "lucide-react";
 
 import type { Btn, Section } from "@/lib/home-model";
 import { HoneyCta } from "@/components/ui/honey-cta";
+import { EnquiryForm } from "@/components/site/enquiry-form";
 import { cn } from "@/lib/utils";
 
 /**
@@ -256,6 +257,22 @@ export function Block({ section, compact }: { section: Section; compact?: boolea
             {section.caption && (
               <p className="mt-3 text-xs text-foreground-muted">{section.caption}</p>
             )}
+          </div>
+        </section>
+      );
+
+    case "form":
+      return (
+        <section className={cn("bg-bg-soft px-6", pad)}>
+          <div className="mx-auto max-w-2xl text-center">
+            {section.heading && <Heading compact={compact}>{section.heading}</Heading>}
+            {section.body && <Body className="mx-auto">{section.body}</Body>}
+            <EnquiryForm
+              className="mt-7 text-left"
+              source={section.heading || "Home page form"}
+              buttonLabel={section.buttonLabel}
+              askPhone={section.askPhone}
+            />
           </div>
         </section>
       );

@@ -6,8 +6,11 @@ import { motion, useScroll, useTransform } from "motion/react";
 
 import { useI18n } from "@/components/i18n";
 import { EASE } from "@/lib/motion";
+import { useAsset } from "@/components/live-content";
 
 export function Hero() {
+  const backdrop = useAsset("hero.backdrop", "/honeycomb.jpg");
+  const logo = useAsset("hero.logo", "/logo-home.png");
   const { t } = useI18n();
   const ref = useRef<HTMLElement>(null);
   const { scrollYProgress } = useScroll({
@@ -25,7 +28,7 @@ export function Hero() {
       {/* Honeycomb backdrop (the former picture band, now the hero) */}
       <motion.div style={{ y: bgY }} className="absolute inset-0 -top-[9%] h-[118%]">
         <Image
-          src="/honeycomb.jpg"
+          src={backdrop}
           alt="Golden honeycomb dripping with raw amber honey"
           fill
           priority
@@ -69,7 +72,7 @@ export function Hero() {
               }}
             />
             <Image
-              src="/logo-home.png"
+              src={logo}
               alt="Honey Volcano"
               width={1024}
               height={1024}

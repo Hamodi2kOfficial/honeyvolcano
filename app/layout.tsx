@@ -4,6 +4,7 @@ import "./globals.css";
 import { I18nProvider } from "@/components/i18n";
 import { SmoothScroll } from "@/components/smooth-scroll";
 import { LiveContentProvider } from "@/components/live-content";
+import { AnnouncementBar } from "@/components/site/announcement-bar";
 
 const cinzel = Cinzel({
   subsets: ["latin"],
@@ -43,6 +44,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       <body className="min-h-full">
         <LiveContentProvider>
           <I18nProvider>
+            <AnnouncementBar />
             <SmoothScroll>{children}</SmoothScroll>
           </I18nProvider>
         </LiveContentProvider>

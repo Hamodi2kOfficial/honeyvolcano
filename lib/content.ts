@@ -4,6 +4,7 @@ import productsData from "@/content/products.json";
 import siteData from "@/content/site.json";
 
 import type { HomeContent } from "@/lib/home-model";
+import { defaultMarketing, type Marketing } from "@/lib/marketing";
 
 /**
  * Single source of truth for owner-editable content. These JSON files live in
@@ -48,6 +49,12 @@ export type SiteBundle = {
   gallery: { slides: GallerySlide[] };
   products: Product[];
   site: SiteContent;
+  /** Owner rewrites of the designed sections' words, by language then key. */
+  copy?: Record<string, Record<string, string>>;
+  /** Owner replacements for the designed sections' pictures and film. */
+  assets?: Record<string, string>;
+  /** Announcement strip, offer codes, share preview and form settings. */
+  marketing?: Marketing;
 };
 
 /** The content baked into this build — the starting point and the fallback. */
@@ -56,4 +63,7 @@ export const buildTimeContent: SiteBundle = {
   gallery: { slides: gallerySlides },
   products,
   site,
+  copy: {},
+  assets: {},
+  marketing: defaultMarketing(),
 };

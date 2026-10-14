@@ -13,12 +13,25 @@ import { getStore } from "@netlify/blobs";
 export const CONTENT_STORE = "site-content";
 export const MEDIA_STORE = "site-media";
 export const CONTENT_KEY = "current";
+export const LEADS_STORE = "site-leads";
+export const STATS_STORE = "site-stats";
 
 export function contentStore() {
   return getStore(CONTENT_STORE);
 }
 export function mediaStore() {
   return getStore(MEDIA_STORE);
+}
+export function leadsStore() {
+  return getStore(LEADS_STORE);
+}
+export function statsStore() {
+  return getStore(STATS_STORE);
+}
+
+/** Today as yyyy-mm-dd, the key one day of statistics is stored under. */
+export function today() {
+  return new Date().toISOString().slice(0, 10);
 }
 
 export function json(body, status = 200, headers = {}) {

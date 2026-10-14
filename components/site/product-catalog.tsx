@@ -4,6 +4,7 @@ import Image from "next/image";
 import { motion } from "motion/react";
 
 import { CallToTaste } from "@/components/ui/call-to-taste";
+import { OffersNote } from "@/components/site/offers-note";
 import { RevealWords } from "@/components/ui/reveal-words";
 import { formatPrice, type Product } from "@/lib/content";
 import { useLiveContent } from "@/components/live-content";
@@ -89,6 +90,9 @@ export function ProductCatalog() {
       >
         {site.businessNote}
       </motion.p>
+
+      {/* Live offer codes, managed in the dashboard */}
+      <OffersNote />
 
       <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
         {products.map((product, i) => (

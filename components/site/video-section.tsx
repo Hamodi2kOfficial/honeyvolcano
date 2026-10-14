@@ -8,8 +8,10 @@ import { HoneycombCanvas } from "@/components/ui/honeycomb-canvas";
 import { HoneyCta } from "@/components/ui/honey-cta";
 import { useI18n } from "@/components/i18n";
 import { EASE } from "@/lib/motion";
+import { useAsset } from "@/components/live-content";
 
 export function VideoSection() {
+  const film = useAsset("video.file", "/reliable-source.mp4");
   const { t } = useI18n();
   const videoRef = useRef<HTMLVideoElement>(null);
   const [done, setDone] = useState(false);
@@ -81,7 +83,7 @@ export function VideoSection() {
         >
           <video
             ref={videoRef}
-            src="/reliable-source.mp4"
+            src={film}
             muted
             playsInline
             preload="metadata"

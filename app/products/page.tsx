@@ -8,6 +8,9 @@ import { ArrowLeft } from "lucide-react";
 import { HoneycombCanvas } from "@/components/ui/honeycomb-canvas";
 import { AuroraBackground } from "@/components/ui/aurora-background";
 import { CallToTaste } from "@/components/ui/call-to-taste";
+import { EnquiryForm } from "@/components/site/enquiry-form";
+
+import { useLiveContent } from "@/components/live-content";
 import { RevealWords } from "@/components/ui/reveal-words";
 import { ProductCatalog } from "@/components/site/product-catalog";
 import { LanguageSwitcher } from "@/components/site/controls";
@@ -15,6 +18,7 @@ import { useI18n } from "@/components/i18n";
 import { EASE } from "@/lib/motion";
 
 export default function ProductsPage() {
+  const forms = useLiveContent().marketing?.forms;
   const { t } = useI18n();
 
   return (
@@ -113,6 +117,16 @@ export default function ProductsPage() {
           <div className="mt-7">
             <CallToTaste label={t.products.call} />
           </div>
+
+          {/* Or leave details instead of calling — lands in the dashboard inbox */}
+          {forms?.onProductsPage !== false && (
+            <EnquiryForm
+              className="mt-7 text-left"
+              source="Products page — taste request"
+              buttonLabel={t.products.call}
+              askPhone={forms?.askPhone !== false}
+            />
+          )}
 
           {/* the reassurance line */}
           <div className="mt-6 flex items-center gap-2.5 border-t border-white/10 pt-5">

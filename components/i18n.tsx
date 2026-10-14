@@ -2,6 +2,9 @@
 
 import * as React from "react";
 
+import { useLiveContent } from "@/components/live-content";
+import { applyCopyOverrides } from "@/lib/site-copy";
+
 export type Lang = "en" | "lt" | "is" | "es" | "ru" | "pl";
 
 export const LANGS: { code: Lang; label: string; name: string }[] = [
@@ -491,6 +494,16 @@ const pl: Dict = {
 
 const DICTS: Record<Lang, Dict> = { en, lt, is, es, ru, pl };
 
+/**
+ * The wording this site ships with, before any dashboard edit — what the
+ * editor shows as the starting point and restores with "original".
+ */
+export function originalText(lang: Lang, path: string): string {
+  const [group, field] = path.split(".");
+  const dict = DICTS[lang] as unknown as Record<string, Record<string, string>>;
+  return dict?.[group]?.[field] ?? "";
+}
+
 type I18nContext = {
   lang: Lang;
   setLang: (l: Lang) => void;
@@ -516,9 +529,12 @@ export function I18nProvider({ children }: { children: React.ReactNode }) {
     document.documentElement.lang = l;
   }, []);
 
+  // Anything the owner rewrote in the dashboard wins over the shipped
+  // translation — for that language only, so the other five stay intact.
+  const copy = useLiveContent().copy;
   const value = React.useMemo<I18nContext>(
-    () => ({ lang, setLang, t: DICTS[lang] }),
-    [lang, setLang]
+    () => ({ lang, setLang, t: applyCopyOverrides(DICTS[lang], copy?.[lang]) }),
+    [lang, setLang, copy]
   );
 
   return <Ctx.Provider value={value}>{children}</Ctx.Provider>;

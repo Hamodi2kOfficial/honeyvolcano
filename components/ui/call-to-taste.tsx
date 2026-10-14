@@ -4,6 +4,7 @@ import * as React from "react";
 
 import { IcelandFlag } from "@/components/ui/flags";
 import { useLiveContent } from "@/components/live-content";
+import { track } from "@/lib/track";
 import { cn } from "@/lib/utils";
 
 
@@ -27,7 +28,10 @@ export function CallToTaste({
   return (
     <button
       type="button"
-      onClick={() => setShown((s) => !s)}
+      onClick={() => {
+        if (!shown) track("taste");
+        setShown((s) => !s);
+      }}
       aria-label={shown ? `Phone number ${PHONE}` : label}
       className={cn(
         "relative inline-flex h-12 min-w-[11rem] items-center justify-center overflow-hidden rounded-xl px-6 text-base font-semibold text-[#1c1206] shadow-[0_12px_28px_-12px_rgba(212,175,55,0.7)] ring-1 ring-[#f0d38a]/40 transition-transform duration-300 hover:scale-[1.03]",
