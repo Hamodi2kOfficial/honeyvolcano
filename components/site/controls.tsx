@@ -8,7 +8,7 @@ import { cn } from "@/lib/utils";
 
 /** Small inline SVG flags — render consistently on every OS (unlike emoji flags). */
 function Flag({ code, className }: { code: Lang; className?: string }) {
-  const cls = cn("block h-4 w-[22px] shrink-0 rounded-[3px] ring-1 ring-white/15", className);
+  const cls = cn("block h-4 w-[22px] shrink-0 rounded-[3px] ring-1 ring-border-strong", className);
   switch (code) {
     case "lt":
       return (
@@ -89,7 +89,7 @@ export function LanguageSwitcher() {
         aria-haspopup="listbox"
         aria-expanded={open}
         aria-label="Select language"
-        className="flex items-center gap-2 rounded-full border border-accent/25 bg-white/[0.03] px-3 py-1.5 text-sm text-white/85 transition-colors hover:border-accent/50 hover:text-white"
+        className="flex h-11 items-center gap-2 rounded-full border border-border px-3.5 text-sm text-foreground-muted transition-colors hover:border-accent hover:text-accent"
       >
         <Flag code={cur.code} />
         <span className="font-medium tracking-wide">{cur.label}</span>
@@ -99,7 +99,7 @@ export function LanguageSwitcher() {
       {open && (
         <ul
           role="listbox"
-          className="absolute right-0 z-50 mt-2 w-48 overflow-hidden rounded-xl border border-accent/20 bg-[#0e0c0a]/95 p-1 shadow-[0_20px_50px_-20px_rgba(0,0,0,0.8)] backdrop-blur-md"
+          className="absolute right-0 z-50 mt-2 w-48 overflow-hidden rounded-xl border border-border bg-surface/97 p-1 shadow-[var(--shadow-soft)] backdrop-blur-md"
         >
           {LANGS.map((l) => (
             <li key={l.code}>
@@ -115,12 +115,12 @@ export function LanguageSwitcher() {
                   "flex w-full items-center gap-3 rounded-lg px-3 py-2 text-sm transition-colors",
                   l.code === lang
                     ? "bg-accent/15 text-accent"
-                    : "text-white/75 hover:bg-white/5 hover:text-white"
+                    : "text-foreground-muted hover:bg-accent/5 hover:text-foreground"
                 )}
               >
                 <Flag code={l.code} />
                 <span>{l.name}</span>
-                <span className="ml-auto text-[11px] tracking-wide text-white/35">
+                <span className="ml-auto text-[11px] tracking-wide text-foreground-muted/60">
                   {l.label}
                 </span>
               </button>

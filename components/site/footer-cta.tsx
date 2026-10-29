@@ -1,46 +1,31 @@
 "use client";
 
-import { motion } from "motion/react";
-
+import { CallButton } from "@/components/ui/call-button";
+import { Reveal } from "@/components/ui/reveal";
 import { EruptMark } from "@/components/ui/erupt-mark";
 import { useI18n } from "@/components/i18n";
-import { useLiveContent } from "@/components/live-content";
-import { EASE } from "@/lib/motion";
 
+/**
+ * The closing call: the catchphrase, big, with the one action the site is for.
+ * (The business details and page links live in the site footer, which the root
+ * layout puts on every page.)
+ */
 export function FooterCta() {
   const { t } = useI18n();
-  const { site } = useLiveContent();
-  const PHONE = site.phoneIntl;
-  const EMAIL = site.email;
 
   return (
-    <footer className="relative overflow-hidden bg-background">
-      <EruptMark className="left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-4xl text-accent/[0.04] sm:text-6xl md:text-7xl" />
+    <section className="relative overflow-hidden bg-background py-20 md:py-28">
+      <EruptMark className="left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-4xl text-accent/[0.05] sm:text-6xl md:text-7xl" />
 
-      <div className="relative mx-auto max-w-4xl border-t border-border px-6 py-12">
-        <motion.p
-          initial={{ opacity: 0, y: 14 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.6 }}
-          transition={{ duration: 0.8, ease: EASE }}
-          className="text-center text-xs font-light leading-relaxed text-foreground-muted"
-        >
-          © 2026 Honey Volcano · honeyvolcano.com. {t.footer.rights} ·{" "}
-          <a
-            href={`tel:${PHONE}`}
-            className="whitespace-nowrap text-foreground/80 transition-colors hover:text-accent"
-          >
-            {PHONE}
-          </a>{" "}
-          ·{" "}
-          <a
-            href={`mailto:${EMAIL}`}
-            className="text-foreground/80 transition-colors hover:text-accent"
-          >
-            {EMAIL}
-          </a>
-        </motion.p>
-      </div>
-    </footer>
+      <Reveal className="relative mx-auto flex max-w-2xl flex-col items-center gap-6 px-5 text-center md:px-8">
+        <h2 className="font-serif text-[32px] font-light leading-tight text-foreground md:text-[46px]">
+          {t.cta.heading}
+        </h2>
+        <p className="max-w-md text-[15px] font-light leading-relaxed text-foreground-muted">
+          {t.cta.subtitle}
+        </p>
+        <CallButton size="lg" showCopy />
+      </Reveal>
+    </section>
   );
 }

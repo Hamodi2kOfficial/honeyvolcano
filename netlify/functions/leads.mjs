@@ -17,7 +17,10 @@ const handler = async (req) => {
     if (action === "list") {
       const { blobs } = await store.list();
       const leads = await Promise.all(
-        blobs.map((blob) => store.get(blob.key, { type: "json" }))
+        // "rate/…" keys are the form's own rate-limit counters, not enquiries.
+        blobs
+          .filter((blob) => !blob.key.startsWith("rate/"))
+          .map((blob) => store.get(blob.key, { type: "json" }))
       );
       // Newest first; the key starts with the timestamp.
       leads.sort((a, b) => String(b?.id ?? "").localeCompare(String(a?.id ?? "")));

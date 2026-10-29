@@ -29,14 +29,14 @@ export function UnderConstruction({
         {children}
       </div>
 
-      <div className="absolute inset-0 z-10 flex items-center justify-center overflow-hidden bg-[#0b0a08]/55 backdrop-blur-[3px]">
+      <div className="absolute inset-0 z-10 flex items-center justify-center overflow-hidden bg-background/70 backdrop-blur-[3px]">
         {/* caution stripes */}
         <div
           aria-hidden
           className="absolute inset-0 opacity-[0.06]"
           style={{
             backgroundImage:
-              "repeating-linear-gradient(45deg, #D4AF37 0 16px, transparent 16px 32px)",
+              "repeating-linear-gradient(45deg, var(--accent) 0 16px, transparent 16px 32px)",
           }}
         />
         <div className="relative flex flex-col items-center gap-4 px-6 text-center">
@@ -60,7 +60,7 @@ export function UnderConstruction({
             {plate}
           </p>
           <span className="h-px w-14 bg-accent/40" />
-          <p className="text-[10px] uppercase tracking-[0.35em] text-white/40">
+          <p className="text-[10px] uppercase tracking-[0.35em] text-foreground-muted">
             {t.uc.soon}
           </p>
         </div>

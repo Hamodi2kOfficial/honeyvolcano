@@ -2,19 +2,16 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import Image from "next/image";
-import Link from "next/link";
 import { motion } from "motion/react";
-import { ArrowLeft, ChevronLeft, ChevronRight } from "lucide-react";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 
-import { HoneyCta } from "@/components/ui/honey-cta";
-import { useI18n } from "@/components/i18n";
+import { Navbar } from "@/components/site/navbar";
 import { EASE } from "@/lib/motion";
 import { useLiveContent } from "@/components/live-content";
 
 const DURATION = 5000;
 
 export default function GalleryPage() {
-  const { t } = useI18n();
   // The slideshow is owner-managed: order, pictures and phrases come from /admin.
   const SLIDES = useLiveContent().gallery.slides;
   const [rawIdx, setIdx] = useState(0);
@@ -75,7 +72,7 @@ export default function GalleryPage() {
 
   return (
     <main
-      className="dark relative h-[100svh] w-full overflow-hidden bg-[#0b0805] text-white"
+      className="relative h-[100svh] w-full overflow-hidden bg-background text-foreground"
       onTouchStart={onTouchStart}
       onTouchEnd={onTouchEnd}
     >
@@ -85,7 +82,7 @@ export default function GalleryPage() {
         className="absolute inset-0"
         style={{
           background:
-            "radial-gradient(120% 80% at 50% 0%, rgba(212,175,55,0.10) 0%, transparent 55%)",
+            "radial-gradient(120% 80% at 50% 0%, color-mix(in oklab, var(--accent) 12%, transparent) 0%, transparent 55%)",
         }}
       />
 
@@ -98,7 +95,7 @@ export default function GalleryPage() {
             initial={false}
             animate={{ opacity: active ? 1 : 0 }}
             transition={{ duration: 1, ease: EASE }}
-            className="absolute inset-0 flex flex-col items-center px-5 pb-14 pt-[4.75rem] md:px-16 md:pb-16 md:pt-[6.5rem]"
+            className="absolute inset-0 flex flex-col items-center px-5 pb-16 pt-[5.75rem] md:px-16 md:pb-20 md:pt-[7rem]"
             style={{ zIndex: active ? 1 : 0 }}
           >
             {/* Phrase sits above the photo (on the dark ground) so it never covers the image */}
@@ -109,7 +106,7 @@ export default function GalleryPage() {
                 transition={{ duration: 0.8, ease: EASE, delay: 0.15 }}
                 className="mb-4 flex shrink-0 flex-col items-center gap-2.5"
               >
-                <span className="text-center font-display text-2xl uppercase leading-tight tracking-[0.18em] text-[#F3CE72] sm:text-3xl md:text-4xl">
+                <span className="text-center font-display text-2xl uppercase leading-tight tracking-[0.18em] text-accent sm:text-3xl md:text-4xl">
                   {slide.text}
                 </span>
                 <span aria-hidden className="h-px w-12 bg-accent/50" />
@@ -146,38 +143,15 @@ export default function GalleryPage() {
         );
       })}
 
-      {/* Branded header — same look as the site navbar */}
-      <header className="absolute inset-x-0 top-0 z-30">
-        <div className="relative flex items-center justify-between px-5 py-3.5 md:px-8">
-          <Link
-            href="/"
-            aria-label="Back to home"
-            className="grid h-10 w-10 place-items-center rounded-full border border-white/20 bg-black/30 text-white/80 backdrop-blur-md transition-colors hover:border-accent/60 hover:text-accent"
-          >
-            <ArrowLeft className="h-4 w-4" />
-          </Link>
-          <Link
-            href="/"
-            className="absolute left-1/2 hidden -translate-x-1/2 whitespace-nowrap font-display text-lg tracking-[0.28em] text-accent sm:block md:text-xl"
-          >
-            HONEY&nbsp;VOLCANO
-          </Link>
-          <HoneyCta href="/products" size="sm">
-            {t.products.call}
-          </HoneyCta>
-        </div>
-        <div
-          aria-hidden
-          className="pointer-events-none absolute inset-0 -z-10 border-b border-white/5 bg-[#0e0c0a]/40 backdrop-blur-md"
-        />
-      </header>
+      {/* The site's own navigation, so the gallery is not a page apart */}
+      <Navbar />
 
       {/* arrows */}
       <button
         type="button"
         onClick={prev}
         aria-label="Previous"
-        className="absolute left-2 top-1/2 z-20 grid h-10 w-10 -translate-y-1/2 place-items-center rounded-full border border-white/20 bg-black/40 text-white/80 backdrop-blur-md transition-colors hover:border-accent/60 hover:text-accent md:left-4 md:h-11 md:w-11"
+        className="absolute left-2 top-1/2 z-20 grid h-11 w-11 -translate-y-1/2 place-items-center rounded-full border border-border bg-surface/70 text-foreground-muted backdrop-blur-md transition-colors hover:border-accent hover:text-accent md:left-4"
       >
         <ChevronLeft className="h-5 w-5" />
       </button>
@@ -185,7 +159,7 @@ export default function GalleryPage() {
         type="button"
         onClick={next}
         aria-label="Next"
-        className="absolute right-2 top-1/2 z-20 grid h-10 w-10 -translate-y-1/2 place-items-center rounded-full border border-white/20 bg-black/40 text-white/80 backdrop-blur-md transition-colors hover:border-accent/60 hover:text-accent md:right-4 md:h-11 md:w-11"
+        className="absolute right-2 top-1/2 z-20 grid h-11 w-11 -translate-y-1/2 place-items-center rounded-full border border-border bg-surface/70 text-foreground-muted backdrop-blur-md transition-colors hover:border-accent hover:text-accent md:right-4"
       >
         <ChevronRight className="h-5 w-5" />
       </button>
@@ -199,7 +173,7 @@ export default function GalleryPage() {
             onClick={() => goTo(i)}
             aria-label={`Slide ${i + 1}`}
             className={`h-1.5 rounded-full transition-all ${
-              i === idx ? "w-6 bg-accent" : "w-1.5 bg-white/40 hover:bg-white/70"
+              i === idx ? "w-6 bg-accent" : "w-1.5 bg-foreground-muted/50 hover:bg-accent/70"
             }`}
           />
         ))}

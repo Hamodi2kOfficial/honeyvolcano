@@ -1,6 +1,10 @@
 "use client";
 
 import { Hero } from "@/components/site/hero";
+import { RawAndBeeSection } from "@/components/site/raw-and-bee";
+import { FeaturedProducts } from "@/components/site/featured-products";
+import { StoryOne, StoryTwo, StoryThree } from "@/components/site/story-sections";
+import { ConstructionSection } from "@/components/site/construction-section";
 import { VideoSection } from "@/components/site/video-section";
 import { TrustSection } from "@/components/site/trust-section";
 import { ValuesSection } from "@/components/site/values-section";
@@ -19,6 +23,12 @@ import { isWithinWindow } from "@/lib/marketing";
  */
 const BUILTINS: Record<BuiltinKind, React.ComponentType> = {
   hero: Hero,
+  rawAndBee: RawAndBeeSection,
+  featured: FeaturedProducts,
+  story1: StoryOne,
+  story2: StoryTwo,
+  story3: StoryThree,
+  construction: ConstructionSection,
   video: VideoSection,
   trust: TrustSection,
   values: ValuesSection,

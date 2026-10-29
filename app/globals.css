@@ -3,41 +3,86 @@
 /* next-themes toggles the `dark` class on <html> */
 @custom-variant dark (&:is(.dark *));
 
-/* ---- MEDAUS ŪKIS brand tokens ---- */
+/* ---- HONEY VOLCANO brand tokens ----------------------------------------
+   Every colour here is taken from the logo: the near-black label ground, the
+   copper hexagon and volcano line, the gold lettering, and the bee's
+   Lithuanian-flag stripes (whose green and red become success and error).
+   Light-mode values are darkened until they clear WCAG AA (4.5:1) against the
+   cream paper background; dark-mode values are checked against the ink.
+   ---------------------------------------------------------------------- */
 :root {
-  /* Light mode: warm cream paper, deep ink, darkened gold for contrast */
-  --bg: #f6f2e9;
-  --bg-soft: #efe9db;
-  --fg: #1b1a17;
-  --fg-muted: rgba(27, 26, 23, 0.66);
-  --accent: #9a7d1e;
-  --accent-strong: #b8912e;
-  --border: rgba(154, 125, 30, 0.22);
+  /* Light mode: warm cream paper, deep ink, darkened metals */
+  --bg: #f8f3e9;
+  --bg-soft: #f0e9da;
+  --surface: #ffffff;
+  --surface-2: #faf6ee;
+  --fg: #1b1510;
+  --fg-muted: rgba(27, 21, 16, 0.68);
+  --accent: #7e6212; /* 5.3:1 on --bg */
+  --accent-strong: #5e4a0d;
+  --on-accent: #fffdf6;
+  --copper: #96532a; /* 5.4:1 on --bg */
+  --copper-soft: #b36a3c;
+  --amber: #8a5a10;
+  --border: rgba(126, 98, 18, 0.24);
+  --border-strong: rgba(126, 98, 18, 0.45);
+  --ring: #5e4a0d;
+  --success: #1f7a45; /* bee green, darkened */
+  --error: #b3261e; /* bee red, darkened */
+  --shadow-soft: 0 18px 48px -28px rgba(27, 21, 16, 0.35);
 }
 
 .dark {
-  /* Dark mode (default): deep label black, off-white, metallic gold */
-  --bg: #151515;
-  --bg-soft: #0f0f0f;
-  --fg: #f4f4f4;
-  --fg-muted: rgba(244, 244, 244, 0.68);
-  --accent: #d4af37;
-  --accent-strong: #e5b869;
-  --border: rgba(212, 175, 55, 0.16);
+  /* Dark mode: the logo's own ground — deep warm black, copper, gold */
+  --bg: #0d0a08;
+  --bg-soft: #14100c;
+  --surface: #1a1511;
+  --surface-2: #221b15;
+  --fg: #f5f0e8;
+  --fg-muted: rgba(245, 240, 232, 0.68);
+  --accent: #d4af37; /* 9.4:1 on --bg */
+  --accent-strong: #e8c56a;
+  --on-accent: #120e09;
+  --copper: #c8824e;
+  --copper-soft: #e0a878;
+  --amber: #e9a935;
+  --border: rgba(212, 175, 55, 0.18);
+  --border-strong: rgba(212, 175, 55, 0.42);
+  --ring: #e8c56a;
+  --success: #4fa36b; /* bee green, lightened */
+  --error: #e4584f; /* bee red, lightened */
+  --shadow-soft: 0 24px 60px -30px rgba(0, 0, 0, 0.8);
 }
 
 @theme inline {
   --color-background: var(--bg);
   --color-bg-soft: var(--bg-soft);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
   --color-foreground: var(--fg);
   --color-foreground-muted: var(--fg-muted);
   --color-accent: var(--accent);
   --color-accent-strong: var(--accent-strong);
+  --color-on-accent: var(--on-accent);
+  --color-copper: var(--copper);
+  --color-copper-soft: var(--copper-soft);
+  --color-amber: var(--amber);
   --color-border: var(--border);
+  --color-border-strong: var(--border-strong);
+  --color-ring: var(--ring);
+  --color-success: var(--success);
+  --color-error: var(--error);
 
   --font-display: var(--font-cinzel);
   --font-serif: var(--font-cormorant);
   --font-sans: var(--font-lato);
+}
+
+/* One visible focus ring for the whole site — never removed, only restyled. */
+:where(a, button, input, textarea, select, [tabindex]):focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 3px;
+  border-radius: 4px;
 }
 
 html {
@@ -131,11 +176,99 @@ html.lenis body {
   animation: hv-curtain-out 0.6s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
+/* ---- Decorative drift for the products page margins ------------------
+   Transform and opacity only, so these never trigger layout or paint on the
+   main thread. Each element is given its own negative animation-delay in the
+   markup, which desynchronises them without extra keyframes.
+   -------------------------------------------------------------------- */
+@keyframes hv-float {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+  50% {
+    transform: translate3d(0, -16px, 0);
+  }
+}
+@keyframes hv-drift {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) rotate(-4deg);
+  }
+  50% {
+    transform: translate3d(7px, -11px, 0) rotate(5deg);
+  }
+}
+/* A drop swells, falls, and fades — then the cycle rests before repeating. */
+@keyframes hv-drip {
+  0% {
+    transform: translate3d(0, 0, 0) scaleY(0.55);
+    opacity: 0;
+  }
+  12% {
+    transform: translate3d(0, 0, 0) scaleY(1);
+    opacity: 1;
+  }
+  48% {
+    transform: translate3d(0, 54px, 0) scaleY(0.75);
+    opacity: 0;
+  }
+  100% {
+    transform: translate3d(0, 54px, 0) scaleY(0.75);
+    opacity: 0;
+  }
+}
+/* A bee's curved patrol: across, up, back, down. */
+@keyframes hv-bee {
+  0% {
+    transform: translate3d(0, 0, 0) rotate(6deg);
+  }
+  25% {
+    transform: translate3d(44px, -26px, 0) rotate(-8deg);
+  }
+  50% {
+    transform: translate3d(14px, -52px, 0) rotate(5deg);
+  }
+  75% {
+    transform: translate3d(-26px, -22px, 0) rotate(-6deg);
+  }
+  100% {
+    transform: translate3d(0, 0, 0) rotate(6deg);
+  }
+}
+.hv-float {
+  animation: hv-float 7s ease-in-out infinite;
+  will-change: transform;
+}
+.hv-drift {
+  animation: hv-drift 11s ease-in-out infinite;
+  will-change: transform;
+}
+.hv-drip {
+  animation: hv-drip 6s ease-in infinite;
+  will-change: transform, opacity;
+}
+.hv-bee {
+  animation: hv-bee 14s ease-in-out infinite;
+  will-change: transform;
+}
+.hv-bee-slow {
+  animation: hv-bee 21s ease-in-out infinite;
+  will-change: transform;
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
   }
   .animate-marquee {
+    animation: none;
+  }
+  .hv-float,
+  .hv-drift,
+  .hv-drip,
+  .hv-bee,
+  .hv-bee-slow {
     animation: none;
   }
   .text-shimmer {
@@ -148,6 +281,115 @@ html.lenis body {
   .hv-curtain {
     animation: none;
   }
+}
+
+/* ---- Stockist map ------------------------------------------------------
+   Leaflet ships its own light chrome; these rules put it in the brand's
+   colours so the map belongs to the page in both themes.
+   ---------------------------------------------------------------------- */
+.hv-map {
+  background: var(--bg-soft);
+}
+.hv-map .leaflet-container {
+  font-family: var(--font-lato), system-ui, sans-serif;
+  background: var(--bg-soft);
+}
+.hv-pin-wrap,
+.hv-cluster-wrap {
+  background: none;
+  border: 0;
+}
+.hv-pin {
+  display: block;
+  filter: drop-shadow(0 6px 10px rgba(0, 0, 0, 0.45));
+  transition: transform 0.2s ease-out;
+}
+.hv-pin svg {
+  width: 30px;
+  height: 38px;
+}
+.leaflet-marker-icon:hover .hv-pin {
+  transform: translateY(-2px) scale(1.06);
+}
+.hv-cluster {
+  display: grid;
+  place-items: center;
+  width: 38px;
+  height: 38px;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--on-accent);
+  background: var(--accent);
+  border: 2px solid var(--bg);
+  border-radius: 999px;
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.4);
+}
+.hv-map .leaflet-popup-content-wrapper,
+.hv-map .leaflet-popup-tip {
+  background: var(--surface);
+  color: var(--fg);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-soft);
+}
+.hv-map .leaflet-popup-content-wrapper {
+  border-radius: 14px;
+}
+.hv-map .leaflet-popup-content {
+  margin: 14px 16px;
+  min-width: 190px;
+}
+.hv-map .leaflet-popup-close-button {
+  color: var(--fg-muted);
+  padding: 8px 8px 0 0;
+}
+.hv-pop h3 {
+  font-family: var(--font-cormorant), serif;
+  font-size: 19px;
+  font-weight: 400;
+  color: var(--fg);
+}
+.hv-pop-addr {
+  margin-top: 4px;
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--fg-muted);
+}
+.hv-pop-h {
+  margin-top: 10px;
+  font-size: 10px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+.hv-pop-ul {
+  margin-top: 3px;
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--fg);
+}
+.hv-pop-note {
+  margin-top: 10px;
+  font-size: 12px;
+  font-style: italic;
+  line-height: 1.5;
+  color: var(--fg-muted);
+}
+.hv-map .leaflet-control-zoom a {
+  background: var(--surface);
+  color: var(--fg);
+  border-color: var(--border);
+}
+.hv-map .leaflet-control-zoom a:hover {
+  background: var(--surface-2);
+  color: var(--accent);
+}
+.hv-map .leaflet-control-attribution {
+  background: color-mix(in oklab, var(--bg) 82%, transparent);
+  color: var(--fg-muted);
+  font-size: 10px;
+}
+.hv-map .leaflet-control-attribution a {
+  color: var(--accent);
 }
 
 /* Dashboard on a phone: a tick box you can actually hit with a thumb. */

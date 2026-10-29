@@ -1,11 +1,13 @@
 {
   "sections": [
     { "id": "b-hero", "kind": "builtin", "builtin": "hero", "visible": true },
-    { "id": "b-video", "kind": "builtin", "builtin": "video", "visible": true },
+    { "id": "b-rawandbee", "kind": "builtin", "builtin": "rawAndBee", "visible": true },
+    { "id": "b-featured", "kind": "builtin", "builtin": "featured", "visible": true },
     { "id": "b-trust", "kind": "builtin", "builtin": "trust", "visible": true },
-    { "id": "b-values", "kind": "builtin", "builtin": "values", "visible": true, "underConstruction": true },
-    { "id": "b-letter", "kind": "builtin", "builtin": "letter", "visible": true, "underConstruction": true },
-    { "id": "b-showcase", "kind": "builtin", "builtin": "showcase", "visible": true },
-    { "id": "b-cta", "kind": "builtin", "builtin": "cta", "visible": true }
+    { "id": "b-story1", "kind": "builtin", "builtin": "story1", "visible": true },
+    { "id": "b-story2", "kind": "builtin", "builtin": "story2", "visible": true },
+    { "id": "b-story3", "kind": "builtin", "builtin": "story3", "visible": true },
+    { "id": "b-cta", "kind": "builtin", "builtin": "cta", "visible": true },
+    { "id": "b-construction", "kind": "builtin", "builtin": "construction", "visible": true }
   ]
 }

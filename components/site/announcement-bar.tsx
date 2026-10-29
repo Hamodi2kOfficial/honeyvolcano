@@ -46,7 +46,7 @@ export function AnnouncementBar() {
   };
 
   return (
-    <div className="relative z-[60] bg-accent text-[#1c1206]">
+    <div className="relative z-[60] bg-accent text-on-accent">
       <div className="mx-auto flex max-w-6xl items-center justify-center gap-3 px-10 py-2 text-center text-[13px] font-medium">
         <span>{announcement.text}</span>
         {announcement.href && announcement.linkLabel && (

@@ -1,110 +1,168 @@
 "use client";
 
-import { useRef } from "react";
+import * as React from "react";
 import Image from "next/image";
-import { motion, useScroll, useTransform } from "motion/react";
+import { motion, useReducedMotion } from "motion/react";
+import { Handshake, Heart, Leaf, Scale, Sparkles } from "lucide-react";
 
+import { CallButton } from "@/components/ui/call-button";
+import { Stamp } from "@/components/ui/stamp";
+import { IcelandFlag, LithuaniaFlag } from "@/components/ui/flags";
+import { useAsset } from "@/components/live-content";
 import { useI18n } from "@/components/i18n";
 import { EASE } from "@/lib/motion";
-import { useAsset } from "@/components/live-content";
+
+/**
+ * The hero: film in the middle, logo down one side, six seals around it.
+ *
+ * Layout changes shape rather than shrinking:
+ *  • xl and up — a three-column grid. Logo and three seals on the left, the
+ *    film in the centre, three more seals on the right. Nothing overlaps the
+ *    film, because each lives in its own grid cell.
+ *  • below xl — logo above the film, all six seals in a two-column grid
+ *    directly beneath it, so every seal is on screen the moment you land.
+ */
+
+const STAMP_ICONS = [
+  <Sparkles key="1" />,
+  <Leaf key="2" />,
+  <Scale key="3" />,
+  null,
+  <span key="5" className="inline-flex items-center gap-1">
+    <LithuaniaFlag className="h-3" />
+    <IcelandFlag className="h-3" />
+  </span>,
+  <span key="6" className="inline-flex items-center gap-1">
+    <Handshake />
+    <Heart />
+  </span>,
+];
+
+function Stamps({ from, to, className }: { from: number; to: number; className?: string }) {
+  const { t } = useI18n();
+  const keys = ["s1", "s2", "s3", "s4", "s5", "s6"] as const;
+  return (
+    <>
+      {keys.slice(from, to).map((k, i) => (
+        <Stamp key={k} index={from + i} icon={STAMP_ICONS[from + i]} className={className}>
+          {t.stamps[k]}
+        </Stamp>
+      ))}
+    </>
+  );
+}
+
+function HeroFilm() {
+  const film = useAsset("video.file", "/reliable-source.mp4");
+  const ref = React.useRef<HTMLVideoElement>(null);
+
+  // Autoplay is muted and inline, which every current browser allows. If one
+  // still refuses, the film simply sits on its first frame — nothing breaks.
+  React.useEffect(() => {
+    ref.current?.play().catch(() => {});
+  }, []);
+
+  return (
+    <div className="relative overflow-hidden rounded-[22px] border border-accent/25 shadow-[0_40px_90px_-40px_rgba(0,0,0,0.8)]">
+      <video
+        ref={ref}
+        src={film}
+        muted
+        loop
+        playsInline
+        autoPlay
+        preload="metadata"
+        aria-label="Honey Volcano — raw honey from a reliable source"
+        className="block aspect-video h-auto w-full bg-bg-soft object-cover"
+      />
+      {/* a touch of warmth over the film so it belongs to the page */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-0 bg-gradient-to-t from-background/35 via-transparent to-transparent"
+      />
+    </div>
+  );
+}
 
 export function Hero() {
-  const backdrop = useAsset("hero.backdrop", "/honeycomb.jpg");
   const logo = useAsset("hero.logo", "/logo-home.png");
   const { t } = useI18n();
-  const ref = useRef<HTMLElement>(null);
-  const { scrollYProgress } = useScroll({
-    target: ref,
-    offset: ["start start", "end start"],
+  const reduced = useReducedMotion();
+
+  const intro = (delay: number) => ({
+    initial: reduced ? false : { opacity: 0, y: 18 },
+    animate: { opacity: 1, y: 0 },
+    transition: { delay, duration: 0.85, ease: EASE },
   });
-  const bgY = useTransform(scrollYProgress, [0, 1], ["0%", "18%"]);
 
   return (
     <section
       id="top"
-      ref={ref}
-      className="relative flex h-[100svh] min-h-[640px] w-full items-center justify-center overflow-hidden bg-[#0b0805] text-white"
+      className="relative flex items-center overflow-hidden bg-background pb-14 pt-[104px] xl:min-h-[100svh] xl:pb-20 xl:pt-[120px]"
     >
-      {/* Honeycomb backdrop (the former picture band, now the hero) */}
-      <motion.div style={{ y: bgY }} className="absolute inset-0 -top-[9%] h-[118%]">
-        <Image
-          src={backdrop}
-          alt="Golden honeycomb dripping with raw amber honey"
-          fill
-          priority
-          sizes="100vw"
-          className="object-cover"
-        />
-      </motion.div>
-
-      {/* Contrast scrim: darker toward the centre so the logo reads cleanly */}
+      {/* warm glow behind everything — decorative, never over the content */}
       <div
         aria-hidden
-        className="absolute inset-0"
+        className="pointer-events-none absolute inset-0 -z-10"
         style={{
           background:
-            "radial-gradient(125% 95% at 50% 44%, rgba(6,4,3,0.5) 0%, rgba(6,4,3,0.3) 46%, rgba(6,4,3,0.58) 100%)",
+            "radial-gradient(120% 70% at 50% 0%, color-mix(in oklab, var(--accent) 14%, transparent) 0%, transparent 60%)",
         }}
       />
 
-      {/* Catch-phrase watermark */}
-      <EruptWatermark />
+      <div className="mx-auto w-full max-w-[1500px] px-5 md:px-8">
+        <div className="grid items-center gap-8 xl:grid-cols-[minmax(240px,1fr)_minmax(0,2.1fr)_minmax(240px,1fr)] xl:items-stretch xl:gap-10">
+          {/* ---- Left: the logo, and the first three seals on wide screens ---- */}
+          <div className="flex flex-col items-center gap-7 xl:items-start xl:justify-between xl:gap-0">
+            <motion.div {...intro(0.1)} className="w-[180px] sm:w-[220px] xl:w-full xl:max-w-[260px]">
+              <Image
+                src={logo}
+                alt="Honey Volcano"
+                width={1024}
+                height={1024}
+                priority
+                quality={95}
+                sizes="(max-width: 1279px) 220px, 260px"
+                className="h-auto w-full"
+              />
+            </motion.div>
 
-      {/* Center content — the logo + tagline */}
-      <div className="relative z-10 flex flex-col items-center px-6 text-center">
-        <motion.div
-          initial={{ opacity: 0, scale: 0.9, filter: "blur(10px)" }}
-          animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
-          transition={{ duration: 1.6, ease: EASE }}
-        >
-          <motion.div
-            animate={{ y: [0, -10, 0] }}
-            transition={{ duration: 7, ease: "easeInOut", repeat: Infinity }}
-            className="relative w-[280px] md:w-[420px]"
-          >
-            {/* dark backdrop so the emblem reads on the bright comb */}
-            <div
-              aria-hidden
-              className="absolute left-1/2 top-1/2 -z-10 h-[150%] w-[150%] -translate-x-1/2 -translate-y-1/2 rounded-full"
-              style={{
-                background:
-                  "radial-gradient(circle, rgba(5,3,2,0.9) 0%, rgba(5,3,2,0.62) 42%, transparent 72%)",
-              }}
-            />
-            <Image
-              src={logo}
-              alt="Honey Volcano"
-              width={1024}
-              height={1024}
-              priority
-              quality={100}
-              className="h-auto w-full"
-              style={{ filter: "drop-shadow(0 24px 70px rgba(0,0,0,0.55))" }}
-            />
+            <motion.p
+              {...intro(0.25)}
+              className="max-w-xs text-center font-display text-[11px] uppercase leading-relaxed tracking-[0.34em] text-accent xl:mt-5 xl:text-left"
+            >
+              {t.hero.tagline}
+            </motion.p>
+
+            <div className="hidden w-full flex-col gap-3 xl:flex">
+              <Stamps from={0} to={3} />
+            </div>
+          </div>
+
+          {/* ---- Centre: the film, the line and the call ---- */}
+          <motion.div {...intro(0.18)} className="flex flex-col items-center justify-center gap-6">
+            <HeroFilm />
+
+            <p className="max-w-xl text-center text-[15px] font-light leading-relaxed text-foreground-muted md:text-base">
+              {t.hero.lead}
+            </p>
+
+            <CallButton size="lg" showCopy />
           </motion.div>
-        </motion.div>
 
-        {/* Tagline */}
-        <motion.p
-          initial={{ opacity: 0, y: 16 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.9, duration: 1, ease: EASE }}
-          className="mt-6 max-w-xs font-display text-[11px] uppercase leading-relaxed tracking-[0.42em] text-[#F3CE72]/90 md:max-w-none md:text-sm"
-        >
-          {t.hero.tagline}
-        </motion.p>
+          {/* ---- Right: the last three seals on wide screens ---- */}
+          <div className="hidden w-full flex-col gap-3 xl:flex">
+            {/* spacer: drops the three seals level with the ones on the left */}
+            <span aria-hidden className="flex-1" />
+            <Stamps from={3} to={6} />
+          </div>
+        </div>
+
+        {/* ---- Below xl: all six seals, straight under the film ---- */}
+        <div className="mt-8 grid grid-cols-2 gap-2.5 sm:gap-3 xl:hidden">
+          <Stamps from={0} to={6} />
+        </div>
       </div>
     </section>
-  );
-}
-
-function EruptWatermark() {
-  return (
-    <span
-      aria-hidden
-      className="pointer-events-none absolute top-[13%] left-1/2 -translate-x-1/2 select-none whitespace-nowrap font-display text-4xl uppercase leading-none tracking-[0.3em] text-white/[0.13] sm:text-6xl md:text-8xl"
-    >
-      Let happiness erupt
-    </span>
   );
 }

@@ -83,7 +83,7 @@ export function TrustSection() {
             />
             <div
               aria-hidden
-              className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent"
+              className="absolute inset-0 bg-gradient-to-t from-background/50 via-transparent to-transparent"
             />
           </motion.div>
         </motion.div>

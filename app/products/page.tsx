@@ -1,158 +1,126 @@
 "use client";
 
-import Link from "next/link";
 import Image from "next/image";
 import { motion } from "motion/react";
-import { ArrowLeft } from "lucide-react";
 
-import { HoneycombCanvas } from "@/components/ui/honeycomb-canvas";
-import { AuroraBackground } from "@/components/ui/aurora-background";
-import { CallToTaste } from "@/components/ui/call-to-taste";
-import { EnquiryForm } from "@/components/site/enquiry-form";
-
-import { useLiveContent } from "@/components/live-content";
-import { RevealWords } from "@/components/ui/reveal-words";
+import { Navbar } from "@/components/site/navbar";
+import { HiveDecor } from "@/components/site/hive-decor";
 import { ProductCatalog } from "@/components/site/product-catalog";
-import { LanguageSwitcher } from "@/components/site/controls";
+import { EnquiryForm } from "@/components/site/enquiry-form";
+import { CallButton } from "@/components/ui/call-button";
+import { Reveal } from "@/components/ui/reveal";
+import { RevealWords } from "@/components/ui/reveal-words";
+import { useAsset, useLiveContent } from "@/components/live-content";
 import { useI18n } from "@/components/i18n";
 import { EASE } from "@/lib/motion";
 
 export default function ProductsPage() {
   const forms = useLiveContent().marketing?.forms;
+  const logo = useAsset("products.logo", "/logo-full.png");
   const { t } = useI18n();
 
   return (
-    <main className="dark relative min-h-[100svh] overflow-hidden bg-[#090405] text-white">
-      <HoneycombCanvas />
-      <AuroraBackground className="mix-blend-screen" />
-      {/* Dark stage: solid behind the logo/title, softening lower so the honey
-          cells stay alive around the taste card — keeps everything legible. */}
-      <div
-        aria-hidden
-        className="absolute inset-0"
-        style={{
-          background:
-            "linear-gradient(to bottom, #090405 0%, rgba(9,4,5,0.95) 34%, rgba(9,4,5,0.62) 56%, rgba(9,4,5,0.5) 74%, rgba(9,4,5,0.76) 100%)",
-        }}
-      />
+    <main className="relative min-h-[100svh] overflow-hidden bg-background">
+      <Navbar />
 
-      {/* Top bar */}
-      <header className="relative z-20 mx-auto flex max-w-6xl items-center justify-between gap-4 px-5 py-5 md:px-8">
-        <Link
-          href="/"
-          className="inline-flex items-center gap-2 text-sm font-light text-white/70 transition-colors hover:text-accent"
-        >
-          <ArrowLeft className="h-4 w-4" />
-          {t.products.back}
-        </Link>
-        <span className="hidden font-display text-base tracking-[0.28em] text-accent sm:block">
-          HONEY&nbsp;VOLCANO
-        </span>
-        <div className="flex items-center gap-2.5">
-          <LanguageSwitcher />
-        </div>
-      </header>
+      {/* Jars, drips, comb and bees drifting down both margins — decorative,
+          behind the content, and only where there is margin to spare. */}
+      <HiveDecor />
 
-      {/* Content */}
-      <section className="relative z-10 mx-auto flex max-w-3xl flex-col items-center px-6 pb-28 pt-14 text-center md:pt-20">
-        {/* logo mark */}
+      <section className="relative z-10 mx-auto flex max-w-3xl flex-col items-center px-5 pb-16 pt-[120px] text-center md:px-8 md:pt-[140px]">
         <motion.div
-          initial={{ opacity: 0, scale: 0.85, filter: "blur(12px)" }}
+          initial={{ opacity: 0, scale: 0.9, filter: "blur(10px)" }}
           animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
-          transition={{ duration: 1.4, ease: EASE }}
+          transition={{ duration: 1.1, ease: EASE }}
           className="relative"
         >
-          {/* soft circular gold halo (behind the square logo) */}
           <div
             aria-hidden
             className="absolute left-1/2 top-1/2 -z-10 h-[150%] w-[150%] -translate-x-1/2 -translate-y-1/2 rounded-full opacity-70 blur-2xl"
-            style={{ background: "radial-gradient(circle, rgba(212,175,55,0.16), transparent 66%)" }}
+            style={{
+              background:
+                "radial-gradient(circle, color-mix(in oklab, var(--accent) 18%, transparent), transparent 66%)",
+            }}
           />
           <Image
-            src="/logo-full.png"
+            src={logo}
             alt="Honey Volcano"
             width={360}
             height={360}
             priority
-            className="h-auto w-[168px] rounded-md md:w-[208px]"
+            className="h-auto w-[150px] rounded-md md:w-[190px]"
           />
         </motion.div>
 
-        {/* Coming soon badge */}
+        {/* The first thing to do on this page, directly under the logo. */}
         <motion.div
           initial={{ opacity: 0, y: 14 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.25, duration: 0.9, ease: EASE }}
-          className="mt-8 inline-flex items-center gap-2 rounded-full border border-accent/30 bg-accent/5 px-4 py-1.5"
+          transition={{ delay: 0.25, duration: 0.8, ease: EASE }}
+          className="mt-8"
         >
-          <motion.span
-            className="h-1.5 w-1.5 rounded-full bg-accent"
-            animate={{ opacity: [0.3, 1, 0.3], scale: [0.8, 1.2, 0.8] }}
-            transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-          />
-          <span className="text-xs font-medium uppercase tracking-[0.3em] text-accent">
-            {t.products.badge}
-          </span>
+          <CallButton size="lg" showCopy />
         </motion.div>
 
-        {/* Taste request card */}
-        <motion.div
-          initial={{ opacity: 0, y: 26 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.7, duration: 1, ease: EASE }}
-          className="mt-16 w-full max-w-lg rounded-3xl border border-accent/20 bg-white/[0.03] p-8 text-left backdrop-blur-md md:p-10"
-        >
-          <p className="text-[11px] font-medium uppercase tracking-[0.35em] text-accent">
-            {t.products.tasteEyebrow}
-          </p>
-          <RevealWords
-            as="h2"
-            text={t.products.tasteHeading}
-            className="mt-3 font-serif text-3xl font-light text-white"
-          />
-          <p className="mt-3 text-sm font-light leading-relaxed text-white/70">
-            {t.products.tasteBody}
-          </p>
+        <RevealWords
+          as="h1"
+          text={t.products.title}
+          className="mt-10 font-serif text-[30px] font-light leading-tight text-foreground md:text-[40px]"
+        />
+        <p className="mt-4 max-w-xl text-[15px] font-light leading-relaxed text-foreground-muted">
+          {t.products.subtitle}
+        </p>
+      </section>
 
-          <div className="mt-7">
-            <CallToTaste label={t.products.call} />
-          </div>
+      <ProductCatalog />
 
-          {/* Or leave details instead of calling — lands in the dashboard inbox */}
-          {forms?.onProductsPage !== false && (
+      {/* Or leave your details instead of calling — lands in the owner's inbox */}
+      {forms?.onProductsPage !== false && (
+        <Reveal className="relative z-10 mx-auto mb-28 w-full max-w-lg px-5 md:px-8">
+          <div className="rounded-3xl border border-border bg-surface/60 p-7 text-left backdrop-blur-md md:p-9">
+            <p className="text-[11px] font-semibold uppercase tracking-[0.3em] text-accent">
+              {t.products.tasteEyebrow}
+            </p>
+            <h2 className="mt-3 font-serif text-3xl font-light text-foreground">
+              {t.products.tasteHeading}
+            </h2>
+            <p className="mt-3 text-sm font-light leading-relaxed text-foreground-muted">
+              {t.products.tasteBody}
+            </p>
+
+            <div className="mt-7">
+              <CallButton size="md" className="[&>a]:w-full" />
+            </div>
+
             <EnquiryForm
               className="mt-7 text-left"
               source="Products page — taste request"
-              buttonLabel={t.products.call}
+              buttonLabel={t.products.button}
               askPhone={forms?.askPhone !== false}
             />
-          )}
 
-          {/* the reassurance line */}
-          <div className="mt-6 flex items-center gap-2.5 border-t border-white/10 pt-5">
-            <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden className="shrink-0 text-accent">
-              <path
-                d="M12 2l8 4v6c0 5-3.5 8-8 10-4.5-2-8-5-8-10V6z"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="1.4"
-              />
-              <path
-                d="M8.5 12l2.3 2.3L15.5 9.5"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="1.6"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </svg>
-            <p className="text-sm font-light italic text-accent/90">{t.products.tasteNote}</p>
+            <div className="mt-6 flex items-center gap-2.5 border-t border-border pt-5">
+              <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden className="shrink-0 text-accent">
+                <path
+                  d="M12 2l8 4v6c0 5-3.5 8-8 10-4.5-2-8-5-8-10V6z"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="1.4"
+                />
+                <path
+                  d="M8.5 12l2.3 2.3L15.5 9.5"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="1.6"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
+              <p className="text-sm font-light italic text-accent/90">{t.products.tasteNote}</p>
+            </div>
           </div>
-        </motion.div>
-      </section>
-
-      {/* Product catalog */}
-      <ProductCatalog />
+        </Reveal>
+      )}
     </main>
   );
 }

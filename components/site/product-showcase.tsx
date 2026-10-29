@@ -93,7 +93,7 @@ export function ProductShowcase() {
               <div
                 aria-hidden
                 className="absolute left-1/2 top-1/2 -z-10 h-[70%] w-[70%] -translate-x-1/2 -translate-y-1/2 rounded-full opacity-40 blur-3xl"
-                style={{ background: "radial-gradient(circle, #D4AF37 0%, transparent 70%)" }}
+                style={{ background: "radial-gradient(circle, var(--accent) 0%, transparent 70%)" }}
               />
               <Image
                 src={jar}

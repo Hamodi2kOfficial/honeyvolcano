@@ -20,6 +20,12 @@ export type Btn = { label: string; href: string; style: "gold" | "outline" };
 
 export type BuiltinKind =
   | "hero"
+  | "rawAndBee"
+  | "featured"
+  | "story1"
+  | "story2"
+  | "story3"
+  | "construction"
   | "video"
   | "trust"
   | "values"
@@ -191,13 +197,19 @@ export const ADDABLE_KINDS: SectionKind[] = [
 ];
 
 export const BUILTIN_LABEL: Record<BuiltinKind, string> = {
-  hero: "Hero — logo, honeycomb and tagline",
+  hero: "Hero — film, logo and the six seals",
+  rawAndBee: "Raw honey & all bee products — picture and three reasons",
+  featured: "Our favourites — the four dearest jars",
+  story1: "Story 1 — the 'three faces' picture",
+  story2: "Story 2 — hand to hand",
+  story3: "Story 3 — honey on the breakfast table",
+  construction: "Under construction — the blurred plate at the end",
   video: "Film — raw honey from a reliable source",
   trust: "Reliable source — jar photo and authorisations",
   values: "Real honey — the four promises",
   letter: "A note from the hive — beekeeper letter",
   showcase: "Product pictures — the three jars",
-  cta: "Taste the wild — waitlist and footer",
+  cta: "Let happiness erupt — the closing call",
 };
 
 export function uid(prefix = "s"): string {
@@ -269,8 +281,8 @@ export function createSection(kind: SectionKind): Section {
         id,
         visible: true,
         kind: "quote",
-        text: "We don't make honey. The forest does.",
-        author: "The Honey Volcano beekeepers",
+        text: "We don't make honey. The bees do.",
+        author: "Jordanas, Honey Volcano",
       };
     case "reviews":
       return {

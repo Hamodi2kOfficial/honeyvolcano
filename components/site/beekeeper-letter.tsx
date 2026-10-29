@@ -18,12 +18,12 @@ export function BeekeeperLetter() {
   const { t } = useI18n();
 
   return (
-    <section className="relative overflow-hidden bg-[#151515] py-28 text-[#f4f4f4] md:py-40">
+    <section className="relative overflow-hidden bg-bg-soft py-28 text-foreground md:py-40">
       {/* soft gold glow */}
       <div
         aria-hidden
         className="pointer-events-none absolute left-1/2 top-1/2 h-[520px] w-[520px] -translate-x-1/2 -translate-y-1/2 rounded-full opacity-[0.07] blur-3xl"
-        style={{ background: "radial-gradient(circle, #D4AF37 0%, transparent 70%)" }}
+        style={{ background: "radial-gradient(circle, var(--accent) 0%, transparent 70%)" }}
       />
 
       {/* faint drifting honeycomb hexagons */}
@@ -39,7 +39,7 @@ export function BeekeeperLetter() {
           viewBox="0 0 100 115"
           width={h.size}
           height={h.size * 1.15}
-          className="pointer-events-none absolute text-[#D4AF37]"
+          className="pointer-events-none absolute text-accent"
           style={{ left: h.left, top: h.top, opacity: 0.06 }}
           animate={{ rotate: 360 }}
           transition={{ duration: h.dur, repeat: Infinity, ease: "linear" }}
@@ -62,7 +62,7 @@ export function BeekeeperLetter() {
         <motion.p
           variants={soft}
           custom={0}
-          className="mb-8 text-xs font-light uppercase tracking-[0.4em] text-[#D4AF37]/80"
+          className="mb-8 text-xs font-light uppercase tracking-[0.4em] text-accent/80"
         >
           {t.letter.eyebrow}
         </motion.p>
@@ -70,7 +70,7 @@ export function BeekeeperLetter() {
         <motion.h2
           variants={soft}
           custom={1}
-          className="whitespace-pre-line font-serif text-4xl font-light italic leading-[1.15] text-[#f4f4f4] md:text-6xl"
+          className="whitespace-pre-line font-serif text-4xl font-light italic leading-[1.15] text-foreground md:text-6xl"
         >
           {t.letter.heading}
         </motion.h2>
@@ -78,21 +78,21 @@ export function BeekeeperLetter() {
         <motion.p
           variants={soft}
           custom={2}
-          className="mx-auto mt-10 max-w-xl text-lg font-light leading-relaxed text-[#f4f4f4]/70"
+          className="mx-auto mt-10 max-w-xl text-lg font-light leading-relaxed text-foreground-muted"
         >
           {t.letter.p1}
         </motion.p>
         <motion.p
           variants={soft}
           custom={3}
-          className="mx-auto mt-6 max-w-xl text-lg font-light leading-relaxed text-[#f4f4f4]/70"
+          className="mx-auto mt-6 max-w-xl text-lg font-light leading-relaxed text-foreground-muted"
         >
           {t.letter.p2}
         </motion.p>
         <motion.p
           variants={soft}
           custom={4}
-          className="mx-auto mt-6 max-w-xl text-lg font-light leading-relaxed text-[#f4f4f4]/70"
+          className="mx-auto mt-6 max-w-xl text-lg font-light leading-relaxed text-foreground-muted"
         >
           {t.letter.p3}
         </motion.p>
@@ -100,7 +100,7 @@ export function BeekeeperLetter() {
         <motion.p
           variants={soft}
           custom={5}
-          className="mt-12 font-serif text-xl font-light italic tracking-wide text-[#D4AF37]"
+          className="mt-12 font-serif text-xl font-light italic tracking-wide text-accent"
         >
           {t.letter.signature}
         </motion.p>

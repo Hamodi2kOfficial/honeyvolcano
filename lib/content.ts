@@ -12,13 +12,28 @@ import { defaultMarketing, type Marketing } from "@/lib/marketing";
  * static) and the /admin dashboard is where the owner edits them.
  */
 
+/** One jar of a multi-flavour product, e.g. the honey delicacies. */
+export type Flavour = {
+  id: string;
+  /** Exactly as it reads on the jar — we never invent a product name. */
+  name: string;
+  weight: string;
+  image: string;
+};
+
 export type Product = {
   id: string;
   name: string;
   priceISK: number | null;
   tba: boolean;
-  /** Optional product photo path, e.g. "/products/raw-honey-500.png". */
+  /** Optional product photo path, e.g. "/products/raw-honey-500.webp". */
   image?: string;
+  /** Net weight as printed on the jar, shown as a badge on the card. */
+  weight?: string;
+  /** Shown on the home page's selection of the most expensive jars. */
+  featured?: boolean;
+  /** Set when one product comes in several jars the customer picks between. */
+  flavours?: Flavour[];
 };
 
 export type SiteContent = {

@@ -80,10 +80,10 @@ export function defaultMarketing(): Marketing {
     },
     offers: [],
     share: {
-      title: "Honey Volcano — Raw Forest Honey",
+      title: "Honey Volcano — Raw Honey & Bee Products",
       description:
-        "Premium raw forest honey, harvested from untamed mountains and wild lupine fields. Pure, unfiltered, and artisanal.",
-      image: "/logo-full.png",
+        "Raw Lithuanian honey and every other bee product — pollen, bee bread, honeycomb and honey treats — sold in Iceland. Call to taste before you buy.",
+      image: "/sections/all-bee-products.webp",
     },
     forms: {
       onProductsPage: true,

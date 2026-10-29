@@ -39,17 +39,105 @@ export type ContentGroup = {
 /** The designed home-page sections, in the order they appear on the page. */
 export const BUILTIN_CONTENT: Record<BuiltinKind, ContentGroup> = {
   hero: {
-    text: [{ key: "hero.tagline", label: "Tagline under the logo" }],
+    text: [
+      { key: "hero.tagline", label: "Tagline under the logo" },
+      { key: "hero.lead", label: "Line under the film", lines: 2 },
+      { key: "stamps.s1", label: "Seal 1" },
+      { key: "stamps.s2", label: "Seal 2" },
+      { key: "stamps.s3", label: "Seal 3" },
+      { key: "stamps.s4", label: "Seal 4" },
+      { key: "stamps.s5", label: "Seal 5" },
+      { key: "stamps.s6", label: "Seal 6" },
+    ],
     assets: [
       { key: "hero.logo", label: "Logo", kind: "image", fallback: "/logo-home.png" },
       {
-        key: "hero.backdrop",
-        label: "Background photo",
-        kind: "image",
-        fallback: "/honeycomb.jpg",
-        hint: "Fills the whole first screen — use a wide, dark photo.",
+        key: "video.file",
+        label: "The film in the hero",
+        kind: "video",
+        fallback: "/reliable-source.mp4",
+        hint: "An .mp4 file. Keep it short — it loads for every visitor.",
       },
     ],
+  },
+  rawAndBee: {
+    text: [
+      { key: "home.rawEyebrow", label: "Small line above the heading" },
+      { key: "home.rawHeading", label: "Heading", lines: 2 },
+      { key: "home.rawBody", label: "Paragraph", lines: 4 },
+      { key: "home.rawP1t", label: "Reason 1 — title" },
+      { key: "home.rawP1d", label: "Reason 1 — text", lines: 2 },
+      { key: "home.rawP2t", label: "Reason 2 — title" },
+      { key: "home.rawP2d", label: "Reason 2 — text", lines: 2 },
+      { key: "home.rawP3t", label: "Reason 3 — title" },
+      { key: "home.rawP3d", label: "Reason 3 — text", lines: 2 },
+    ],
+    assets: [
+      {
+        key: "rawAndBee.image",
+        label: "Picture",
+        kind: "image",
+        fallback: "/sections/all-bee-products.webp",
+      },
+    ],
+  },
+  featured: {
+    text: [
+      { key: "home.featEyebrow", label: "Small line above the heading" },
+      { key: "home.featHeading", label: "Heading" },
+      { key: "home.featBody", label: "Paragraph", lines: 3 },
+      { key: "home.featAll", label: "“See all products” link" },
+    ],
+    assets: [],
+  },
+  story1: {
+    text: [
+      { key: "home.s1Eyebrow", label: "Small line above the heading" },
+      { key: "home.s1Heading", label: "Heading", lines: 2 },
+      { key: "home.s1Body", label: "Paragraph", lines: 3 },
+    ],
+    assets: [
+      { key: "story1.image", label: "Picture", kind: "image", fallback: "/gallery/3faces.jpg" },
+    ],
+  },
+  story2: {
+    text: [
+      { key: "home.s2Eyebrow", label: "Small line above the heading" },
+      { key: "home.s2Heading", label: "Heading", lines: 2 },
+      { key: "home.s2Body", label: "Paragraph", lines: 3 },
+    ],
+    assets: [
+      {
+        key: "story2.image",
+        label: "Picture",
+        kind: "image",
+        fallback: "/sections/hand-to-hand.webp",
+      },
+    ],
+  },
+  story3: {
+    text: [
+      { key: "home.s3Eyebrow", label: "Small line above the heading" },
+      { key: "home.s3Heading", label: "Heading", lines: 2 },
+      { key: "home.s3Body", label: "Paragraph", lines: 3 },
+    ],
+    assets: [
+      {
+        key: "story3.image",
+        label: "Picture",
+        kind: "image",
+        fallback: "/sections/breakfast.webp",
+      },
+    ],
+  },
+  construction: {
+    text: [
+      { key: "uc.label", label: "Plate label" },
+      { key: "home.ucHeading", label: "Heading" },
+      { key: "home.ucBody", label: "Text under the heading", lines: 2 },
+      { key: "uc.more", label: "Button" },
+    ],
+    assets: [],
   },
   video: {
     text: [{ key: "video.button", label: "Button under the film" }],
@@ -113,7 +201,7 @@ export const BUILTIN_CONTENT: Record<BuiltinKind, ContentGroup> = {
     text: [
       { key: "cta.heading", label: "Heading" },
       { key: "cta.subtitle", label: "Text under the heading", lines: 2 },
-      { key: "footer.rights", label: "Footer — rights line" },
+      { key: "cta.call", label: "Call button label" },
     ],
     assets: [],
   },
@@ -129,13 +217,21 @@ export const PAGE_GROUPS: {
   {
     id: "nav",
     label: "Menu & buttons",
-    hint: "The links at the top of every page.",
+    hint: "The links at the top of every page, and the footer.",
     content: {
       text: [
+        { key: "nav.home", label: "Home link" },
+        { key: "nav.products", label: "Products link" },
+        { key: "nav.stores", label: "“Where to buy” link" },
+        { key: "nav.about", label: "About link" },
+        { key: "nav.best", label: "“What's best for me?” link" },
+        { key: "nav.bestSoon", label: "“What's best for me?” tooltip" },
+        { key: "nav.contact", label: "Contact link" },
         { key: "nav.gallery", label: "Gallery link" },
-        { key: "nav.cta", label: "Top-right button" },
-        { key: "products.call", label: "“Call to taste” button" },
-        { key: "products.back", label: "“Back to home” link" },
+        { key: "cta.call", label: "“Call to taste” button" },
+        { key: "footer.tagline", label: "Footer — tagline" },
+        { key: "footer.made", label: "Footer — line under the tagline" },
+        { key: "footer.rights", label: "Footer — rights line" },
       ],
       assets: [],
     },

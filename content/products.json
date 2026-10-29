@@ -1,11 +1,90 @@
 {
   "products": [
-    { "id": "raw-honey-500", "name": "Raw honey 500 g", "priceISK": 2299, "tba": false },
-    { "id": "raw-honey-1kg", "name": "Raw honey 1 kg", "priceISK": 3499, "tba": false },
-    { "id": "honeycomb-300", "name": "Honeycomb 300 g", "priceISK": 2299, "tba": false },
-    { "id": "delicacies-220", "name": "Honey delicacies 220 g", "priceISK": 2199, "tba": false },
-    { "id": "multicoloured-220", "name": "Honey multicoloured 220 g", "priceISK": 2499, "tba": false },
-    { "id": "pollen-100", "name": "Pollen 100 g", "priceISK": 1499, "tba": false },
-    { "id": "bee-bread-100", "name": "Bee bread 100 g", "priceISK": null, "tba": true }
+    {
+      "id": "raw-honey-500",
+      "name": "Raw honey 500 g",
+      "priceISK": 2299,
+      "tba": false,
+      "weight": "500 g",
+      "image": "/products/raw-honey-500.webp",
+      "featured": true
+    },
+    {
+      "id": "raw-honey-1kg",
+      "name": "Raw honey 1 kg",
+      "priceISK": 3499,
+      "tba": false,
+      "weight": "1 kg",
+      "image": "/products/raw-honey-1kg.webp",
+      "featured": true
+    },
+    {
+      "id": "honeycomb-300",
+      "name": "Honeycomb 300 g",
+      "priceISK": 2299,
+      "tba": false,
+      "weight": "300 g",
+      "image": "/products/honeycomb.webp",
+      "featured": true
+    },
+    {
+      "id": "delicacies-220",
+      "name": "Honey delicacies 220 g",
+      "priceISK": 2199,
+      "tba": false,
+      "weight": "220 g",
+      "image": "/products/delicacy-raspberry.webp",
+      "flavours": [
+        {
+          "id": "raspberry",
+          "name": "Honey treat with raspberries",
+          "weight": "220 g",
+          "image": "/products/delicacy-raspberry.webp"
+        },
+        {
+          "id": "buckthorn",
+          "name": "Honey treat with sea buckthorn",
+          "weight": "220 g",
+          "image": "/products/delicacy-buckthorn.webp"
+        },
+        {
+          "id": "quince-pumpkin",
+          "name": "Honey treat with quinces and pumpkins",
+          "weight": "200 g",
+          "image": "/products/delicacy-quince-pumpkin.webp"
+        },
+        {
+          "id": "cannabis",
+          "name": "Honeyvolcano with cannabis bricks and cocoa",
+          "weight": "220 g",
+          "image": "/products/delicacy-cannabis.webp"
+        }
+      ]
+    },
+    {
+      "id": "multicoloured-220",
+      "name": "Honey multicoloured 220 g",
+      "priceISK": 2499,
+      "tba": false,
+      "weight": "220 g",
+      "image": "/products/honey-multicoloured.webp",
+      "featured": true
+    },
+    {
+      "id": "pollen-100",
+      "name": "Pollen 100 g",
+      "priceISK": 1499,
+      "tba": false,
+      "weight": "100 g",
+      "image": "/products/pollen.webp"
+    },
+    {
+      "id": "bee-bread-100",
+      "name": "Bee bread 100 g",
+      "priceISK": null,
+      "tba": true,
+      "weight": "100 g",
+      "image": "/products/bee-bread.webp"
+    }
   ]
 }

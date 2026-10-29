@@ -60,14 +60,14 @@ export function VideoSection() {
   };
 
   return (
-    <section className="relative overflow-hidden bg-[#0b0805] py-20 md:py-28">
+    <section className="relative overflow-hidden bg-bg-soft py-20 md:py-28">
       {/* Interactive honey cells */}
       <HoneycombCanvas />
 
       {/* Catch-phrase watermark */}
       <span
         aria-hidden
-        className="pointer-events-none absolute left-1/2 top-6 -translate-x-1/2 select-none whitespace-nowrap font-display text-3xl uppercase leading-none tracking-[0.3em] text-white/[0.13] sm:text-5xl md:text-7xl"
+        className="pointer-events-none absolute left-1/2 top-6 -translate-x-1/2 select-none whitespace-nowrap font-display text-3xl uppercase leading-none tracking-[0.3em] text-accent/[0.10] sm:text-5xl md:text-7xl"
       >
         Let happiness erupt
       </span>
@@ -98,9 +98,9 @@ export function VideoSection() {
               type="button"
               onClick={startTap}
               aria-label="Play"
-              className="absolute inset-0 grid place-items-center bg-black/30 backdrop-blur-[1px]"
+              className="absolute inset-0 grid place-items-center bg-background/40 backdrop-blur-[1px]"
             >
-              <span className="grid h-16 w-16 place-items-center rounded-full bg-accent/90 text-[#1c1206] shadow-lg">
+              <span className="grid h-16 w-16 place-items-center rounded-full bg-accent text-on-accent shadow-lg">
                 <Play className="ml-0.5 h-7 w-7" fill="currentColor" />
               </span>
             </button>
