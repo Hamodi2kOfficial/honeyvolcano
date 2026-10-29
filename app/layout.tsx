@@ -5,8 +5,7 @@ import { I18nProvider } from "@/components/i18n";
 import { SmoothScroll } from "@/components/smooth-scroll";
 import { LiveContentProvider } from "@/components/live-content";
 import { AnnouncementBar } from "@/components/site/announcement-bar";
-import { SiteFooter } from "@/components/site/footer";
-import { StickyCall } from "@/components/site/sticky-call";
+import { SiteChrome } from "@/components/site/chrome";
 import { ThemeProvider, themeScript } from "@/components/theme";
 
 const cinzel = Cinzel({
@@ -114,10 +113,8 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
             <I18nProvider>
               <AnnouncementBar />
               <SmoothScroll>
-                {children}
-                <SiteFooter />
+                <SiteChrome>{children}</SiteChrome>
               </SmoothScroll>
-              <StickyCall />
             </I18nProvider>
           </ThemeProvider>
         </LiveContentProvider>

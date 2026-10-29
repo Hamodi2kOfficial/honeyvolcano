@@ -38,11 +38,28 @@ test.describe("every page", () => {
     test(`${name} loads cleanly`, async ({ page }) => {
       const errors: string[] = [];
       const failed: string[] = [];
-      page.on("console", (m) => m.type() === "error" && errors.push(m.text()));
+
+      // /api/* is a Netlify function. The export is served here by a plain
+      // file server, so those calls 404 — which the site is written to
+      // survive. Judge a failed resource by its URL, from the response, not
+      // from the console: Chromium's generic "Failed to load resource" line
+      // does not carry the URL that failed.
+      page.on("response", (r) => {
+        if (r.status() >= 400 && !r.url().includes("/api/")) {
+          failed.push(`${r.status()} ${r.url()}`);
+        }
+      });
       page.on("requestfailed", (r) => {
-        // The content API only exists on Netlify; the site is built to work
-        // without it, and the export is served here by a plain file server.
-        if (!r.url().includes("/api/")) failed.push(`${r.url()} ${r.failure()?.errorText}`);
+        if (r.url().includes("/api/")) return;
+        // A cancelled request is not a broken one: the browser aborts video
+        // range requests and in-flight navigations as a matter of course.
+        if (r.failure()?.errorText === "net::ERR_ABORTED") return;
+        failed.push(`${r.url()} ${r.failure()?.errorText}`);
+      });
+      page.on("console", (m) => {
+        if (m.type() !== "error") return;
+        if (/Failed to load resource/i.test(m.text())) return; // judged above
+        errors.push(m.text());
       });
 
       await page.goto(path);
@@ -143,15 +160,26 @@ test.describe("navigation", () => {
     await page.goto("/");
     if (info.project.name === "mobile") {
       await page.getByRole("button", { name: /menu/i }).first().click();
-      await expect(page.getByText("What's best for me?")).toBeVisible();
-      await expect(page.getByText("Coming soon").first()).toBeVisible();
+      // Scope to the open drawer: the desktop menu holds the same wording,
+      // hidden, and an unscoped locator matches both.
+      const drawer = page.locator("#hv-menu");
+      await expect(drawer.getByText("What's best for me?")).toBeVisible();
+      await expect(drawer.getByText("Coming soon")).toBeVisible();
+      // No link, so there is nothing to follow by accident.
+      await expect(drawer.locator('a:has-text("What\'s best for me?")')).toHaveCount(0);
       return;
     }
     const soon = page.getByRole("button", { name: /What's best for me\?/ });
     await expect(soon).toBeVisible();
     await expect(soon).toHaveAttribute("aria-disabled", "true");
-    await soon.click();
+    // It is a <button>, not an <a>: there is no href to follow by accident.
+    await expect(soon).toHaveJSProperty("tagName", "BUTTON");
+    // Playwright treats aria-disabled as "not enabled", so a plain click would
+    // wait for ever. Force it through and prove the page did not move.
+    await soon.click({ force: true });
+    await page.waitForTimeout(300);
     expect(page.url()).toMatch(/\/$/);
+    await expect(page.getByText("Coming soon").first()).toBeVisible();
   });
 
   test("the basket is gone", async ({ page }) => {
@@ -167,6 +195,9 @@ test.describe("the hero", () => {
     await expect(page.locator("#top img").first()).toBeVisible();
     await expect(page.locator("#top video")).toHaveCount(1);
 
+    // The seals are laid out twice — down the sides on a wide screen, in a
+    // grid under the film on a narrow one — so only one copy is ever on
+    // screen. Check the one that is.
     for (const seal of [
       "Direct from bees",
       "Natural & real",
@@ -175,7 +206,8 @@ test.describe("the hero", () => {
       "Authorised in LT & IS",
       "Hand to hand • Heart to heart",
     ]) {
-      await expect(page.getByText(seal, { exact: true }).first()).toBeVisible();
+      const visible = page.locator("#top").getByText(seal, { exact: true }).locator("visible=true");
+      await expect(visible.first()).toBeVisible();
     }
   });
 
@@ -285,7 +317,8 @@ test.describe("where to buy", () => {
   test("the map draws, with pins", async ({ page }) => {
     await page.goto("/where-to-buy/");
     await expect(page.locator(".hv-map")).toBeVisible();
-    await expect(page.locator(".leaflet-pane").first()).toBeVisible({ timeout: 15_000 });
+    await expect(page.locator(".leaflet-container")).toBeVisible({ timeout: 15_000 });
+    await expect(page.locator("img.leaflet-tile").first()).toBeVisible({ timeout: 15_000 });
     await expect
       .poll(async () => page.locator(".hv-pin, .hv-cluster").count(), { timeout: 15_000 })
       .toBeGreaterThan(0);
@@ -301,7 +334,7 @@ test.describe("where to buy", () => {
 
   test("a shop in the list flies the map to its pin", async ({ page }) => {
     await page.goto("/where-to-buy/");
-    await expect(page.locator(".leaflet-pane").first()).toBeVisible({ timeout: 15_000 });
+    await expect(page.locator(".leaflet-container")).toBeVisible({ timeout: 15_000 });
     await settle(page);
     await page.getByRole("button", { name: /show on the map/i }).first().click();
     await expect(page.locator(".leaflet-popup")).toBeVisible({ timeout: 15_000 });
@@ -347,7 +380,7 @@ test.describe("the contact form", () => {
     await page.getByLabel(/your name/i).fill("Test Person");
     await page.getByLabel(/^email$/i).fill("test@example.com");
     await page.getByRole("button", { name: /send message/i }).click();
-    await expect(page.getByRole("alert")).toBeVisible();
+    await expect(page.locator("form").getByRole("alert")).toBeVisible();
   });
 
   test("it confirms when the message is away", async ({ page }) => {
@@ -468,10 +501,15 @@ test.describe("on a phone", () => {
 
   test("every seal is on screen without scrolling", async ({ page }) => {
     await page.goto("/");
-    const offscreen = await page.evaluate(() => {
-      const seals = [...document.querySelectorAll("#top .group")];
-      return seals.filter((s) => s.getBoundingClientRect().bottom > window.innerHeight).length;
+    const { count, offscreen } = await page.evaluate(() => {
+      const seals = [...document.querySelectorAll("#top .grid.grid-cols-2 > .group")];
+      return {
+        count: seals.length,
+        offscreen: seals.filter((s) => s.getBoundingClientRect().bottom > window.innerHeight)
+          .length,
+      };
     });
+    expect(count, "the six seals are not where expected").toBe(6);
     expect(offscreen, "seals below the fold on a phone").toBe(0);
   });
 
@@ -490,7 +528,7 @@ test.describe("on a phone", () => {
 
   test("the map can be touched and pinched", async ({ page }) => {
     await page.goto("/where-to-buy/");
-    await expect(page.locator(".leaflet-pane").first()).toBeVisible({ timeout: 15_000 });
+    await expect(page.locator(".leaflet-container")).toBeVisible({ timeout: 15_000 });
     const dragging = await page.evaluate(
       () => document.querySelector(".leaflet-container")?.classList.contains("leaflet-touch") ?? false
     );

@@ -40,7 +40,7 @@ export function Stamp({
     >
       <div
         className={cn(
-          "relative flex min-h-[66px] items-center justify-center gap-2.5 border border-accent/35 bg-accent/[0.06] px-7 py-3 text-center backdrop-blur-sm",
+          "relative flex min-h-[54px] items-center justify-center gap-2 border border-accent/35 bg-accent/[0.06] px-5 py-2.5 text-center backdrop-blur-sm sm:min-h-[66px] sm:gap-2.5 sm:px-7 sm:py-3",
           "transition-colors duration-300 group-hover:border-accent/70 group-hover:bg-accent/[0.12]"
         )}
         style={{
@@ -63,7 +63,7 @@ export function Stamp({
             {icon}
           </span>
         )}
-        <span className="text-[10px] font-semibold uppercase leading-tight tracking-[0.16em] text-accent sm:text-[11px]">
+        <span className="text-[9px] font-semibold uppercase leading-tight tracking-[0.12em] text-accent sm:text-[11px] sm:tracking-[0.16em]">
           {children}
         </span>
       </div>

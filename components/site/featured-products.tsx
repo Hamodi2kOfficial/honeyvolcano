@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import Link from "next/link";
+import { Link } from "@/components/ui/link";
 import { ArrowRight } from "lucide-react";
 
 import { CallButton } from "@/components/ui/call-button";

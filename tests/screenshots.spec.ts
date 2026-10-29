@@ -34,7 +34,8 @@ async function settle(page: Page) {
   await page.waitForTimeout(700);
 }
 
-test.describe.configure({ mode: "serial" });
+// Seven pages, two shots each, at twice the pixel density — generous.
+test.describe.configure({ mode: "serial", timeout: 240_000 });
 
 test.skip(({ isMobile }) => isMobile, "capture once, from the desktop project");
 

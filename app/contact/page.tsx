@@ -3,7 +3,6 @@
 import Image from "next/image";
 import { Mail, MapPin, Phone, Receipt } from "lucide-react";
 
-import { Navbar } from "@/components/site/navbar";
 import { ContactForm } from "@/components/site/contact-form";
 import { HiveDecor } from "@/components/site/hive-decor";
 import { CallButton } from "@/components/ui/call-button";
@@ -80,7 +79,6 @@ export default function ContactPage() {
 
   return (
     <main className="relative overflow-hidden bg-background">
-      <Navbar />
       <HiveDecor />
 
       <section className="relative z-10 mx-auto max-w-6xl px-5 pb-16 pt-[120px] md:px-8 md:pt-[150px]">

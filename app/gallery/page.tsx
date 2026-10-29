@@ -5,13 +5,14 @@ import Image from "next/image";
 import { motion } from "motion/react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
-import { Navbar } from "@/components/site/navbar";
 import { EASE } from "@/lib/motion";
+import { useI18n } from "@/components/i18n";
 import { useLiveContent } from "@/components/live-content";
 
 const DURATION = 5000;
 
 export default function GalleryPage() {
+  const { t } = useI18n();
   // The slideshow is owner-managed: order, pictures and phrases come from /admin.
   const SLIDES = useLiveContent().gallery.slides;
   const [rawIdx, setIdx] = useState(0);
@@ -86,6 +87,10 @@ export default function GalleryPage() {
         }}
       />
 
+      {/* The slideshow carries no visible heading, but the page still needs
+          one for search engines and for anyone arriving by screen reader. */}
+      <h1 className="sr-only">{t.nav.gallery}</h1>
+
       {SLIDES.map((slide, i) => {
         const active = i === idx;
         return (
@@ -143,8 +148,6 @@ export default function GalleryPage() {
         );
       })}
 
-      {/* The site's own navigation, so the gallery is not a page apart */}
-      <Navbar />
 
       {/* arrows */}
       <button

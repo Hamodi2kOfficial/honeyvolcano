@@ -2,10 +2,9 @@
 
 import * as React from "react";
 import dynamic from "next/dynamic";
-import Link from "next/link";
+import { Link } from "@/components/ui/link";
 import { Clock, MapPin, Navigation } from "lucide-react";
 
-import { Navbar } from "@/components/site/navbar";
 import { CallButton } from "@/components/ui/call-button";
 import { Reveal, RevealGroup, RevealItem } from "@/components/ui/reveal";
 import { RevealWords } from "@/components/ui/reveal-words";
@@ -96,7 +95,6 @@ export default function WhereToBuyPage() {
 
   return (
     <main className="relative bg-background">
-      <Navbar />
 
       <section className="mx-auto max-w-6xl px-5 pb-10 pt-[120px] md:px-8 md:pt-[150px]">
         <Reveal className="mx-auto max-w-2xl text-center">

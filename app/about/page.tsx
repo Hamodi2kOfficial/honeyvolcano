@@ -1,10 +1,9 @@
 "use client";
 
 import Image from "next/image";
-import Link from "next/link";
+import { Link } from "@/components/ui/link";
 import { ArrowRight, Handshake, Leaf, PackageOpen, Scale, ShieldCheck, Sparkles } from "lucide-react";
 
-import { Navbar } from "@/components/site/navbar";
 import { CallButton } from "@/components/ui/call-button";
 import { Reveal, RevealGroup, RevealItem } from "@/components/ui/reveal";
 import { RevealWords } from "@/components/ui/reveal-words";
@@ -68,7 +67,6 @@ export default function AboutPage() {
 
   return (
     <main className="relative bg-background">
-      <Navbar />
 
       {/* ---- Opening: the plains where it starts ---- */}
       <section className="relative overflow-hidden pt-[120px] md:pt-[150px]">

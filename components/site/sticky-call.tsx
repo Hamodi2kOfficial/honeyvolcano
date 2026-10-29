@@ -1,5 +1,6 @@
 "use client";
 
+import * as React from "react";
 import { Phone } from "lucide-react";
 import { motion, useReducedMotion } from "motion/react";
 
@@ -21,13 +22,29 @@ export function StickyCall() {
   const reduced = useReducedMotion();
   const pretty = formatPhone(site.phoneIntl);
 
+  // Hidden on the first screen. Every page already opens with a call button,
+  // so a second one bolted to the bottom would only cover the content — on a
+  // small phone it was hiding the hero's own seals. It slides in once the
+  // visitor has scrolled past that first action and needs it again.
+  const [shown, setShown] = React.useState(false);
+  React.useEffect(() => {
+    const onScroll = () => setShown(window.scrollY > 200);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
   return (
     <motion.div
-      initial={reduced ? false : { y: 90, opacity: 0 }}
-      animate={{ y: 0, opacity: 1 }}
-      transition={{ delay: 0.8, duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+      aria-hidden={!shown}
+      initial={false}
+      animate={shown ? { y: 0, opacity: 1 } : { y: reduced ? 0 : 90, opacity: 0 }}
+      transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
       className="fixed inset-x-0 bottom-0 z-40 lg:hidden"
-      style={{ paddingBottom: "max(0.75rem, env(safe-area-inset-bottom))" }}
+      style={{
+        paddingBottom: "max(0.75rem, env(safe-area-inset-bottom))",
+        pointerEvents: shown ? "auto" : "none",
+      }}
     >
       <div className="mx-auto w-full max-w-md px-4">
         <a

@@ -3,7 +3,6 @@
 import Image from "next/image";
 import { motion } from "motion/react";
 
-import { Navbar } from "@/components/site/navbar";
 import { HiveDecor } from "@/components/site/hive-decor";
 import { ProductCatalog } from "@/components/site/product-catalog";
 import { EnquiryForm } from "@/components/site/enquiry-form";
@@ -21,7 +20,6 @@ export default function ProductsPage() {
 
   return (
     <main className="relative min-h-[100svh] overflow-hidden bg-background">
-      <Navbar />
 
       {/* Jars, drips, comb and bees drifting down both margins — decorative,
           behind the content, and only where there is margin to spare. */}

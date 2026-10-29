@@ -1,6 +1,5 @@
 "use client";
 
-import { Navbar } from "@/components/site/navbar";
 import { Reveal } from "@/components/ui/reveal";
 import { useI18n } from "@/components/i18n";
 
@@ -23,7 +22,6 @@ export default function PrivacyPage() {
 
   return (
     <main className="relative bg-background">
-      <Navbar />
 
       <article className="mx-auto max-w-2xl px-5 pb-24 pt-[120px] md:px-8 md:pt-[150px]">
         <Reveal>

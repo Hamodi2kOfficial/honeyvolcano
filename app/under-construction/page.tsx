@@ -1,9 +1,8 @@
 "use client";
 
-import Link from "next/link";
+import { Link } from "@/components/ui/link";
 import { ArrowLeft } from "lucide-react";
 
-import { Navbar } from "@/components/site/navbar";
 import { HiveDecor } from "@/components/site/hive-decor";
 import { CallButton } from "@/components/ui/call-button";
 import { Reveal } from "@/components/ui/reveal";
@@ -15,7 +14,6 @@ export default function UnderConstructionPage() {
 
   return (
     <main className="relative flex min-h-[100svh] flex-col overflow-hidden bg-background">
-      <Navbar />
       <HiveDecor />
 
       <section className="relative z-10 mx-auto flex w-full max-w-xl flex-1 flex-col items-center justify-center px-5 py-32 text-center md:px-8">

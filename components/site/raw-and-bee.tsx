@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import Link from "next/link";
+import { Link } from "@/components/ui/link";
 import { ArrowRight, FlaskConical, HandHeart, Thermometer } from "lucide-react";
 
 import { Reveal, RevealGroup, RevealItem } from "@/components/ui/reveal";

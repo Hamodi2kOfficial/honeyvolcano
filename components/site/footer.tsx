@@ -1,6 +1,6 @@
 "use client";
 
-import Link from "next/link";
+import { Link } from "@/components/ui/link";
 
 import { VolcanoMark } from "@/components/ui/volcano-mark";
 import { useI18n } from "@/components/i18n";

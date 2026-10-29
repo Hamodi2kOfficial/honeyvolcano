@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import Link from "next/link";
+import { Link } from "@/components/ui/link";
 import { X } from "lucide-react";
 
 import { useLiveContent } from "@/components/live-content";

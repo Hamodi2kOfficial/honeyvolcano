@@ -98,7 +98,7 @@ export function Hero() {
   return (
     <section
       id="top"
-      className="relative flex items-center overflow-hidden bg-background pb-14 pt-[104px] xl:min-h-[100svh] xl:pb-20 xl:pt-[120px]"
+      className="relative flex items-center overflow-hidden bg-background pb-8 pt-[78px] xl:min-h-[100svh] xl:pb-20 xl:pt-[120px]"
     >
       {/* warm glow behind everything — decorative, never over the content */}
       <div
@@ -113,8 +113,8 @@ export function Hero() {
       <div className="mx-auto w-full max-w-[1500px] px-5 md:px-8">
         <div className="grid items-center gap-8 xl:grid-cols-[minmax(240px,1fr)_minmax(0,2.1fr)_minmax(240px,1fr)] xl:items-stretch xl:gap-10">
           {/* ---- Left: the logo, and the first three seals on wide screens ---- */}
-          <div className="flex flex-col items-center gap-7 xl:items-start xl:justify-between xl:gap-0">
-            <motion.div {...intro(0.1)} className="w-[180px] sm:w-[220px] xl:w-full xl:max-w-[260px]">
+          <div className="flex flex-col items-center gap-4 sm:gap-6 xl:items-start xl:justify-between xl:gap-0">
+            <motion.div {...intro(0.1)} className="w-[108px] sm:w-[200px] xl:w-full xl:max-w-[260px]">
               <Image
                 src={logo}
                 alt="Honey Volcano"
@@ -122,17 +122,19 @@ export function Hero() {
                 height={1024}
                 priority
                 quality={95}
-                sizes="(max-width: 1279px) 220px, 260px"
+                sizes="(max-width: 639px) 108px, (max-width: 1279px) 200px, 260px"
                 className="h-auto w-full"
               />
             </motion.div>
 
-            <motion.p
+            {/* Reads as a tagline, but it is what this page is about, so it
+                carries the h1 — the home page had none at all before. */}
+            <motion.h1
               {...intro(0.25)}
-              className="max-w-xs text-center font-display text-[11px] uppercase leading-relaxed tracking-[0.34em] text-accent xl:mt-5 xl:text-left"
+              className="max-w-xs text-center font-display text-[11px] font-normal uppercase leading-relaxed tracking-[0.34em] text-accent xl:mt-5 xl:text-left"
             >
               {t.hero.tagline}
-            </motion.p>
+            </motion.h1>
 
             <div className="hidden w-full flex-col gap-3 xl:flex">
               <Stamps from={0} to={3} />
@@ -140,14 +142,14 @@ export function Hero() {
           </div>
 
           {/* ---- Centre: the film, the line and the call ---- */}
-          <motion.div {...intro(0.18)} className="flex flex-col items-center justify-center gap-6">
+          <motion.div {...intro(0.18)} className="flex flex-col items-center justify-center gap-4 sm:gap-6">
             <HeroFilm />
 
             <p className="max-w-xl text-center text-[15px] font-light leading-relaxed text-foreground-muted md:text-base">
               {t.hero.lead}
             </p>
 
-            <CallButton size="lg" showCopy />
+            <CallButton size="lg" showCopy className="[&>a]:max-sm:h-12 [&>a]:max-sm:px-6 [&>a]:max-sm:text-[14px]" />
           </motion.div>
 
           {/* ---- Right: the last three seals on wide screens ---- */}
@@ -159,7 +161,7 @@ export function Hero() {
         </div>
 
         {/* ---- Below xl: all six seals, straight under the film ---- */}
-        <div className="mt-8 grid grid-cols-2 gap-2.5 sm:gap-3 xl:hidden">
+        <div className="mt-5 grid grid-cols-2 gap-2 sm:mt-8 sm:gap-3 xl:hidden">
           <Stamps from={0} to={6} />
         </div>
       </div>
