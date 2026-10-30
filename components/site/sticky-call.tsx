@@ -49,7 +49,7 @@ export function StickyCall() {
       <div className="mx-auto w-full max-w-md px-4">
         <a
           href={telHref(site.phoneIntl)}
-          aria-label={callAriaLabel(site.phoneIntl)}
+          aria-label={callAriaLabel(t.cta.call, pretty)}
           onClick={() => track("taste")}
           className="flex h-14 items-center justify-center gap-3 rounded-full text-[15px] font-semibold text-on-accent shadow-[0_16px_40px_-12px_rgba(0,0,0,0.65)] ring-1 ring-accent-strong/50"
           style={{

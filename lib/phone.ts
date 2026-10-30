@@ -23,6 +23,16 @@ export function telHref(intl: string): string {
 }
 
 /** Screen-reader label, e.g. "Call Honey Volcano at +354 834 0999". */
-export function callAriaLabel(intl: string): string {
-  return `Call Honey Volcano at ${formatPhone(intl)}`;
+/**
+ * The spoken name of a call button.
+ *
+ * It opens with the words on the button, because WCAG 2.5.3 (Label in Name)
+ * asks that the accessible name contain the visible one — otherwise someone
+ * driving the page by voice can read "Call to taste" aloud and have nothing
+ * happen. The number follows, so a screen reader announces what will be
+ * dialled.
+ */
+export function callAriaLabel(visible: string, pretty?: string): string {
+  const number = pretty && pretty !== visible ? `, ${pretty}` : "";
+  return `${visible} — Honey Volcano${number}`;
 }

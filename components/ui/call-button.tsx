@@ -58,7 +58,7 @@ export function CallButton({
     <span className={cn("inline-flex items-center gap-2", className)}>
       <a
         href={telHref(intl)}
-        aria-label={callAriaLabel(intl)}
+        aria-label={callAriaLabel(text, pretty)}
         onClick={() => {
           track("taste");
           onCall?.();

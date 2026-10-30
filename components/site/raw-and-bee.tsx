@@ -5,6 +5,8 @@ import { Link } from "@/components/ui/link";
 import { ArrowRight, FlaskConical, HandHeart, Thermometer } from "lucide-react";
 
 import { Reveal, RevealGroup, RevealItem } from "@/components/ui/reveal";
+import { RevealWords } from "@/components/ui/reveal-words";
+import { MaskReveal, Parallax, ScrollZoom, SectionTint } from "@/components/ui/scroll-motion";
 import { useAsset } from "@/components/live-content";
 import { useI18n } from "@/components/i18n";
 
@@ -24,14 +26,17 @@ export function RawAndBeeSection() {
 
   return (
     <section className="relative bg-background py-20 md:py-28">
+      <SectionTint />
       <div className="mx-auto grid max-w-6xl items-center gap-10 px-5 md:px-8 lg:grid-cols-2 lg:gap-16">
         <Reveal className="order-2 lg:order-1">
           <p className="text-[11px] font-semibold uppercase tracking-[0.3em] text-accent">
             {t.home.rawEyebrow}
           </p>
-          <h2 className="mt-4 whitespace-pre-line font-serif text-[32px] font-light leading-[1.15] text-foreground md:text-[44px]">
-            {t.home.rawHeading}
-          </h2>
+          <RevealWords
+            as="h2"
+            text={t.home.rawHeading}
+            className="mt-4 font-serif text-[32px] font-light leading-[1.15] text-foreground md:text-[44px]"
+          />
           <p className="mt-5 max-w-xl text-[15px] font-light leading-relaxed text-foreground-muted md:text-base">
             {t.home.rawBody}
           </p>
@@ -63,18 +68,20 @@ export function RawAndBeeSection() {
           </Link>
         </Reveal>
 
-        <Reveal delay={0.1} className="order-1 lg:order-2">
-          <div className="relative overflow-hidden rounded-[26px] border border-border shadow-[var(--shadow-soft)]">
-            <Image
-              src={image}
-              alt="Raw honey, honeycomb, bee pollen, bee bread and honey treats laid out on a dark oak table"
-              width={1920}
-              height={1072}
-              sizes="(max-width: 1023px) 92vw, 48vw"
-              className="h-auto w-full"
-            />
-          </div>
-        </Reveal>
+        <Parallax strength={48} className="order-1 lg:order-2">
+          <MaskReveal from="right" delay={0.08}>
+            <ScrollZoom className="relative rounded-[26px] border border-border shadow-[var(--shadow-soft)]">
+              <Image
+                src={image}
+                alt="Raw honey, honeycomb, bee pollen, bee bread and honey treats laid out on a dark oak table"
+                width={1920}
+                height={1072}
+                sizes="(max-width: 1023px) 92vw, 48vw"
+                className="h-auto w-full"
+              />
+            </ScrollZoom>
+          </MaskReveal>
+        </Parallax>
       </div>
     </section>
   );

@@ -1,11 +1,12 @@
 import type { Dict } from "@/lib/locales/en";
 
 /**
- * Español — TEMPORARY TRANSLATION, NEEDS NATIVE REVIEW.
+ * Español — the About page is the owner's own text; the rest still NEEDS
+ * NATIVE REVIEW.
  *
- * The owner supplied no Spanish, so this is translated from the English
- * source, keeping his warm first-person voice (and the ":-)") rather than a
- * polished marketing tone.
+ * Everything under `about` was written by the owner and is used as supplied.
+ * The rest of the file is translated from the English source, keeping his
+ * warm first-person voice rather than a polished marketing tone.
  */
 const es: Dict = {
   nav: {
@@ -24,7 +25,8 @@ const es: Dict = {
 
   hero: {
     tagline: "Miel cruda y todos los productos de la colmena",
-    lead: "Miel lituana, traída a Islandia a mano. Pruébala antes de comprarla.",
+    lead: "Miel lituana, traída a mano. Pruébala antes de comprarla.",
+    sealsLabel: "Lo que promete cada tarro",
   },
 
   stamps: {
@@ -40,7 +42,7 @@ const es: Dict = {
     label: "En construcción",
     soon: "Muy pronto",
     title: "Viene más",
-    body: "Estamos preparando nuevos productos de la colmena, recetas y una tienda en línea. Mientras tanto, lo más rápido es llamar: te llevamos una prueba.",
+    body: "Nuevos productos de la colmena, recetas y tienda en camino.",
     back: "Volver al inicio",
     more: "Ver lo que viene",
   },
@@ -48,35 +50,30 @@ const es: Dict = {
   home: {
     rawEyebrow: "Miel cruda y todos los productos de la colmena",
     rawHeading: "Todo lo que da la colmena,\ny nada más.",
-    rawBody:
-      "La miel es solo el principio. Polen, pan de abeja, panal recién sacado del cuadro y delicias de miel removidas con fruta de verdad: todo sale de las mismas colmenas lituanas y llega a ti sin una cadena de intermediarios.",
+    rawBody: "Miel, polen, pan de abeja y panal — de las mismas colmenas.",
     rawP1t: "Cruda y sin calentar",
-    rawP1d: "Nunca pasteurizada, así el polen y las enzimas siguen donde los dejaron las abejas.",
+    rawP1d: "Nunca pasteurizada. El polen y las enzimas se quedan.",
     rawP2t: "Un solo apicultor",
-    rawP2d: "Las mismas colmenas, las mismas manos, cada tarro: de las llanuras de Lituania.",
+    rawP2d: "Las mismas colmenas, las mismas manos, cada tarro.",
     rawP3t: "Traída, no enviada",
-    rawP3d: "Llevada a Islandia en persona y entregada de la misma manera.",
+    rawP3d: "Llevada a Islandia en persona y entregada igual.",
 
     featEyebrow: "Primero, pruébala",
     featHeading: "Nuestras favoritas",
-    featBody:
-      "Los tarros por los que la gente vuelve. Llama y te llevamos una prueba: pedirla nunca te sube el precio.",
+    featBody: "Los tarros por los que la gente vuelve.",
     featAll: "Ver todos los productos",
 
     s1Eyebrow: "Que estalle la felicidad",
     s1Heading: "Una cucharada nunca basta",
-    s1Body:
-      "La miel es una de esas cosas pequeñas y sencillas que llegan más lejos de lo que deberían. Comparte un tarro y mira lo que pasa en la mesa.",
+    s1Body: "Comparte un tarro y mira qué pasa en la mesa.",
 
     s2Eyebrow: "De mano a mano",
     s2Heading: "De las manos del apicultor\ndirectamente a las tuyas",
-    s2Body:
-      "Sin almacén, sin revendedor, sin palés anónimos. Sabemos de qué colmenas salió tu tarro, y preferimos dártelo nosotros mismos.",
+    s2Body: "Sin almacén, sin revendedor. Sabemos de qué colmena viene.",
 
     s3Eyebrow: "La mañana, mejorada",
-    s3Heading: "Buena en el pan.\nMejor en el té. La mejor, a cucharadas.",
-    s3Body:
-      "Espesa, lenta y de un dorado de verdad. Así sabía la miel antes de que la cortaran con jarabe y la calentaran hasta no dejar nada.",
+    s3Heading: "Buena en el pan.\nMejor a cucharadas.",
+    s3Body: "Espesa, lenta, bien dorada. Miel como era antes.",
 
     ucHeading: "Se está construyendo algo dulce",
     ucBody: "Una tienda en línea, recetas y más productos de la colmena están en camino.",
@@ -85,13 +82,13 @@ const es: Dict = {
   trust: {
     heading: "Origen fiable.\nNegocio de fiar.",
     authorized: "Autorizados en",
-    body: "Registrados y conformes con la seguridad alimentaria en ambos países, con un origen que se puede seguir hasta la colmena.",
+    body: "Registrados y conformes con la seguridad alimentaria en ambos países.",
   },
 
   values: {
     eyebrow: "Miel de verdad, nada escondido",
-    heading: "Mereces saber\nqué hay exactamente en el tarro.",
-    lead: "La miel es uno de los alimentos más falsificados del mundo: cortada con jarabe, sobrecalentada, despojada de todo lo que importa. Honey Volcano es lo contrario: cruda, trazable y honesta hasta la última gota dorada.",
+    heading: "Sepa exactamente\nqué hay en el tarro.",
+    lead: "Uno de los alimentos más falsificados del mundo. Este no.",
     t1: "Directo de las abejas",
     d1: "Sin intermediarios innecesarios: de las manos del apicultor directamente a tu casa.",
     t2: "Natural y auténtico",
@@ -105,10 +102,10 @@ const es: Dict = {
 
   letter: {
     eyebrow: "Una nota desde la colmena",
-    heading: "Nosotros no hacemos la miel.\nLa hacen las abejas.",
-    p1: "Vemos florecer el tilo y el trébol, seguimos a las abejas por las llanuras y dejamos que la temporada decida cuándo está lista la miel.",
-    p2: "Lo que pruebas es un verano lituano: el prado, el trabajo lento, la paciencia. Nada añadido. Nada con prisa.",
-    p3: "Solo envasamos lo que dan las colmenas, y agradecemos cada gota.",
+    heading: "Nosotros no hacemos miel.\nLa hacen las abejas.",
+    p1: "Seguimos a las abejas y dejamos decidir a la temporada.",
+    p2: "Lo que pruebas es un verano lituano. Nada añadido.",
+    p3: "Envasamos solo lo que dan las colmenas.",
     signature: "— Jordanas, Honey Volcano",
   },
 
@@ -122,67 +119,70 @@ const es: Dict = {
   products: {
     badge: "Llama y prueba",
     call: "Llama y prueba",
-    title: "Miel cruda y todo lo demás que hacen las abejas.",
-    subtitle:
-      "Siete productos, un apicultor, cero intermediarios. Llama y te llevamos una prueba.",
+    title: "Todo lo que hacen las abejas",
+    subtitle: "Siete productos, un apicultor, sin intermediarios.",
     tasteEyebrow: "Prueba antes de comprar",
     tasteHeading: "Pide una prueba",
-    tasteBody: "¿Con curiosidad pero sin convencerte? Pide una prueba y juzga la miel tú mismo.",
+    tasteBody: "Pide probarla y juzga por ti mismo.",
     tasteNote: "Pedir una prueba nunca te sube el precio.",
     placeholder: "Tu correo electrónico",
     button: "Pedir una prueba",
     success: "Gracias: te escribiremos para la prueba.",
     invalid: "Introduce un correo electrónico válido.",
     back: "Volver al inicio",
-    heading: "Nuestros productos",
-    intro: "Precios en coronas islandesas. Llama y prueba lo que quieras antes de decidir.",
     flavours: "Elige un sabor",
-    sizeHeading: "¿500 g o 1 kg?",
-    sizeBody:
-      "La misma miel, dos tarros. Aquí están uno al lado del otro, fotografiados juntos para que la diferencia sea honesta.",
-    size500: "500 g",
-    size1kg: "1 kg",
+    close: "Cerrar",
     tba: "Precio por anunciar",
+  },
+
+  /** One short line per product, shown when a card is opened. */
+  productDesc: {
+    "raw-honey-500": "Cruda, sin calentar, directa de colmenas lituanas. El tarro diario.",
+    "raw-honey-1kg": "La misma miel cruda, en el tarro que dura.",
+    "honeycomb-300": "Panal cortado del cuadro. Mastícalo, cera incluida.",
+    "delicacies-220": "Miel cruda batida con fruta real. Cuatro sabores.",
+    "multicoloured-220": "Una caja de tarros pequeños. Todos nuestros sabores juntos.",
+    "pollen-100": "Polen que las abejas recogieron. Espolvoréalo sobre cualquier cosa.",
+    "bee-bread-100": "Pan de abeja: polen fermentado. Más profundo que el polen.",
   },
 
   about: {
     eyebrow: "Sobre nosotros",
     title: "Honey Volcano",
-    tagline: "¡Que estalle la felicidad! :-)",
-    p1: "Soy lituano y, desde hace nueve años, mi casa es Islandia: una tierra de hielo y fuego.",
-    p2: "Pero nuestra historia dulce empieza un poco más lejos: en las llanuras tranquilas de Lituania, llenas del zumbido de abejas trabajadoras.",
-    p3: "¡Y ahora una nueva oleada dulce está entrando en erupción en el Norte! Como un volcán islandés de verdad, solo que en lugar de lava lo que sale es MIEL LITUANA pura y natural.",
-    p4: "Los productos de la colmena son, quizá, una de esas alegrías sencillas de la vida que nos tocan muy dentro.",
-    p5: "Al final todos buscamos algo auténtico, natural y sencillo, y que a la vez nos provoque una sensación maravillosa.",
-    p6: "Y quien haya probado miel lituana de verdad sabe una cosa segura: ¡una cucharada nunca basta! :-)",
-    p7: "¿Qué más podemos ofrecerte para alegrarte el día? Pues tenemos bastante.",
-    p8: "No se trata solo de miel. Ofrecemos todo un mundo de tesoros creados por las abejas, tesoros que queremos compartir contigo. Nuestro objetivo es que los mejores productos de la colmena te lleguen directamente y sin complicaciones, a buen precio y con una pizca de alegría. :-)",
-    openList: "Ver la lista de productos",
+    tagline: "¡Que la felicidad estalle como un volcán! 🍯🌋",
+    p1: "Soy lituano y desde hace ya 9 años mi hogar está en la tierra del hielo y el fuego: Islandia.",
+    p2: "Nuestra historia comienza de forma sencilla, entre trabajo, naturaleza y tradición, en las verdes tierras de Lituania.",
+    p3: "Pero ahora, aquí en el Norte, una nueva explosión de dulzura está a punto de entrar en erupción como un auténtico volcán islandés: ¡MIEL LITUANA, PURA Y NATURAL! 🍯🌋",
+    p4: "Los productos de la colmena son una de esas cosas que nos unen desde lo más profundo del corazón: el deseo de volver a lo sencillo, descubrir sabores auténticos y disfrutar de esos pequeños placeres que hacen la vida un poquito más dulce.",
+    p5: "¿Y cómo podemos endulzarte la vida? ¡Tenemos mucho que ofrecerte!",
+    p6: "Quien haya probado alguna vez la auténtica MIEL LITUANA sabe de lo que hablamos… ¡y seguro que querrá repetir! 😊",
+    p7: "Descubre nuestros productos y todo lo que nace de la colmena.",
+    p8: "Nosotros nos encargamos de hacerte llegar lo mejor de nuestra tierra, con toda su autenticidad y calidad.",
+    openList: "Ver productos",
     valuesHeading: "Nuestros valores",
-    v1t: "Directo de las abejas",
-    v1d: "Sin intermediarios innecesarios: de las manos del apicultor directamente a tu casa.",
+    v1t: "Directamente de las abejas",
+    v1d: "",
     v2t: "Natural y auténtico",
-    v2d: "Creado por la naturaleza. Recogido por las abejas. Preparado con cuidado humano.",
+    v2d: "",
     v3t: "Precios justos y accesibles",
-    v3d: "Creemos que los productos de la colmena de calidad no deberían ser un lujo.",
-    v4t: "Toda la gama de productos de la colmena",
-    v4d: "De la miel al polen, el pan de abeja y otros tesoros de la colmena.",
-    v5t: "Operamos oficialmente en Lituania e Islandia",
-    v5d: "Origen responsable, procedencia trazable y pleno cumplimiento de las normas de seguridad alimentaria.",
-    v6t: "De mano a mano, de corazón a corazón",
-    v6d: "Porque lo que transmitimos importa tanto como lo que vendemos.",
+    v3d: "",
+    v4t: "Todos los productos de la colmena",
+    v4d: "",
+    v5t: "Certificado en Lituania e Islandia",
+    v5d: "",
+    v6t: "De mano en mano ❤️ y de corazón a corazón",
+    v6d: "",
     close1: "Honey Volcano",
-    close2: "¡Que estalle la felicidad!",
+    close2: "¡Que la felicidad estalle como un volcán!",
   },
 
   contact: {
     title: "Información de contacto",
-    lead: "Dos formas de encontrarnos. Elige la que prefieras: llamar siempre es lo más rápido.",
+    lead: "Dos formas de contactarnos. Llamar es lo más rápido.",
     writeHeading: "Escríbenos",
     writeBody: "Déjanos un mensaje y te respondemos.",
     callHeading: "Llama directamente",
-    callBody:
-      "La forma más rápida de preguntar cualquier cosa, acordar una prueba o hacer un pedido. Atendemos en islandés, inglés, lituano, polaco y ruso.",
+    callBody: "Respondemos en islandés, inglés, lituano, polaco y ruso.",
     name: "Tu nombre",
     email: "Correo electrónico",
     phone: "Teléfono",
@@ -222,8 +222,7 @@ const es: Dict = {
   privacy: {
     title: "Política de privacidad",
     updated: "Última actualización",
-    intro:
-      "Esta página explica qué pasa con tu información cuando usas honeyvolcano.com. Es corta porque recogemos muy poco.",
+    intro: "Qué pasa con tus datos en este sitio. Recogemos muy poco.",
     s1h: "Quién es el responsable",
     s1b: "Jordanas Golovinas, n.º de IVA 161171, Miðholt 1, 270 Mosfellsbær, Islandia. Correo golovinasjordanas@gmail.com, teléfono +354 834 0999.",
     s2h: "Qué recogemos",
@@ -272,10 +271,8 @@ const es: Dict = {
   story: {
     eyebrow: "Donde empieza",
     heading: "Nacida en las llanuras\nde Lituania",
-    body1:
-      "Nuestra miel se recoge donde la tierra se vuelve llana y silenciosa: prados de trébol, tilo y flores silvestres, trabajados por abejas que nunca han visto una autopista.",
-    body2:
-      "Cada cosecha es pequeña, cruda y sin filtrar, envasada exactamente como la hicieron las abejas y llevada después al norte, a Islandia, a mano.",
+    body1: "Prados de trébol, tilo y flores silvestres, trabajados por abejas sin prisa.",
+    body2: "Lotes pequeños, cruda, sin filtrar. Al norte, a mano.",
     stat1: "Cruda",
     stat2: "Lote pequeño",
     stat3: "Sin filtrar",

@@ -88,7 +88,7 @@ export function LanguageSwitcher() {
         onClick={() => setOpen((o) => !o)}
         aria-haspopup="listbox"
         aria-expanded={open}
-        aria-label="Select language"
+        aria-label={`${cur.label} — select language`}
         className="flex h-11 items-center gap-2 rounded-full border border-border px-3.5 text-sm text-foreground-muted transition-colors hover:border-accent hover:text-accent"
       >
         <Flag code={cur.code} />

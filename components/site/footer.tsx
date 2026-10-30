@@ -87,7 +87,7 @@ export function SiteFooter() {
             </span>
             <a
               href={telHref(site.phoneIntl)}
-              aria-label={callAriaLabel(site.phoneIntl)}
+              aria-label={callAriaLabel(formatPhone(site.phoneIntl))}
               className="w-fit tabular-nums text-accent transition-colors hover:text-accent-strong"
             >
               {pretty}

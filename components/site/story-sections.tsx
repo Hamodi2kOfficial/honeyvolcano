@@ -3,6 +3,8 @@
 import Image from "next/image";
 
 import { Reveal } from "@/components/ui/reveal";
+import { RevealWords } from "@/components/ui/reveal-words";
+import { MaskReveal, Parallax, ScrollZoom, SectionTint } from "@/components/ui/scroll-motion";
 import { useAsset } from "@/components/live-content";
 import { useI18n } from "@/components/i18n";
 import { cn } from "@/lib/utils";
@@ -33,28 +35,40 @@ function StorySection({
   tone?: "base" | "soft";
 }) {
   return (
-    <section className={cn("py-20 md:py-28", tone === "soft" ? "bg-bg-soft" : "bg-background")}>
+    <section
+      className={cn(
+        "relative py-20 md:py-28",
+        tone === "soft" ? "bg-bg-soft" : "bg-background"
+      )}
+    >
+      <SectionTint />
       <div className="mx-auto grid max-w-6xl items-center gap-10 px-5 md:px-8 lg:grid-cols-2 lg:gap-16">
-        <Reveal className={cn(side === "right" && "lg:order-2")}>
-          <div className="relative overflow-hidden rounded-[26px] border border-border shadow-[var(--shadow-soft)]">
-            <Image
-              src={image}
-              alt={alt}
-              width={1920}
-              height={1280}
-              sizes="(max-width: 1023px) 92vw, 48vw"
-              className="h-auto w-full"
-            />
-          </div>
-        </Reveal>
+        {/* The picture wipes open, settles out of a slight zoom, and drifts
+            against the words beside it — three parts of one arrival. */}
+        <Parallax strength={56} className={cn(side === "right" && "lg:order-2")}>
+          <MaskReveal from={side === "right" ? "right" : "left"}>
+            <ScrollZoom className="relative rounded-[26px] border border-border shadow-[var(--shadow-soft)]">
+              <Image
+                src={image}
+                alt={alt}
+                width={1920}
+                height={1280}
+                sizes="(max-width: 1023px) 92vw, 48vw"
+                className="h-auto w-full"
+              />
+            </ScrollZoom>
+          </MaskReveal>
+        </Parallax>
 
         <Reveal delay={0.1} className={cn(side === "right" && "lg:order-1")}>
           <p className="text-[11px] font-semibold uppercase tracking-[0.3em] text-accent">
             {eyebrow}
           </p>
-          <h2 className="mt-4 whitespace-pre-line font-serif text-[30px] font-light leading-[1.15] text-foreground md:text-[42px]">
-            {heading}
-          </h2>
+          <RevealWords
+            as="h2"
+            text={heading}
+            className="mt-4 font-serif text-[30px] font-light leading-[1.15] text-foreground md:text-[42px]"
+          />
           <p className="mt-5 max-w-xl text-[15px] font-light leading-relaxed text-foreground-muted md:text-base">
             {body}
           </p>

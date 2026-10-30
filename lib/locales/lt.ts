@@ -22,7 +22,8 @@ const lt: Dict = {
 
   hero: {
     tagline: "Žalias medus ir visi bičių produktai",
-    lead: "Lietuviškas medus, atvežtas į Islandiją savo rankomis. Paragaukite prieš pirkdami.",
+    lead: "Lietuviškas medus, atvežtas rankomis. Paragaukite prieš pirkdami.",
+    sealsLabel: "Ką žada kiekvienas stiklainis",
   },
 
   stamps: {
@@ -38,43 +39,38 @@ const lt: Dict = {
     label: "Ruošiama",
     soon: "Netrukus",
     title: "Netrukus bus daugiau",
-    body: "Ruošiame naujų bičių produktų, receptų ir internetinę parduotuvę. Kol kas greičiausias būdas paragauti – paskambinti, o mes atvešime.",
+    body: "Netrukus – nauji bičių produktai, receptai ir parduotuvė.",
     back: "Grįžti į pradžią",
     more: "Pažiūrėti, kas ruošiama",
   },
 
   home: {
     rawEyebrow: "Žalias medus ir visi bičių produktai",
-    rawHeading: "Viskas, ką pagamina avilys,\nir nieko, ko jis negamina.",
-    rawBody:
-      "Medus – tik pradžia. Žiedadulkės, bičių duonelė, korys tiesiai iš rėmo ir medaus skanėstai su tikrais vaisiais – visa tai iš tų pačių lietuviškų avilių ir pasiekia jus be tarpininkų grandinės.",
+    rawHeading: "Viskas, ką duoda avilys,\nir nieko daugiau.",
+    rawBody: "Medus, žiedadulkės, bičių duona ir korys – iš to paties bityno.",
     rawP1t: "Žalias ir nekaitintas",
-    rawP1d: "Niekada nepasterizuotas, todėl žiedadulkės ir fermentai lieka tokie, kokius paliko bitės.",
+    rawP1d: "Nekaitinta. Žiedadulkės ir fermentai lieka savo vietose.",
     rawP2t: "Vienas bitininkas",
-    rawP2d: "Tie patys aviliai, tos pačios rankos, kiekvienas stiklainis – iš Lietuvos lygumų.",
+    rawP2d: "Tie patys aviliai, tos pačios rankos, kiekvienas stiklainis.",
     rawP3t: "Atvežta, o ne atsiųsta",
-    rawP3d: "Į Islandiją atgabenama asmeniškai ir taip pat perduodama į rankas.",
+    rawP3d: "Į Islandiją atvežta asmeniškai ir taip pat perduota.",
 
     featEyebrow: "Pirma paragaukite",
     featHeading: "Mūsų mėgstamiausi",
-    featBody:
-      "Stiklainiai, dėl kurių grįžtama. Paskambinkite ir atvešime paragauti – paprašius paragauti kaina niekada nepadidėja.",
+    featBody: "Stiklainiai, dėl kurių grįžtama.",
     featAll: "Visi produktai",
 
     s1Eyebrow: "Te laimė trykšta",
     s1Heading: "Vieno šaukšto niekada neužtenka",
-    s1Body:
-      "Medus – vienas tų mažų, paprastų dalykų, kurie pasiekia toliau, nei tikėtumėtės. Padalinkite stiklainį ir pamatysite, kas nutinka prie stalo.",
+    s1Body: "Padalinkite stiklainį ir pamatysite, kas vyksta prie stalo.",
 
     s2Eyebrow: "Iš rankų į rankas",
     s2Heading: "Iš bitininko rankų\ntiesiai į jūsų",
-    s2Body:
-      "Jokio sandėlio, jokio perpardavėjo, jokių bevardžių palečių. Žinome, iš kurių avilių jūsų stiklainis, ir mieliau įteiksime jį patys.",
+    s2Body: "Jokių sandėlių, jokių perpardavinėtojų. Žinome, iš kurio avilio.",
 
     s3Eyebrow: "Geresnis rytas",
-    s3Heading: "Geras ant duonos.\nGeresnis arbatoje. Geriausias šaukštu.",
-    s3Body:
-      "Tirštas, lėtas, tikrai auksinis. Būtent taip medus skonėjo prieš tai, kai imta jį skiesti sirupu ir kaitinti tol, kol nieko nelieka.",
+    s3Heading: "Geras ant duonos.\nGeriausias šaukštu.",
+    s3Body: "Tirštas, lėtas, tikrai auksinis. Medus toks, koks buvo.",
 
     ucHeading: "Kuriame kai ką saldaus",
     ucBody: "Internetinė parduotuvė, receptai ir daugiau bičių produktų jau kelyje.",
@@ -83,13 +79,13 @@ const lt: Dict = {
   trust: {
     heading: "Patikimas šaltinis.\nSąžiningas verslas.",
     authorized: "Autorizuota",
-    body: "Registruota ir atitinka maisto saugos reikalavimus abiejose šalyse, o kilmę galima atsekti iki avilio.",
+    body: "Registruota ir atitinka maisto saugą abiejose šalyse.",
   },
 
   values: {
     eyebrow: "Tikras medus, nieko paslėpta",
-    heading: "Turite žinoti,\nkas tiksliai yra stiklainyje.",
-    lead: "Medus – vienas dažniausiai klastojamų maisto produktų pasaulyje: skiedžiamas sirupu, perkaitinamas, atimant viską, kas svarbu. „Honey Volcano“ yra priešingybė: žalias, atsekamas ir sąžiningas iki paskutinio auksinio lašo.",
+    heading: "Žinokite tiksliai,\nkas yra stiklainyje.",
+    lead: "Vienas labiausiai klastojamų maisto produktų pasaulyje. Tik ne šis.",
     t1: "Tiesiai iš bičių",
     d1: "Jokių nereikalingų tarpininkų – iš bitininko rankų tiesiai į jūsų namus.",
     t2: "Natūralu ir tikra",
@@ -103,10 +99,10 @@ const lt: Dict = {
 
   letter: {
     eyebrow: "Žinutė iš avilio",
-    heading: "Medaus negaminame mes.\nJį gamina bitės.",
-    p1: "Stebime, kaip pražysta liepa ir dobilai, sekame bites per lygumas ir leidžiame sezonui nuspręsti, kada medus paruoštas.",
-    p2: "Tai, ką ragaujate, yra lietuviška vasara – pieva, lėtas darbas, kantrybė. Nieko nepridėta. Niekur neskubama.",
-    p3: "Supilstome tik tai, ką dovanoja aviliai, ir esame dėkingi už kiekvieną lašą.",
+    heading: "Medaus negaminame.\nJį gamina bitės.",
+    p1: "Sekame paskui bites ir leidžiame sezonui nuspręsti.",
+    p2: "Tai, ką ragaujate, yra lietuviška vasara. Nieko pridėta.",
+    p3: "Pilstome tik tiek, kiek aviliai duoda.",
     signature: "— Jordanas, Honey Volcano",
   },
 
@@ -120,27 +116,31 @@ const lt: Dict = {
   products: {
     badge: "Skambinkite paragauti",
     call: "Skambinkite paragauti",
-    title: "Žalias medus ir visa kita, ką gamina bitės.",
-    subtitle:
-      "Septyni produktai, vienas bitininkas, jokių tarpininkų. Paskambinkite ir atvešime paragauti.",
+    title: "Viskas, ką gamina bitės",
+    subtitle: "Septyni produktai, vienas bitininkas, jokių tarpininkų.",
     tasteEyebrow: "Paragaukite prieš pirkdami",
     tasteHeading: "Paprašykite paragauti",
-    tasteBody: "Smalsu, bet neįtikino? Paprašykite paragauti ir spręskite patys.",
+    tasteBody: "Paprašykite paragauti ir spręskite patys.",
     tasteNote: "Paprašius paragauti kaina niekada nepadidėja.",
     placeholder: "Jūsų el. paštas",
     button: "Noriu paragauti",
     success: "Ačiū – netrukus susisieksime dėl degustacijos.",
     invalid: "Įveskite teisingą el. pašto adresą.",
     back: "Grįžti į pradžią",
-    heading: "Mūsų produktai",
-    intro: "Kainos Islandijos kronomis. Prieš apsispręsdami paskambinkite ir paragaukite.",
     flavours: "Pasirinkite skonį",
-    sizeHeading: "500 g ar 1 kg?",
-    sizeBody:
-      "Tas pats medus, du stiklainiai. Štai jie greta, nufotografuoti kartu, kad skirtumas būtų sąžiningas.",
-    size500: "500 g",
-    size1kg: "1 kg",
+    close: "Uždaryti",
     tba: "Kaina bus paskelbta",
+  },
+
+  /** One short line per product, shown when a card is opened. */
+  productDesc: {
+    "raw-honey-500": "Žalias, nekaitintas, tiesiai iš Lietuvos bityno. Kasdienis stiklainis.",
+    "raw-honey-1kg": "Tas pats žalias medus, stiklainyje visam sezonui.",
+    "honeycomb-300": "Korys, pjautas tiesiai iš rėmo. Kramtykite su vašku.",
+    "delicacies-220": "Žalias medus su tikrais vaisiais. Keturi skoniai.",
+    "multicoloured-220": "Dėžutė mažų stiklainių. Visi mūsų skoniai kartu.",
+    "pollen-100": "Žiedadulkės, kurias bitės susirinko pačios. Barstykite ant visko.",
+    "bee-bread-100": "Bičių duona — fermentuotos žiedadulkės. Sodresnė už žiedadulkes.",
   },
 
   about: {
@@ -175,12 +175,11 @@ const lt: Dict = {
 
   contact: {
     title: "Kontaktinė informacija",
-    lead: "Du būdai mus pasiekti. Rinkitės, kuris patogiau – paskambinti visada greičiausia.",
+    lead: "Du būdai susisiekti. Paskambinti – greičiausia.",
     writeHeading: "Parašykite mums",
     writeBody: "Palikite žinutę ir mes su jumis susisieksime.",
     callHeading: "Skambinkite tiesiai",
-    callBody:
-      "Greičiausias būdas paklausti, susitarti dėl degustacijos ar užsisakyti. Kalbame islandiškai, angliškai, lietuviškai, lenkiškai ir rusiškai.",
+    callBody: "Kalbame islandiškai, angliškai, lietuviškai, lenkiškai ir rusiškai.",
     name: "Jūsų vardas",
     email: "El. paštas",
     phone: "Telefonas",
@@ -220,8 +219,7 @@ const lt: Dict = {
   privacy: {
     title: "Privatumo politika",
     updated: "Atnaujinta",
-    intro:
-      "Šiame puslapyje paaiškinama, kas nutinka jūsų informacijai naudojantis honeyvolcano.com. Jis trumpas, nes renkame labai nedaug.",
+    intro: "Kas nutinka jūsų informacijai šioje svetainėje. Renkame labai mažai.",
     s1h: "Kas atsakingas",
     s1b: "Jordanas Golovinas, PVM kodas 161171, Miðholt 1, 270 Mosfellsbær, Islandija. El. paštas golovinasjordanas@gmail.com, telefonas +354 834 0999.",
     s2h: "Ką renkame",
@@ -270,10 +268,8 @@ const lt: Dict = {
   story: {
     eyebrow: "Kur viskas prasideda",
     heading: "Gimęs Lietuvos\nlygumose",
-    body1:
-      "Mūsų medų renkame ten, kur žemė tampa lygi ir tyli – dobilų, liepų ir laukinių gėlių pievose, kurias darbuoja bitės, niekada nemačiusios greitkelio.",
-    body2:
-      "Kiekvienas derlius mažas, žalias ir nefiltruotas, supilstytas tiksliai toks, kokį sukūrė bitės, o tada savo rankomis gabenamas į šiaurę, į Islandiją.",
+    body1: "Dobilų, liepų ir laukinių gėlių pievos, kuriose dirba neskubančios bitės.",
+    body2: "Mažos partijos, žalias, nefiltruotas. Į šiaurę – rankomis.",
     stat1: "Žalias",
     stat2: "Maža partija",
     stat3: "Nefiltruotas",

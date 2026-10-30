@@ -181,80 +181,29 @@ html.lenis body {
    main thread. Each element is given its own negative animation-delay in the
    markup, which desynchronises them without extra keyframes.
    -------------------------------------------------------------------- */
-@keyframes hv-float {
-  0%,
-  100% {
-    transform: translate3d(0, 0, 0);
-  }
-  50% {
-    transform: translate3d(0, -16px, 0);
-  }
-}
-@keyframes hv-drift {
-  0%,
-  100% {
-    transform: translate3d(0, 0, 0) rotate(-4deg);
-  }
-  50% {
-    transform: translate3d(7px, -11px, 0) rotate(5deg);
-  }
-}
-/* A drop swells, falls, and fades — then the cycle rests before repeating. */
-@keyframes hv-drip {
+/* One fall, reused by every piece. Each gets its own duration, a negative
+   delay so the field is already mid-fall on the first frame, and its own
+   drift and spin, so no two pieces trace the same line. */
+@keyframes hv-fall {
   0% {
-    transform: translate3d(0, 0, 0) scaleY(0.55);
+    transform: translate3d(0, -18vh, 0) rotate(0deg);
     opacity: 0;
   }
-  12% {
-    transform: translate3d(0, 0, 0) scaleY(1);
+  10% {
     opacity: 1;
   }
-  48% {
-    transform: translate3d(0, 54px, 0) scaleY(0.75);
-    opacity: 0;
+  88% {
+    opacity: 1;
   }
   100% {
-    transform: translate3d(0, 54px, 0) scaleY(0.75);
+    transform: translate3d(var(--fall-drift, 0), 112vh, 0) rotate(var(--fall-spin, 0deg));
     opacity: 0;
   }
 }
-/* A bee's curved patrol: across, up, back, down. */
-@keyframes hv-bee {
-  0% {
-    transform: translate3d(0, 0, 0) rotate(6deg);
-  }
-  25% {
-    transform: translate3d(44px, -26px, 0) rotate(-8deg);
-  }
-  50% {
-    transform: translate3d(14px, -52px, 0) rotate(5deg);
-  }
-  75% {
-    transform: translate3d(-26px, -22px, 0) rotate(-6deg);
-  }
-  100% {
-    transform: translate3d(0, 0, 0) rotate(6deg);
-  }
-}
-.hv-float {
-  animation: hv-float 7s ease-in-out infinite;
-  will-change: transform;
-}
-.hv-drift {
-  animation: hv-drift 11s ease-in-out infinite;
-  will-change: transform;
-}
-.hv-drip {
-  animation: hv-drip 6s ease-in infinite;
-  will-change: transform, opacity;
-}
-.hv-bee {
-  animation: hv-bee 14s ease-in-out infinite;
-  will-change: transform;
-}
-.hv-bee-slow {
-  animation: hv-bee 21s ease-in-out infinite;
-  will-change: transform;
+.hv-fall {
+  animation-name: hv-fall;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -264,12 +213,9 @@ html.lenis body {
   .animate-marquee {
     animation: none;
   }
-  .hv-float,
-  .hv-drift,
-  .hv-drip,
-  .hv-bee,
-  .hv-bee-slow {
+  .hv-fall {
     animation: none;
+    opacity: 0;
   }
   .text-shimmer {
     animation: none;
@@ -397,5 +343,50 @@ html.lenis body {
   .hv-admin input[type="checkbox"] {
     width: 1.2rem;
     height: 1.2rem;
+  }
+}
+
+/* A row that scrolls sideways without the bar getting in the way of the
+   design. The row is tabbable and snaps, so the scroll is still discoverable
+   and still reachable from a keyboard. */
+.hv-rail {
+  scrollbar-width: none;
+}
+.hv-rail::-webkit-scrollbar {
+  display: none;
+}
+
+/* The hero film dissolves toward one edge instead of being covered over:
+   where the mask runs out, the page's own background shows through, and that
+   is the fog the logo sits in. Bottom edge on a phone, left edge once there
+   is a side to spare. */
+.hv-film {
+  -webkit-mask-image: linear-gradient(
+    0deg,
+    transparent 0%,
+    rgba(0, 0, 0, 0.18) 30%,
+    #000 68%
+  );
+  mask-image: linear-gradient(
+    0deg,
+    transparent 0%,
+    rgba(0, 0, 0, 0.18) 30%,
+    #000 68%
+  );
+}
+@media (min-width: 1024px) {
+  .hv-film {
+    -webkit-mask-image: linear-gradient(
+      90deg,
+      transparent 0%,
+      rgba(0, 0, 0, 0.16) 26%,
+      #000 62%
+    );
+    mask-image: linear-gradient(
+      90deg,
+      transparent 0%,
+      rgba(0, 0, 0, 0.16) 26%,
+      #000 62%
+    );
   }
 }

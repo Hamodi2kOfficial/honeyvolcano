@@ -5,6 +5,7 @@ import Image from "next/image";
 import { motion } from "motion/react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
+import { CallButton } from "@/components/ui/call-button";
 import { EASE } from "@/lib/motion";
 import { useI18n } from "@/components/i18n";
 import { useLiveContent } from "@/components/live-content";
@@ -166,6 +167,12 @@ export default function GalleryPage() {
       >
         <ChevronRight className="h-5 w-5" />
       </button>
+
+      {/* The one action the site exists for — the sticky bar never shows
+          here, because the slideshow does not scroll. */}
+      <div className="absolute bottom-16 left-1/2 z-20 -translate-x-1/2">
+        <CallButton size="md" showNumber={false} />
+      </div>
 
       {/* dots */}
       <div className="absolute bottom-6 left-1/2 z-20 flex -translate-x-1/2 items-center gap-2">

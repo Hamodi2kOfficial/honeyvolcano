@@ -21,7 +21,8 @@ const pl: Dict = {
 
   hero: {
     tagline: "Surowy miód i wszystkie produkty pszczele",
-    lead: "Litewski miód przywieziony na Islandię własnymi rękami. Spróbuj, zanim kupisz.",
+    lead: "Litewski miód przywieziony tu własnymi rękami. Spróbuj, zanim kupisz.",
+    sealsLabel: "Co obiecuje każdy słoik",
   },
 
   stamps: {
@@ -37,43 +38,38 @@ const pl: Dict = {
     label: "W budowie",
     soon: "Wkrótce",
     title: "Będzie tego więcej",
-    body: "Przygotowujemy nowe produkty pszczele, przepisy i sklep internetowy. Na razie najszybciej jest zadzwonić — przywieziemy próbkę.",
+    body: "Nowe produkty pszczele, przepisy i sklep są w drodze.",
     back: "Wróć na stronę główną",
     more: "Zobacz, co powstaje",
   },
 
   home: {
     rawEyebrow: "Surowy miód i wszystkie produkty pszczele",
-    rawHeading: "Wszystko, co daje ul,\ni nic poza tym.",
-    rawBody:
-      "Miód to dopiero początek. Pyłek, pierzga, plaster prosto z ramki i miodowe przysmaki mieszane z prawdziwymi owocami — wszystko z tych samych litewskich uli i trafia do Was bez łańcucha pośredników.",
+    rawHeading: "Wszystko, co daje ul,\ni nic więcej.",
+    rawBody: "Miód, pyłek, pierzga i plaster — z tych samych uli.",
     rawP1t: "Surowy i niepodgrzewany",
-    rawP1d: "Nigdy nie pasteryzowany, więc pyłek i enzymy zostają tam, gdzie zostawiły je pszczoły.",
+    rawP1d: "Nigdy niepasteryzowany. Pyłek i enzymy zostają na miejscu.",
     rawP2t: "Jeden pszczelarz",
-    rawP2d: "Te same ule, te same ręce, każdy słoik — z równin Litwy.",
+    rawP2d: "Te same ule, te same ręce, każdy słoik.",
     rawP3t: "Przywiezione, nie wysłane",
-    rawP3d: "Przywożone na Islandię osobiście i tak samo przekazywane.",
+    rawP3d: "Przywieziony na Islandię osobiście i tak samo przekazany.",
 
     featEyebrow: "Najpierw spróbuj",
     featHeading: "Nasze ulubione",
-    featBody:
-      "Słoiki, po które ludzie wracają. Zadzwoń, a przywieziemy próbkę — prośba o spróbowanie nigdy nie podnosi ceny.",
+    featBody: "Słoiki, po które wraca się ponownie.",
     featAll: "Zobacz wszystkie produkty",
 
     s1Eyebrow: "Niech szczęście wybuchnie",
     s1Heading: "Jedna łyżeczka to za mało",
-    s1Body:
-      "Miód to jedna z tych małych, prostych rzeczy, które sięgają dalej, niż powinny. Podziel się słoikiem i zobacz, co dzieje się przy stole.",
+    s1Body: "Podziel się słoikiem i zobacz, co dzieje się przy stole.",
 
     s2Eyebrow: "Z rąk do rąk",
     s2Heading: "Z rąk pszczelarza\nprosto do Waszych",
-    s2Body:
-      "Żadnego magazynu, żadnego pośrednika, żadnej bezimiennej palety. Wiemy, z których uli pochodzi Wasz słoik, i wolimy podać go osobiście.",
+    s2Body: "Bez magazynu, bez pośrednika. Wiemy, z którego ula.",
 
     s3Eyebrow: "Lepszy poranek",
-    s3Heading: "Dobry na chlebie.\nLepszy w herbacie. Najlepszy łyżeczką.",
-    s3Body:
-      "Gęsty, powolny, naprawdę złoty. Tak smakował miód, zanim zaczęto go rozcieńczać syropem i podgrzewać, aż nic z niego nie zostawało.",
+    s3Heading: "Dobry na chlebie.\nNajlepszy łyżką.",
+    s3Body: "Gęsty, powolny, naprawdę złoty. Miód taki jak dawniej.",
 
     ucHeading: "Powstaje coś słodkiego",
     ucBody: "Sklep internetowy, przepisy i więcej produktów pszczelich już w drodze.",
@@ -82,13 +78,13 @@ const pl: Dict = {
   trust: {
     heading: "Pewne źródło.\nUczciwy biznes.",
     authorized: "Zarejestrowani w",
-    body: "Zarejestrowani i zgodni z normami bezpieczeństwa żywności w obu krajach, z pochodzeniem, które da się prześledzić aż do ula.",
+    body: "Zarejestrowani i zgodni z normami żywnościowymi w obu krajach.",
   },
 
   values: {
     eyebrow: "Prawdziwy miód, nic ukrytego",
-    heading: "Macie prawo wiedzieć,\nco dokładnie jest w słoiku.",
-    lead: "Miód to jeden z najczęściej fałszowanych produktów spożywczych na świecie — rozcieńczany syropem, przegrzewany, pozbawiany wszystkiego, co istotne. Honey Volcano jest przeciwieństwem: surowy, możliwy do prześledzenia i uczciwy do ostatniej złotej kropli.",
+    heading: "Wiedz dokładnie,\nco jest w słoiku.",
+    lead: "Jeden z najczęściej fałszowanych produktów świata. Tylko nie ten.",
     t1: "Prosto od pszczół",
     d1: "Bez zbędnych pośredników — prosto z rąk pszczelarza do Waszego domu.",
     t2: "Naturalnie i autentycznie",
@@ -102,10 +98,10 @@ const pl: Dict = {
 
   letter: {
     eyebrow: "Wiadomość z ula",
-    heading: "To nie my robimy miód.\nRobią go pszczoły.",
-    p1: "Patrzymy, jak zakwita lipa i koniczyna, idziemy za pszczołami przez równiny i pozwalamy sezonowi zdecydować, kiedy miód jest gotowy.",
-    p2: "To, co smakujecie, to litewskie lato — łąka, powolna praca, cierpliwość. Nic dodanego. Nic w pośpiechu.",
-    p3: "Zamykamy w słoikach tylko to, co dają ule, i jesteśmy wdzięczni za każdą kroplę.",
+    heading: "Nie robimy miodu.\nRobią go pszczoły.",
+    p1: "Idziemy za pszczołami i pozwalamy decydować sezonowi.",
+    p2: "To, co czujesz, to litewskie lato. Nic dodanego.",
+    p3: "Rozlewamy tylko tyle, ile dadzą ule.",
     signature: "— Jordanas, Honey Volcano",
   },
 
@@ -119,27 +115,31 @@ const pl: Dict = {
   products: {
     badge: "Zadzwoń i spróbuj",
     call: "Zadzwoń i spróbuj",
-    title: "Surowy miód i wszystko inne, co robią pszczoły.",
-    subtitle:
-      "Siedem produktów, jeden pszczelarz, zero pośredników. Zadzwoń, a przywieziemy próbkę.",
+    title: "Wszystko, co robią pszczoły",
+    subtitle: "Siedem produktów, jeden pszczelarz, żadnych pośredników.",
     tasteEyebrow: "Spróbuj przed zakupem",
     tasteHeading: "Poproś o spróbowanie",
-    tasteBody: "Ciekawi, ale nieprzekonani? Poproście o spróbowanie i oceńcie sami.",
+    tasteBody: "Poproś o spróbowanie i oceń sam.",
     tasteNote: "Prośba o spróbowanie nigdy nie podnosi ceny.",
     placeholder: "Twój e-mail",
     button: "Chcę spróbować",
     success: "Dziękujemy — odezwiemy się w sprawie degustacji.",
     invalid: "Podaj prawidłowy adres e-mail.",
     back: "Wróć na stronę główną",
-    heading: "Nasze produkty",
-    intro: "Ceny w koronach islandzkich. Zadzwoń i spróbuj, zanim zdecydujesz.",
     flavours: "Wybierz smak",
-    sizeHeading: "500 g czy 1 kg?",
-    sizeBody:
-      "Ten sam miód, dwa słoiki. Tutaj obok siebie, sfotografowane razem, żeby różnica była uczciwa.",
-    size500: "500 g",
-    size1kg: "1 kg",
+    close: "Zamknij",
     tba: "Cena wkrótce",
+  },
+
+  /** One short line per product, shown when a card is opened. */
+  productDesc: {
+    "raw-honey-500": "Surowy, niepodgrzewany, prosto z litewskiej pasieki. Słoik na co dzień.",
+    "raw-honey-1kg": "Ten sam surowy miód, w słoiku na cały sezon.",
+    "honeycomb-300": "Plaster krojony prosto z ramki. Żuj razem z woskiem.",
+    "delicacies-220": "Surowy miód ucierany z prawdziwymi owocami. Cztery smaki.",
+    "multicoloured-220": "Pudełko małych słoiczków. Wszystkie nasze smaki razem.",
+    "pollen-100": "Pyłek kwiatowy zebrany przez pszczoły. Posyp nim wszystko.",
+    "bee-bread-100": "Pierzga — pyłek sfermentowany w ulu. Głębsza niż pyłek.",
   },
 
   about: {
@@ -174,12 +174,11 @@ const pl: Dict = {
 
   contact: {
     title: "Kontakt",
-    lead: "Dwa sposoby, żeby się z nami skontaktować. Wybierz wygodniejszy — telefon jest zawsze najszybszy.",
+    lead: "Dwa sposoby kontaktu. Telefon jest najszybszy.",
     writeHeading: "Napisz do nas",
     writeBody: "Zostaw wiadomość, a my się odezwiemy.",
     callHeading: "Zadzwoń bezpośrednio",
-    callBody:
-      "Najszybszy sposób, żeby o cokolwiek zapytać, umówić degustację albo złożyć zamówienie. Mówimy po islandzku, angielsku, litewsku, polsku i rosyjsku.",
+    callBody: "Odpowiadamy po islandzku, angielsku, litewsku, polsku i rosyjsku.",
     name: "Imię",
     email: "E-mail",
     phone: "Telefon",
@@ -219,8 +218,7 @@ const pl: Dict = {
   privacy: {
     title: "Polityka prywatności",
     updated: "Ostatnia aktualizacja",
-    intro:
-      "Ta strona wyjaśnia, co dzieje się z Waszymi informacjami, gdy korzystacie z honeyvolcano.com. Jest krótka, bo zbieramy bardzo niewiele.",
+    intro: "Co dzieje się z Twoimi danymi na tej stronie. Zbieramy bardzo mało.",
     s1h: "Kto jest administratorem",
     s1b: "Jordanas Golovinas, numer VAT 161171, Miðholt 1, 270 Mosfellsbær, Islandia. E-mail golovinasjordanas@gmail.com, telefon +354 834 0999.",
     s2h: "Co zbieramy",
@@ -269,10 +267,8 @@ const pl: Dict = {
   story: {
     eyebrow: "Tam się zaczyna",
     heading: "Zrodzony na równinach\nLitwy",
-    body1:
-      "Nasz miód zbieramy tam, gdzie ziemia robi się płaska i cicha — na łąkach koniczyny, lipy i dzikich kwiatów, obrabianych przez pszczoły, które nigdy nie widziały autostrady.",
-    body2:
-      "Każdy zbiór jest mały, surowy i niefiltrowany, zamknięty w słoiku dokładnie taki, jaki zrobiły go pszczoły, a potem przywieziony na północ, na Islandię, własnymi rękami.",
+    body1: "Łąki koniczyny, lipy i dzikich kwiatów, obrabiane przez niespieszne pszczoły.",
+    body2: "Małe partie, surowy, niefiltrowany. Na północ własnymi rękami.",
     stat1: "Surowy",
     stat2: "Mała partia",
     stat3: "Niefiltrowany",

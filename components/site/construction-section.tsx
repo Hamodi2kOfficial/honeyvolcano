@@ -4,6 +4,7 @@ import { Link } from "@/components/ui/link";
 import { ArrowRight } from "lucide-react";
 
 import { Reveal } from "@/components/ui/reveal";
+import { RevealWords } from "@/components/ui/reveal-words";
 import { useI18n } from "@/components/i18n";
 
 /**
@@ -45,9 +46,7 @@ export function ConstructionSection() {
           {t.uc.label}
         </p>
 
-        <h2 className="mt-5 font-serif text-[30px] font-light leading-tight text-foreground md:text-[40px]">
-          {t.home.ucHeading}
-        </h2>
+        <RevealWords as="h2" text={t.home.ucHeading} className="mt-5 font-serif text-[30px] font-light leading-tight text-foreground md:text-[40px]" />
 
         <p className="mt-4 text-[15px] font-light leading-relaxed text-foreground-muted">
           {t.home.ucBody}

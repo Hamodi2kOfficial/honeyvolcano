@@ -61,6 +61,23 @@ const getSnapshot = (): Theme =>
 const getServerSnapshot = (): Theme => "dark";
 
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
+  React.useEffect(() => {
+    // React owns `className` on <html>, and the prerendered value has no
+    // theme in it — the static export cannot know one. So when React
+    // hydrates it writes its own className back and the class the pre-paint
+    // script set is wiped: choose dark, reload, and you are in light again.
+    // `suppressHydrationWarning` silences the complaint but does not stop the
+    // patch. Re-assert the choice here, in the same commit React hydrated in,
+    // so there is nothing to see.
+    const want: Theme =
+      stored() ?? (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+    if (getSnapshot() !== want) apply(want);
+
+    // And mark the document as live, so anything that clicks — a test, or a
+    // very fast visitor — can tell "painted" from "listening".
+    document.documentElement.dataset.hvReady = "1";
+  }, []);
+
   return <>{children}</>;
 }
 

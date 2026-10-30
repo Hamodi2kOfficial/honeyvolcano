@@ -23,7 +23,8 @@ const en = {
 
   hero: {
     tagline: "Raw Honey & All Bee Products",
-    lead: "Lithuanian honey, carried to Iceland by hand. Taste it before you buy it.",
+    lead: "Lithuanian honey, carried here by hand. Taste before you buy.",
+    sealsLabel: "What every jar promises",
   },
 
   stamps: {
@@ -39,43 +40,38 @@ const en = {
     label: "Under construction",
     soon: "Coming soon",
     title: "More is on the way",
-    body: "New bee products, recipes and an online shop are being prepared. Until then, the fastest way to try anything is to call — we will bring it to you.",
+    body: "New bee products, recipes and a shop are coming.",
     back: "Back to home",
     more: "See what's coming",
   },
 
   home: {
     rawEyebrow: "Raw honey & all bee products",
-    rawHeading: "Everything the hive makes,\nnothing the hive doesn't.",
-    rawBody:
-      "Honey is only the beginning. Pollen, bee bread, comb straight from the frame, and honey treats stirred with real fruit — the whole range comes from the same Lithuanian hives and reaches you without a chain of middlemen in between.",
+    rawHeading: "Everything the hive makes,\nnothing else.",
+    rawBody: "Honey, pollen, bee bread and comb — all from the same hives.",
     rawP1t: "Raw and unheated",
-    rawP1d: "Never pasteurised, so the pollen and enzymes stay where the bees left them.",
+    rawP1d: "Never pasteurised. The pollen and enzymes stay put.",
     rawP2t: "One beekeeper",
-    rawP2d: "The same hives, the same hands, every jar — from the plains of Lithuania.",
+    rawP2d: "The same hives, the same hands, every jar.",
     rawP3t: "Carried, not shipped",
-    rawP3d: "Brought to Iceland in person and handed over the same way.",
+    rawP3d: "Brought to Iceland in person, handed over the same way.",
 
     featEyebrow: "Taste first",
     featHeading: "Our favourites",
-    featBody:
-      "The jars people come back for. Call and we will bring a taste to you — asking never raises your price.",
+    featBody: "The jars people come back for.",
     featAll: "See all products",
 
     s1Eyebrow: "Let happiness erupt",
     s1Heading: "A spoon is never enough",
-    s1Body:
-      "Honey is one of those small, simple things that reaches further than it should. Share a jar and watch what happens at the table.",
+    s1Body: "Share a jar and watch what happens at the table.",
 
     s2Eyebrow: "Hand to hand",
     s2Heading: "From the beekeeper's hands\nstraight to yours",
-    s2Body:
-      "No warehouse, no reseller, no anonymous pallet. We know which hives your jar came from, and we would rather hand it to you ourselves.",
+    s2Body: "No warehouse, no reseller. We know which hives your jar came from.",
 
     s3Eyebrow: "Morning, improved",
-    s3Heading: "Good on bread.\nBetter in tea. Best by the spoon.",
-    s3Body:
-      "Thick, slow, properly golden. This is what honey tasted like before it was cut with syrup and heated until nothing was left of it.",
+    s3Heading: "Good on bread.\nBest by the spoon.",
+    s3Body: "Thick, slow, properly golden. Honey as it was before syrup.",
 
     ucHeading: "Something sweet is being built",
     ucBody: "A webshop, recipes and more bee products are on the way.",
@@ -84,13 +80,13 @@ const en = {
   trust: {
     heading: "Reliable source.\nTrustworthy business.",
     authorized: "Authorised in",
-    body: "Registered and food-safety compliant in both countries, with origins you can trace back to the hive.",
+    body: "Registered and food-safe in both countries, traceable to the hive.",
   },
 
   values: {
     eyebrow: "Real honey, nothing hidden",
-    heading: "You deserve to know\nexactly what's in the jar.",
-    lead: "Honey is one of the most faked foods on earth — cut with syrup, over-heated, stripped of everything that matters. Honey Volcano is the opposite: raw, traceable and honest to the last golden drop.",
+    heading: "Know exactly what's\nin the jar.",
+    lead: "One of the most faked foods on earth. Not this one.",
     t1: "Straight from the bees",
     d1: "No unnecessary middlemen — from the beekeeper's hands directly to your home.",
     t2: "Natural and authentic",
@@ -104,10 +100,10 @@ const en = {
 
   letter: {
     eyebrow: "A note from the hive",
-    heading: "We don't make honey.\nThe bees do.",
-    p1: "We watch the lime and the clover come into flower, follow the bees across the plains, and let the season decide when the honey is ready.",
-    p2: "What you taste is a Lithuanian summer — the meadow, the slow work, the patience. Nothing added. Nothing rushed.",
-    p3: "We bottle only what the hives offer, and we are grateful for every drop.",
+    heading: "We don't make honey.\nBees do.",
+    p1: "We follow the bees and let the season decide.",
+    p2: "What you taste is a Lithuanian summer. Nothing added.",
+    p3: "We bottle only what the hives offer.",
     signature: "— Jordanas, Honey Volcano",
   },
 
@@ -121,27 +117,31 @@ const en = {
   products: {
     badge: "Call to taste",
     call: "Call to taste",
-    title: "Raw honey and every other thing bees make.",
-    subtitle:
-      "Seven products, one beekeeper, no middlemen. Call and we'll bring a taste to you.",
+    title: "Everything the bees make",
+    subtitle: "Seven products, one beekeeper, no middlemen.",
     tasteEyebrow: "Try before you buy",
     tasteHeading: "Request a taste",
-    tasteBody: "Curious but not convinced? Ask for a taste and judge the honey for yourself.",
+    tasteBody: "Ask for a taste and judge for yourself.",
     tasteNote: "Asking to taste never raises your price.",
     placeholder: "Your email",
     button: "Request a taste",
     success: "Thank you — we'll be in touch about your taste.",
     invalid: "Please enter a valid email.",
     back: "Back to home",
-    heading: "Our products",
-    intro: "Prices in Icelandic króna. Call to taste anything before you decide.",
     flavours: "Choose a flavour",
-    sizeHeading: "500 g or 1 kg?",
-    sizeBody:
-      "The same honey, two jars. Here they are side by side, photographed together so the difference is honest.",
-    size500: "500 g",
-    size1kg: "1 kg",
+    close: "Close",
     tba: "Price TBA",
+  },
+
+  /** One short line per product, shown when a card is opened. */
+  productDesc: {
+    "raw-honey-500": "Raw, unheated, straight from Lithuanian hives. The everyday jar.",
+    "raw-honey-1kg": "The same raw honey, in the jar that lasts a season.",
+    "honeycomb-300": "Comb cut straight from the frame. Chew it, wax and all.",
+    "delicacies-220": "Raw honey whipped with real fruit. Four flavours to choose from.",
+    "multicoloured-220": "A box of small jars. Every flavour we make, together.",
+    "pollen-100": "Flower pollen the bees packed themselves. Sprinkle it on anything.",
+    "bee-bread-100": "Pollen the hive fermented into bread. Deeper, tangier than pollen.",
   },
 
   about: {
@@ -176,12 +176,11 @@ const en = {
 
   contact: {
     title: "Contact information",
-    lead: "Two ways to reach us. Pick whichever suits you — calling is always fastest.",
+    lead: "Two ways to reach us. Calling is fastest.",
     writeHeading: "Write to us",
     writeBody: "Leave a message and we'll come back to you.",
     callHeading: "Call directly",
-    callBody:
-      "The quickest way to ask anything, arrange a taste, or place an order. We answer in Icelandic, English, Lithuanian, Polish and Russian.",
+    callBody: "We answer in Icelandic, English, Lithuanian, Polish and Russian.",
     name: "Your name",
     email: "Email",
     phone: "Phone",
@@ -222,8 +221,7 @@ const en = {
   privacy: {
     title: "Privacy Policy",
     updated: "Last updated",
-    intro:
-      "This page explains what happens to your information when you use honeyvolcano.com. We keep it short because we collect very little.",
+    intro: "What happens to your information on this site. We collect very little.",
     s1h: "Who is responsible",
     s1b: "Jordanas Golovinas, VAT no. 161171, Miðholt 1, 270 Mosfellsbær, Iceland. Email golovinasjordanas@gmail.com, phone +354 834 0999.",
     s2h: "What we collect",
@@ -272,10 +270,8 @@ const en = {
   story: {
     eyebrow: "Where it begins",
     heading: "Born on the plains\nof Lithuania",
-    body1:
-      "Our honey is gathered where the land goes flat and quiet — meadows of clover, lime and wildflowers, worked by bees that have never seen a motorway.",
-    body2:
-      "Every harvest is small, raw and unfiltered, bottled exactly as the bees made it, then carried north to Iceland by hand.",
+    body1: "Meadows of clover, lime and wildflowers, worked by unhurried bees.",
+    body2: "Small, raw, unfiltered. Carried north by hand.",
     stat1: "Raw",
     stat2: "Small batch",
     stat3: "Unfiltered",

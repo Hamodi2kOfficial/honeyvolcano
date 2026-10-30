@@ -23,7 +23,7 @@ function BusinessDetails() {
       label: t.contact.phoneLabel,
       value: formatPhone(site.phoneIntl),
       href: telHref(site.phoneIntl),
-      aria: callAriaLabel(site.phoneIntl),
+      aria: callAriaLabel(formatPhone(site.phoneIntl)),
     },
     {
       icon: Mail,
@@ -47,13 +47,15 @@ function BusinessDetails() {
 
       <dl className="mt-6 flex flex-col gap-4">
         {rows.map(({ icon: Icon, label, value, href, aria }) => (
-          <div key={label} className="flex items-start gap-3.5">
-            <Icon aria-hidden className="mt-0.5 h-[18px] w-[18px] shrink-0 text-accent" />
-            <div>
-              <dt className="text-[10px] font-semibold uppercase tracking-[0.18em] text-foreground-muted">
-                {label}
-              </dt>
-              <dd className="mt-0.5 text-[15px] font-light text-foreground">
+          // A <dl> may wrap each pair in one <div>, and that div may hold only
+          // dt and dd — so the icon belongs inside the term, not in a second
+          // wrapper around both.
+          <div key={label}>
+            <dt className="flex items-center gap-3 text-[10px] font-semibold uppercase tracking-[0.18em] text-foreground-muted">
+              <Icon aria-hidden className="h-[18px] w-[18px] shrink-0 text-accent" />
+              {label}
+            </dt>
+            <dd className="ml-[30px] mt-0.5 text-[15px] font-light text-foreground">
                 {href ? (
                   <a
                     href={href}
@@ -65,8 +67,7 @@ function BusinessDetails() {
                 ) : (
                   value
                 )}
-              </dd>
-            </div>
+            </dd>
           </div>
         ))}
       </dl>

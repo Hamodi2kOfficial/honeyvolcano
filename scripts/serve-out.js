@@ -10,6 +10,11 @@
 const http = require("node:http");
 const fs = require("node:fs");
 const path = require("node:path");
+const zlib = require("node:zlib");
+
+/** Types Netlify gzips. Binary media is already compressed; gzipping it
+    would only burn CPU and break range requests. */
+const COMPRESS = /^(text\/|application\/(json|xml|javascript)|image\/svg)/;
 
 const ROOT = path.join(__dirname, "..", "out");
 const PORT = Number(process.argv[2] ?? 4321);
@@ -63,8 +68,51 @@ http
       res.end("Not found");
       return;
     }
+    const type = TYPES[path.extname(file).toLowerCase()] ?? "application/octet-stream";
+    const size = fs.statSync(file).size;
+
+    // Range requests. Without these a browser asking for part of the video
+    // gets the whole 6 MB back, over and over — which is not what Netlify
+    // does, and it made the measured page look several times heavier than
+    // the one a visitor actually loads.
+    const range = /^bytes=(\d*)-(\d*)$/.exec(req.headers.range ?? "");
+    if (range && !COMPRESS.test(type)) {
+      const start = range[1] ? Number(range[1]) : 0;
+      const end = range[2] ? Number(range[2]) : size - 1;
+      if (start >= size || end >= size || start > end) {
+        res.writeHead(416, { "content-range": `bytes */${size}` });
+        res.end();
+        return;
+      }
+      res.writeHead(206, {
+        "content-type": type,
+        "content-range": `bytes ${start}-${end}/${size}`,
+        "content-length": end - start + 1,
+        "accept-ranges": "bytes",
+        "cache-control": "no-store",
+      });
+      fs.createReadStream(file, { start, end }).pipe(res);
+      return;
+    }
+
+    // Netlify serves text compressed; serving it raw here would have made
+    // every measurement of this site pessimistic by about 700 KB.
+    const wantsGzip = /\bgzip\b/.test(req.headers["accept-encoding"] ?? "");
+    if (wantsGzip && COMPRESS.test(type)) {
+      res.writeHead(200, {
+        "content-type": type,
+        "content-encoding": "gzip",
+        "vary": "accept-encoding",
+        "cache-control": "no-store",
+      });
+      fs.createReadStream(file).pipe(zlib.createGzip()).pipe(res);
+      return;
+    }
+
     res.writeHead(200, {
-      "content-type": TYPES[path.extname(file).toLowerCase()] ?? "application/octet-stream",
+      "content-type": type,
+      "content-length": size,
+      "accept-ranges": "bytes",
       "cache-control": "no-store",
     });
     fs.createReadStream(file).pipe(res);

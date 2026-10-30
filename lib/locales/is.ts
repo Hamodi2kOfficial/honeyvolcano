@@ -21,7 +21,8 @@ const is: Dict = {
 
   hero: {
     tagline: "Hrátt hunang og allar býflugnaafurðir",
-    lead: "Litháískt hunang, borið til Íslands í höndunum. Smakkaðu áður en þú kaupir.",
+    lead: "Litháískt hunang, borið hingað í höndunum. Smakkaðu áður en þú kaupir.",
+    sealsLabel: "Það sem hver krukka lofar",
   },
 
   stamps: {
@@ -37,43 +38,38 @@ const is: Dict = {
     label: "Í vinnslu",
     soon: "Væntanlegt",
     title: "Meira er á leiðinni",
-    body: "Nýjar býflugnaafurðir, uppskriftir og vefverslun eru í undirbúningi. Þangað til er fljótlegast að hringja — við komum með smakk til þín.",
+    body: "Nýjar býflugnaafurðir, uppskriftir og vefverslun eru á leiðinni.",
     back: "Aftur á forsíðu",
     more: "Sjáðu hvað er á leiðinni",
   },
 
   home: {
     rawEyebrow: "Hrátt hunang og allar býflugnaafurðir",
-    rawHeading: "Allt sem búið gefur af sér,\nog ekkert annað.",
-    rawBody:
-      "Hunang er bara byrjunin. Frjókorn, býflugnabrauð, vaxkaka beint úr rammanum og hunangsgóðgæti hrært með alvöru ávöxtum — allt úr sömu litháísku búunum og kemur til þín án milliliðakeðju.",
+    rawHeading: "Allt sem búið gerir,\nog ekkert annað.",
+    rawBody: "Hunang, frjókorn, brauð og vaxkaka — allt úr sömu búunum.",
     rawP1t: "Hrátt og óhitað",
-    rawP1d: "Aldrei gerilsneytt, svo frjókornin og ensímin eru þar sem býflugurnar skildu við þau.",
+    rawP1d: "Aldrei gerilsneytt. Frjókornin og ensímin haldast.",
     rawP2t: "Einn býflugnaræktandi",
-    rawP2d: "Sömu búin, sömu hendur, hver einasta krukka — af sléttum Litháens.",
+    rawP2d: "Sömu búin, sömu hendur, hver einasta krukka.",
     rawP3t: "Borið, ekki sent",
-    rawP3d: "Flutt til Íslands í eigin persónu og afhent með sama hætti.",
+    rawP3d: "Borið til Íslands í eigin persónu og afhent eins.",
 
     featEyebrow: "Smakkaðu fyrst",
     featHeading: "Í mestu uppáhaldi",
-    featBody:
-      "Krukkurnar sem fólk kemur aftur fyrir. Hringdu og við komum með smakk — það hækkar aldrei verðið þitt að biðja um það.",
+    featBody: "Krukkurnar sem fólk kemur aftur í.",
     featAll: "Sjá allar vörur",
 
     s1Eyebrow: "Látum hamingjuna gjósa",
     s1Heading: "Ein skeið er aldrei nóg",
-    s1Body:
-      "Hunang er eitt af þessum litlu, einföldu hlutum sem ná lengra en þeir ættu að gera. Deildu krukku og sjáðu hvað gerist við borðið.",
+    s1Body: "Deildu krukku og sjáðu hvað gerist við borðið.",
 
     s2Eyebrow: "Frá hönd til handar",
     s2Heading: "Úr höndum býflugnaræktandans\nbeint í þínar",
-    s2Body:
-      "Ekkert vöruhús, enginn endursöluaðili, engin nafnlaus bretti. Við vitum úr hvaða búum krukkan þín kom og viljum helst rétta þér hana sjálf.",
+    s2Body: "Ekkert vöruhús, enginn milliliður. Við vitum úr hvaða búi.",
 
     s3Eyebrow: "Betri morgunn",
-    s3Heading: "Gott á brauð.\nBetra í te. Best af skeiðinni.",
-    s3Body:
-      "Þykkt, seigt og almennilega gyllt. Svona bragðaðist hunang áður en farið var að blanda það sírópi og hita það þar til ekkert var eftir.",
+    s3Heading: "Gott á brauð.\nBest með skeið.",
+    s3Body: "Þykkt, hægt, rétt gyllt. Hunang eins og það var.",
 
     ucHeading: "Eitthvað sætt er í smíðum",
     ucBody: "Vefverslun, uppskriftir og fleiri býflugnaafurðir eru á leiðinni.",
@@ -82,13 +78,13 @@ const is: Dict = {
   trust: {
     heading: "Áreiðanleg uppspretta.\nTraust viðskipti.",
     authorized: "Starfsleyfi í",
-    body: "Skráð og í samræmi við matvælaöryggiskröfur í báðum löndum, með uppruna sem rekja má alla leið í búið.",
+    body: "Skráð og uppfyllir matvælaöryggi í báðum löndum.",
   },
 
   values: {
     eyebrow: "Alvöru hunang, ekkert falið",
-    heading: "Þú átt skilið að vita\nnákvæmlega hvað er í krukkunni.",
-    lead: "Hunang er ein mest fölsuðu matvara heims — blandað sírópi, ofhitað og svipt öllu sem máli skiptir. Honey Volcano er andstæðan: hrátt, rekjanlegt og heiðarlegt fram í síðasta gyllta dropann.",
+    heading: "Vittu nákvæmlega\nhvað er í krukkunni.",
+    lead: "Ein mest fölsuðu matvara heims. Ekki þessi.",
     t1: "Beint frá býflugunum",
     d1: "Engir óþarfir milliliðir — frá höndum býflugnaræktandans beint heim til þín.",
     t2: "Náttúrulegt og ekta",
@@ -103,9 +99,9 @@ const is: Dict = {
   letter: {
     eyebrow: "Kveðja úr búinu",
     heading: "Við búum ekki til hunang.\nBýflugurnar gera það.",
-    p1: "Við fylgjumst með linditrénu og smáranum springa út, fylgjum býflugunum yfir slétturnar og leyfum árstíðinni að ráða hvenær hunangið er tilbúið.",
-    p2: "Það sem þú bragðar er litháískt sumar — engið, hæga vinnan, þolinmæðin. Engu bætt við. Ekkert flýtt.",
-    p3: "Við setjum aðeins á krukkur það sem búin gefa, og erum þakklát fyrir hvern dropa.",
+    p1: "Við fylgjum býflugunum og látum árstíðina ráða.",
+    p2: "Það sem þú smakkar er litháískt sumar. Engu bætt við.",
+    p3: "Við tökum aðeins það sem búin gefa.",
     signature: "— Jordanas, Honey Volcano",
   },
 
@@ -119,67 +115,70 @@ const is: Dict = {
   products: {
     badge: "Hringdu og smakkaðu",
     call: "Hringdu og smakkaðu",
-    title: "Hrátt hunang og allt annað sem býflugur búa til.",
-    subtitle:
-      "Sjö vörur, einn býflugnaræktandi, engir milliliðir. Hringdu og við komum með smakk.",
+    title: "Allt sem býflugurnar gera",
+    subtitle: "Sjö vörur, einn býflugnabóndi, engir milliliðir.",
     tasteEyebrow: "Smakkaðu áður en þú kaupir",
     tasteHeading: "Biddu um smakk",
-    tasteBody: "Forvitin en ekki sannfærð? Biddu um smakk og dæmdu hunangið sjálf.",
+    tasteBody: "Biddu um að smakka og dæmdu sjálfur.",
     tasteNote: "Það hækkar aldrei verðið þitt að biðja um smakk.",
     placeholder: "Netfangið þitt",
     button: "Biðja um smakk",
     success: "Takk — við höfum samband vegna smakksins.",
     invalid: "Sláðu inn gilt netfang.",
     back: "Aftur á forsíðu",
-    heading: "Vörurnar okkar",
-    intro: "Verð í íslenskum krónum. Hringdu og smakkaðu hvað sem er áður en þú ákveður þig.",
     flavours: "Veldu bragðtegund",
-    sizeHeading: "500 g eða 1 kg?",
-    sizeBody:
-      "Sama hunangið, tvær krukkur. Hér eru þær hlið við hlið, myndaðar saman svo munurinn sé heiðarlegur.",
-    size500: "500 g",
-    size1kg: "1 kg",
+    close: "Loka",
     tba: "Verð tilkynnt síðar",
+  },
+
+  /** One short line per product, shown when a card is opened. */
+  productDesc: {
+    "raw-honey-500": "Hrátt, óhitað, beint úr litháískum búum. Hversdagskrukkan.",
+    "raw-honey-1kg": "Sama hráa hunangið, í krukku sem endist heila vertíð.",
+    "honeycomb-300": "Vaxkaka skorin beint úr rammanum. Tyggðu hana, vax og allt.",
+    "delicacies-220": "Hrátt hunang þeytt með alvöru ávöxtum. Fjórar tegundir.",
+    "multicoloured-220": "Kassi af litlum krukkum. Allar tegundirnar okkar saman.",
+    "pollen-100": "Frjókorn sem býflugurnar söfnuðu sjálfar. Stráðu yfir allt.",
+    "bee-bread-100": "Frjókorn sem búið gerjaði. Dýpra og sýrðara en frjókorn.",
   },
 
   about: {
     eyebrow: "Um okkur",
     title: "Honey Volcano",
-    tagline: "Látum hamingjuna gjósa!!! :-)",
-    p1: "Ég er frá Litháen og undanfarin níu ár hefur Ísland – land íss og elds – verið heimilið mitt.",
-    p2: "Sagan okkar á sér þó upphaf annars staðar: á friðsælum sléttum Litháens, þar sem býflugur vinna stanslaust.",
-    p3: "Og nú brýst fram ný, sæt bylgja í norðri eins og eldfjall – en í stað hrauns flæðir hér hreint, náttúrulegt LITHÁÍSKT HUNANG!",
-    p4: "Vörur frá býflugum eru ein af þessum einföldu gleðigjöfum lífsins sem snerta okkur djúpt í hjartanu.",
-    p5: "Við leitum jú öll að einhverju ekta, náttúrulegu og einföldu – en samt einhverju sem vekur með okkur dásamlega tilfinningu.",
-    p6: "Og allir sem hafa smakkað alvöru litháískt hunang vita eitt með vissu: ein skeið er aldrei nóg! :-)",
-    p7: "Hvað annað getum við boðið ykkur til að gleðja ykkur? Jú, við eigum ýmislegt í boði!",
-    p8: "Þetta snýst ekki bara um hunang. Við bjóðum upp á heilan heim af vörum frá býflugum – vörum sem við viljum deila með ykkur. Markmið okkar er að tryggja að bestu býflugnaafurðirnar berist beint og auðveldlega til ykkar, á góðu verði og með smá skammti af gleði! :-)",
+    tagline: "Leyfðu gleðinni að gjósa!",
+    p1: "Við erum frá Litháen og undanfarin níu ár hefur Ísland – land íss og elds – verið heimili okkar.",
+    p2: "Sagan okkar á sér hins vegar upphaf annars staðar: á friðsælum sléttum Litháen, þar sem býflugur vinna stanslaust.",
+    p3: "Nú brýst fram ný bylgja frá eldfjöllunum í norðri – en í stað hrauns flæðir hér hreint, náttúrulegt LITHÁISKT HUNANG! 🍯🌋",
+    p4: "Afurðir frá býflugum eru ein af einföldu gleðigjöfum lífsins sem snerta okkur djúpt.",
+    p5: "Við leitum jú öll að einhverju bragðgóðu, náttúrulegu og einföldu – en samt einhverju sem vekur vellíðunartilfinningu.",
+    p6: "Allir sem hafa smakkað alvöru litháenskt hunang vita eitt með vissu: ein skeið er aldrei nóg! 🙂",
+    p7: "Hvað annað getum við boðið til að gleðja ykkur? - Jú, við höfum ýmislegt í boði! 🐝",
+    p8: "Þetta snýst ekki aðeins um hunang. Við bjóðum upp á gnægð af vörum frá býflugum – vörum sem við viljum leyfa ykkur að njóta með okkur. Markmið okkar er að tryggja að bestu hunangsvörurnar berist fljótt og auðveldlega til ykkar, á góðu verði með smá skammti af gleði! 🙂 🌋",
     openList: "Skoða vöruúrval",
-    valuesHeading: "Gildi okkar",
+    valuesHeading: "Gildin okkar",
     v1t: "Beint frá býflugunum",
-    v1d: "Engir óþarfir milliliðir – frá höndum býflugnaræktandans beint heim til þín.",
-    v2t: "Náttúrulegt og ekta",
-    v2d: "Skapað af náttúrunni. Safnað af býflugum. Unnið af mannahöndum með ást.",
+    v1d: "Engir óþarfa milliliðir – Beint frá býli og heim til þín! Frá höndum ræktanda beint til þín.",
+    v2t: "Náttúrulegt og raunverulegt",
+    v2d: "Skapað í náttúrunni. Safnað af býflugum. Unnið í mannahöndum af alúð.",
     v3t: "Sanngjarnt verð",
-    v3d: "Við teljum að hágæða býflugnaafurðir eigi ekki að vera lúxusvara.",
+    v3d: "Við teljum að hágæða hunangsvörur eigi ekki að vera lúxusvara.",
     v4t: "Stórt úrval býflugnaafurða",
-    v4d: "Allt frá hunangi til frjókorna, býflugnabrauðs og annarra afurða úr býflugnabúinu.",
+    v4d: "Allt frá hunangi til frjókorna, býflugnabrauð (bee bread) ásamt öðrum vörum frá býflugnabúinu.",
     v5t: "Starfsemi í Litháen og á Íslandi",
-    v5d: "Ábyrg uppspretta, rekjanlegur uppruni og fullt samræmi við kröfur um matvælaöryggi.",
-    v6t: "Frá hönd til handar, frá hjarta til hjarta",
+    v5d: "Ábyrgur, rekjanlegur uppruni og í samræmi við kröfur um matvælaöryggi.",
+    v6t: "Frá hendi til handar ❤️ frá hjarta til hjarta",
     v6d: "Því það sem við miðlum skiptir ekki síður máli en það sem við seljum.",
-    close1: "Honey Volcano",
+    close1: "Hunangseldfjall",
     close2: "Leyfðu gleðinni að gjósa!",
   },
 
   contact: {
     title: "Samskiptaupplýsingar",
-    lead: "Tvær leiðir til að ná í okkur. Veldu þá sem hentar — að hringja er alltaf fljótlegast.",
+    lead: "Tvær leiðir til að ná í okkur. Símtal er fljótast.",
     writeHeading: "Sendu okkur línu",
     writeBody: "Skildu eftir skilaboð og við höfum samband.",
     callHeading: "Hringdu beint",
-    callBody:
-      "Fljótlegasta leiðin til að spyrja um hvað sem er, panta smakk eða leggja inn pöntun. Við svörum á íslensku, ensku, litháísku, pólsku og rússnesku.",
+    callBody: "Við svörum á íslensku, ensku, litháísku, pólsku og rússnesku.",
     name: "Nafnið þitt",
     email: "Netfang",
     phone: "Sími",
@@ -219,8 +218,7 @@ const is: Dict = {
   privacy: {
     title: "Persónuverndarstefna",
     updated: "Síðast uppfært",
-    intro:
-      "Þessi síða útskýrir hvað verður um upplýsingarnar þínar þegar þú notar honeyvolcano.com. Hún er stutt því við söfnum mjög litlu.",
+    intro: "Hvað verður um upplýsingarnar þínar hér. Við söfnum mjög litlu.",
     s1h: "Hver ber ábyrgð",
     s1b: "Jordanas Golovinas, VSK-númer 161171, Miðholt 1, 270 Mosfellsbær, Íslandi. Netfang golovinasjordanas@gmail.com, sími +354 834 0999.",
     s2h: "Hverju við söfnum",
@@ -269,10 +267,8 @@ const is: Dict = {
   story: {
     eyebrow: "Þar sem þetta byrjar",
     heading: "Fætt á sléttum\nLitháens",
-    body1:
-      "Hunangið okkar er sótt þangað sem landið verður flatt og hljótt — engi af smára, lindiblómum og villiblómum, unnin af býflugum sem aldrei hafa séð hraðbraut.",
-    body2:
-      "Hver uppskera er lítil, hrá og ósíuð, sett á krukkur nákvæmlega eins og býflugurnar skildu við hana, og síðan borin norður til Íslands í höndunum.",
+    body1: "Engi af smára, lind og villiblómum, unnin af rólegum býflugum.",
+    body2: "Lítil lota, hrátt, ósíað. Borið norður í höndunum.",
     stat1: "Hrátt",
     stat2: "Lítil lota",
     stat3: "Ósíað",

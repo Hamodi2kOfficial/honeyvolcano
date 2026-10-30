@@ -12,7 +12,7 @@ export function AdminLink() {
       <Link
         href="/admin"
         rel="nofollow"
-        className="inline-flex items-center gap-1.5 rounded-full border border-border px-3.5 py-1.5 text-[11px] uppercase tracking-[0.18em] text-foreground-muted/70 transition-colors hover:border-accent/50 hover:text-accent"
+        className="inline-flex items-center gap-1.5 rounded-full border border-border px-3.5 py-1.5 text-[11px] uppercase tracking-[0.18em] text-foreground-muted transition-colors hover:border-accent/50 hover:text-accent"
       >
         <Lock className="h-3 w-3" />
         Manage website

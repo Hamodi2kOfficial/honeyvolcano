@@ -15,7 +15,7 @@ import { EASE } from "@/lib/motion";
 
 export default function ProductsPage() {
   const forms = useLiveContent().marketing?.forms;
-  const logo = useAsset("products.logo", "/logo-full.png");
+  const logo = useAsset("products.logo", "/logo-home.png");
   const { t } = useI18n();
 
   return (
@@ -46,7 +46,7 @@ export default function ProductsPage() {
             width={360}
             height={360}
             priority
-            className="h-auto w-[150px] rounded-md md:w-[190px]"
+            className="h-auto w-[160px] md:w-[210px]"
           />
         </motion.div>
 

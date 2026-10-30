@@ -21,6 +21,15 @@ const PAGES = [
 const TEL = "tel:+3548340999";
 
 /** Scrolls the whole page so lazy images and scroll reveals all fire. */
+/**
+ * Waits until React has hydrated, so a click actually reaches a handler.
+ * The pre-paint theme script styles the page long before that, which makes
+ * "painted" a useless signal for anything interactive.
+ */
+async function ready(page: Page) {
+  await page.waitForSelector("html[data-hv-ready]", { state: "attached" });
+}
+
 async function settle(page: Page) {
   await page.evaluate(async () => {
     const step = window.innerHeight * 0.8;
@@ -211,29 +220,47 @@ test.describe("the hero", () => {
     }
   });
 
-  test("the film never covers the seals or the logo", async ({ page }) => {
+  test("the seals are one line directly under the film", async ({ page }) => {
     await page.goto("/");
     const film = await page.locator("#top video").boundingBox();
     expect(film).not.toBeNull();
 
-    const seals = page.locator("#top .group");
-    for (let i = 0; i < (await seals.count()); i++) {
-      const box = await seals.nth(i).boundingBox();
-      if (!box || !film) continue;
-      const overlaps =
-        box.x < film.x + film.width &&
-        box.x + box.width > film.x &&
-        box.y < film.y + film.height &&
-        box.y + box.height > film.y;
-      expect(overlaps, `seal ${i} sits on top of the film`).toBe(false);
+    const seals = page.locator("#top ul[aria-label] > li");
+    await expect(seals).toHaveCount(6);
+
+    const boxes = [];
+    for (let i = 0; i < 6; i++) boxes.push(await seals.nth(i).boundingBox());
+
+    for (const [i, box] of boxes.entries()) {
+      expect(box, `seal ${i} has no box`).not.toBeNull();
+      expect(box!.y, `seal ${i} sits on top of the film`).toBeGreaterThanOrEqual(
+        film!.y + film!.height - 2
+      );
     }
+
+    const tops = boxes.map((b) => Math.round(b!.y));
+    expect(Math.max(...tops) - Math.min(...tops), "the seals are not on one line").toBeLessThan(3);
+  });
+
+  test("each seal carries its own icon", async ({ page }) => {
+    await page.goto("/");
+    const withIcon = await page.evaluate(
+      () =>
+        [...document.querySelectorAll("#top ul[aria-label] > li")].filter((li) =>
+          li.querySelector("svg")
+        ).length
+    );
+    expect(withIcon, "a seal is missing its icon").toBe(6);
   });
 });
 
 test.describe("products", () => {
   test("the call button is the first action, under the logo", async ({ page }) => {
     await page.goto("/products/");
-    const logo = await page.locator("main img").first().boundingBox();
+    await ready(page);
+    const logoImg = page.locator("main img").first();
+    await expect(logoImg).toBeVisible();
+    const logo = await logoImg.boundingBox();
     const call = await page.locator(`main a[href="${TEL}"]`).first().boundingBox();
     expect(logo && call).toBeTruthy();
     expect(call!.y).toBeGreaterThan(logo!.y);
@@ -268,31 +295,91 @@ test.describe("products", () => {
     expect(missing, "products without a photo").toEqual([]);
   });
 
-  test("the delicacy flavours are separate and switch the picture", async ({ page }) => {
+  test("the delicacy flavours live in the opened product and switch the picture", async ({
+    page,
+  }) => {
     await page.goto("/products/");
+    await ready(page);
     await settle(page);
-    const card = page
-      .locator("#catalog article")
-      .filter({ hasText: "Honey delicacies 220 g" });
 
-    const tabs = card.getByRole("tab");
+    await page
+      .locator("#catalog article")
+      .filter({ hasText: "Honey delicacies 220 g" })
+      .getByRole("button", { name: /delicacies/i })
+      .click();
+
+    const panel = page.getByRole("dialog");
+    await expect(panel).toBeVisible();
+
+    const tabs = panel.getByRole("tab");
     await expect(tabs).toHaveCount(4);
     for (const flavour of ["raspberries", "sea buckthorn", "quinces and pumpkins", "cannabis"]) {
-      await expect(card.getByRole("tab", { name: new RegExp(flavour, "i") })).toBeVisible();
+      await expect(panel.getByRole("tab", { name: new RegExp(flavour, "i") })).toBeVisible();
     }
 
-    const before = await card.locator("img").getAttribute("src");
-    await card.getByRole("tab", { name: /sea buckthorn/i }).click();
+    const before = await panel.locator("img").first().getAttribute("src");
+    await panel.getByRole("tab", { name: /sea buckthorn/i }).click();
     await expect(async () => {
-      expect(await card.locator("img").getAttribute("src")).not.toBe(before);
+      expect(await panel.locator("img").first().getAttribute("src")).not.toBe(before);
     }).toPass();
   });
 
-  test("the 500 g and 1 kg jars are shown side by side", async ({ page }) => {
+  test("a product opens, shows its line and its price, and closes", async ({ page }) => {
+    await page.goto("/products/");
+    await ready(page);
+    await settle(page);
+
+    const open = () =>
+      page
+        .locator("#catalog article")
+        .filter({ hasText: "Raw honey 500 g" })
+        .getByRole("button", { name: /raw honey 500 g/i })
+        .click();
+
+    await open();
+    const panel = page.getByRole("dialog");
+    await expect(panel).toBeVisible();
+    await expect(panel.getByText(/straight from lithuanian hives/i)).toBeVisible();
+    await expect(panel.getByText("2299 ISK")).toBeVisible();
+    await expect(panel.locator(`a[href="${TEL}"]`)).toBeVisible();
+
+    await page.keyboard.press("Escape");
+    await expect(panel).toBeHidden();
+
+    await open();
+    await page.getByRole("button", { name: /^close$/i }).click();
+    await expect(page.getByRole("dialog")).toBeHidden();
+
+    expect(await page.evaluate(() => document.body.style.overflow)).not.toBe("hidden");
+  });
+
+  test("every product picture fills the same frame", async ({ page }) => {
+    await page.goto("/products/");
+    await ready(page);
+    await settle(page);
+
+    const frames = await page.evaluate(() =>
+      [...document.querySelectorAll("#catalog article")].map((a) => {
+        const img = a.querySelector("img");
+        const box = img?.parentElement?.getBoundingClientRect();
+        return box ? +(box.width / box.height).toFixed(2) : null;
+      })
+    );
+    expect(
+      frames.filter((r) => r === null),
+      "a product has no picture frame"
+    ).toEqual([]);
+    expect(new Set(frames).size, "the pictures are not all one shape").toBe(1);
+    expect(frames[0]).toBeCloseTo(0.8, 1);
+  });
+
+  test("the cut sections are gone", async ({ page }) => {
     await page.goto("/products/");
     await settle(page);
-    await expect(page.getByRole("heading", { name: /500 g or 1 kg/i })).toBeVisible();
-    await expect(page.locator('img[src*="raw-honey-sizes"]')).toBeVisible();
+    await expect(page.getByRole("heading", { name: /500 g or 1 kg/i })).toHaveCount(0);
+    await expect(page.locator('img[src*="raw-honey-sizes"]')).toHaveCount(0);
+    await expect(page.getByRole("heading", { name: /^our products$/i })).toHaveCount(0);
+    await expect(page.getByText(/prices in icelandic kr/i)).toHaveCount(0);
   });
 
   test("the decoration never sits over the content", async ({ page }) => {
@@ -377,6 +464,7 @@ test.describe("the contact form", () => {
   test("it shows an error, not a silent failure, when sending fails", async ({ page }) => {
     await page.route("**/api/lead", (route) => route.fulfill({ status: 500, body: "{}" }));
     await page.goto("/contact/");
+    await ready(page);
     await page.getByLabel(/your name/i).fill("Test Person");
     await page.getByLabel(/^email$/i).fill("test@example.com");
     await page.getByRole("button", { name: /send message/i }).click();
@@ -388,6 +476,7 @@ test.describe("the contact form", () => {
       route.fulfill({ status: 200, contentType: "application/json", body: '{"ok":true}' })
     );
     await page.goto("/contact/");
+    await ready(page);
     await page.getByLabel(/your name/i).fill("Test Person");
     await page.getByLabel(/^email$/i).fill("test@example.com");
     await page.getByLabel(/message/i).fill("Hello — this is a Playwright check.");
@@ -399,6 +488,7 @@ test.describe("the contact form", () => {
 test.describe("light and dark", () => {
   test("the toggle switches the page and is remembered", async ({ page }) => {
     await page.goto("/");
+    await ready(page);
     const toggle = page.getByRole("button", { name: /switch between light and dark/i });
 
     const before = await page.evaluate(() => document.documentElement.classList.contains("dark"));
@@ -499,18 +589,24 @@ test.describe("on a phone", () => {
     await expect(sticky).toBeVisible();
   });
 
-  test("every seal is on screen without scrolling", async ({ page }) => {
+  test("the seals arrive as you scroll, and end fully readable", async ({ page }) => {
     await page.goto("/");
-    const { count, offscreen } = await page.evaluate(() => {
-      const seals = [...document.querySelectorAll("#top .grid.grid-cols-2 > .group")];
-      return {
-        count: seals.length,
-        offscreen: seals.filter((s) => s.getBoundingClientRect().bottom > window.innerHeight)
-          .length,
-      };
-    });
-    expect(count, "the six seals are not where expected").toBe(6);
-    expect(offscreen, "seals below the fold on a phone").toBe(0);
+    const seals = page.locator("#top ul[aria-label] > li");
+    await expect(seals).toHaveCount(6);
+
+    await seals.first().scrollIntoViewIfNeeded();
+    await page.waitForTimeout(900);
+
+    const faded = await page.evaluate(
+      () =>
+        [...document.querySelectorAll("#top ul[aria-label] > li > div")].filter(
+          (d) => Number(getComputedStyle(d).opacity) < 0.95
+        ).length
+    );
+    expect(faded, "a seal never finished arriving").toBe(0);
+
+    const row = page.locator("#top ul[aria-label]");
+    expect(await row.getAttribute("tabindex")).toBe("0");
   });
 
   test("the menu opens, lists everything, and closes", async ({ page }) => {

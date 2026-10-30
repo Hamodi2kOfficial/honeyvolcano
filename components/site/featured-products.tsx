@@ -6,6 +6,7 @@ import { ArrowRight } from "lucide-react";
 
 import { CallButton } from "@/components/ui/call-button";
 import { Reveal, RevealGroup, RevealItem } from "@/components/ui/reveal";
+import { RevealWords } from "@/components/ui/reveal-words";
 import { useLiveContent } from "@/components/live-content";
 import { useI18n } from "@/components/i18n";
 import { formatPrice, type Product } from "@/lib/content";
@@ -25,7 +26,7 @@ function FeaturedCard({ product }: { product: Product }) {
         href="/products"
         tabIndex={-1}
         aria-hidden
-        className="relative block aspect-square w-full overflow-hidden bg-bg-soft"
+        className="relative block aspect-[4/5] w-full overflow-hidden bg-bg-soft"
       >
         {product.image && (
           <Image
@@ -84,9 +85,7 @@ export function FeaturedProducts() {
           <p className="text-[11px] font-semibold uppercase tracking-[0.3em] text-accent">
             {t.home.featEyebrow}
           </p>
-          <h2 className="mt-4 font-serif text-[32px] font-light leading-tight text-foreground md:text-[44px]">
-            {t.home.featHeading}
-          </h2>
+          <RevealWords as="h2" text={t.home.featHeading} className="mt-4 font-serif text-[32px] font-light leading-tight text-foreground md:text-[44px]" />
           <p className="mt-4 text-[15px] font-light leading-relaxed text-foreground-muted">
             {t.home.featBody}
           </p>

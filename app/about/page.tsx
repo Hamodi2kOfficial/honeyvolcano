@@ -52,7 +52,13 @@ function Values() {
                 <h3 className="font-display text-[12px] uppercase leading-snug tracking-[0.16em] text-accent">
                   {v.title}
                 </h3>
-                <p className="text-sm font-light leading-relaxed text-foreground-muted">{v.body}</p>
+                {/* Spanish and Russian give the values as names only, so the
+                    card is the name — no empty paragraph underneath it. */}
+                {v.body && (
+                  <p className="text-sm font-light leading-relaxed text-foreground-muted">
+                    {v.body}
+                  </p>
+                )}
               </article>
             </RevealItem>
           ))}

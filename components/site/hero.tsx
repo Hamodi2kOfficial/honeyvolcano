@@ -3,83 +3,98 @@
 import * as React from "react";
 import Image from "next/image";
 import { motion, useReducedMotion } from "motion/react";
-import { Handshake, Heart, Leaf, Scale, Sparkles } from "lucide-react";
+import { HeartHandshake, Leaf, Scale, ShieldCheck } from "lucide-react";
 
 import { CallButton } from "@/components/ui/call-button";
 import { Stamp } from "@/components/ui/stamp";
-import { IcelandFlag, LithuaniaFlag } from "@/components/ui/flags";
+import { BeeIcon, HoneyJarIcon } from "@/components/ui/bee-icons";
 import { useAsset } from "@/components/live-content";
 import { useI18n } from "@/components/i18n";
-import { EASE } from "@/lib/motion";
+import { DUR, EASE, TRAVEL } from "@/lib/motion";
 
 /**
- * The hero: film in the middle, logo down one side, six seals around it.
+ * The hero: the film is the whole first screen, and the page emerges from it.
  *
- * Layout changes shape rather than shrinking:
- *  • xl and up — a three-column grid. Logo and three seals on the left, the
- *    film in the centre, three more seals on the right. Nothing overlaps the
- *    film, because each lives in its own grid cell.
- *  • below xl — logo above the film, all six seals in a two-column grid
- *    directly beneath it, so every seal is on screen the moment you land.
+ * One edge of the film dissolves into fog — a blur masked to that edge, with
+ * the page's own background colour washing over it — and the logo, the line
+ * and the call sit inside that fog rather than on a panel beside it. The edge
+ * is the left on wide screens and the bottom on narrow ones, because a phone
+ * has no side to spare.
+ *
+ * The six seals are no longer scattered around the film. They are one row
+ * directly beneath it, pressing in as the visitor scrolls to them.
  */
 
-const STAMP_ICONS = [
-  <Sparkles key="1" />,
-  <Leaf key="2" />,
-  <Scale key="3" />,
-  null,
-  <span key="5" className="inline-flex items-center gap-1">
-    <LithuaniaFlag className="h-3" />
-    <IcelandFlag className="h-3" />
-  </span>,
-  <span key="6" className="inline-flex items-center gap-1">
-    <Handshake />
-    <Heart />
-  </span>,
-];
+/**
+ * The wash that settles into the fog, so the text has something to sit on
+ * and the film does not simply stop. `--bg` is the raw token behind the
+ * `background` colour; the Tailwind name does not exist as a CSS variable.
+ */
+const WASH_SIDE =
+  "linear-gradient(90deg, color-mix(in oklab, var(--bg) 86%, transparent) 0%, color-mix(in oklab, var(--bg) 58%, transparent) 32%, transparent 64%)";
+const WASH_UP =
+  "linear-gradient(0deg, color-mix(in oklab, var(--bg) 88%, transparent) 0%, color-mix(in oklab, var(--bg) 62%, transparent) 34%, transparent 68%)";
 
-function Stamps({ from, to, className }: { from: number; to: number; className?: string }) {
-  const { t } = useI18n();
-  const keys = ["s1", "s2", "s3", "s4", "s5", "s6"] as const;
-  return (
-    <>
-      {keys.slice(from, to).map((k, i) => (
-        <Stamp key={k} index={from + i} icon={STAMP_ICONS[from + i]} className={className}>
-          {t.stamps[k]}
-        </Stamp>
-      ))}
-    </>
-  );
-}
+const SEALS = [
+  { key: "s1", icon: <BeeIcon /> },
+  { key: "s2", icon: <Leaf /> },
+  { key: "s3", icon: <Scale /> },
+  { key: "s4", icon: <HoneyJarIcon /> },
+  { key: "s5", icon: <ShieldCheck /> },
+  { key: "s6", icon: <HeartHandshake /> },
+] as const;
 
-function HeroFilm() {
+function HeroFilm({ still }: { still: boolean }) {
   const film = useAsset("video.file", "/reliable-source.mp4");
   const ref = React.useRef<HTMLVideoElement>(null);
 
   // Autoplay is muted and inline, which every current browser allows. If one
   // still refuses, the film simply sits on its first frame — nothing breaks.
+  // A visitor who has asked for less motion gets that first frame on purpose.
   React.useEffect(() => {
+    if (still) return;
     ref.current?.play().catch(() => {});
-  }, []);
+  }, [still]);
 
   return (
-    <div className="relative overflow-hidden rounded-[22px] border border-accent/25 shadow-[0_40px_90px_-40px_rgba(0,0,0,0.8)]">
-      <video
-        ref={ref}
-        src={film}
-        muted
-        loop
-        playsInline
-        autoPlay
-        preload="metadata"
-        aria-label="Honey Volcano — raw honey from a reliable source"
-        className="block aspect-video h-auto w-full bg-bg-soft object-cover"
-      />
-      {/* a touch of warmth over the film so it belongs to the page */}
-      <div
-        aria-hidden
-        className="pointer-events-none absolute inset-0 bg-gradient-to-t from-background/35 via-transparent to-transparent"
-      />
+    <video
+      ref={ref}
+      src={film}
+      muted
+      loop={!still}
+      playsInline
+      autoPlay={!still}
+      preload="metadata"
+      aria-label="Honey Volcano — raw honey from a reliable source"
+      className="hv-film absolute inset-0 h-full w-full object-cover"
+    />
+  );
+}
+
+/** The six promises, one line under the film. */
+function SealRow() {
+  const { t } = useI18n();
+
+  return (
+    <div className="mx-auto w-full max-w-[1400px] px-4 py-7 md:px-7 md:py-10">
+      {/* Below lg the row scrolls sideways rather than breaking into a block:
+          it stays one line, and tabIndex keeps it reachable from a keyboard. */}
+      <ul
+        tabIndex={0}
+        aria-label={t.hero.sealsLabel}
+        className="hv-rail flex snap-x snap-mandatory gap-3 overflow-x-auto rounded-[14px] lg:grid lg:grid-cols-6 lg:gap-4 lg:overflow-visible"
+      >
+        {SEALS.map((seal, i) => (
+          <li
+            key={seal.key}
+            className="w-[47%] min-w-[152px] shrink-0 snap-center sm:w-[31%] lg:w-auto lg:min-w-0"
+          >
+            <Stamp index={i} icon={seal.icon}>
+              {t.stamps[seal.key]}
+            </Stamp>
+          </li>
+        ))}
+      </ul>
     </div>
   );
 }
@@ -87,84 +102,91 @@ function HeroFilm() {
 export function Hero() {
   const logo = useAsset("hero.logo", "/logo-home.png");
   const { t } = useI18n();
-  const reduced = useReducedMotion();
+  const reduced = useReducedMotion() ?? false;
 
   const intro = (delay: number) => ({
-    initial: reduced ? false : { opacity: 0, y: 18 },
+    initial: reduced ? false : { opacity: 0, y: TRAVEL.text },
     animate: { opacity: 1, y: 0 },
-    transition: { delay, duration: 0.85, ease: EASE },
+    transition: { delay, duration: DUR.grand * 0.65, ease: EASE },
   });
 
   return (
-    <section
-      id="top"
-      className="relative flex items-center overflow-hidden bg-background pb-8 pt-[78px] xl:min-h-[100svh] xl:pb-20 xl:pt-[120px]"
-    >
-      {/* warm glow behind everything — decorative, never over the content */}
-      <div
-        aria-hidden
-        className="pointer-events-none absolute inset-0 -z-10"
-        style={{
-          background:
-            "radial-gradient(120% 70% at 50% 0%, color-mix(in oklab, var(--accent) 14%, transparent) 0%, transparent 60%)",
-        }}
-      />
+    <section id="top" className="relative bg-background">
+      {/* ---- The film, the whole first screen ---- */}
+      <div className="relative h-[86svh] min-h-[560px] w-full overflow-hidden md:h-[90svh] xl:h-[94svh]">
+        <HeroFilm still={reduced} />
 
-      <div className="mx-auto w-full max-w-[1500px] px-5 md:px-8">
-        <div className="grid items-center gap-8 xl:grid-cols-[minmax(240px,1fr)_minmax(0,2.1fr)_minmax(240px,1fr)] xl:items-stretch xl:gap-10">
-          {/* ---- Left: the logo, and the first three seals on wide screens ---- */}
-          <div className="flex flex-col items-center gap-4 sm:gap-6 xl:items-start xl:justify-between xl:gap-0">
-            <motion.div {...intro(0.1)} className="w-[108px] sm:w-[200px] xl:w-full xl:max-w-[260px]">
-              <Image
-                src={logo}
-                alt="Honey Volcano"
-                width={1024}
-                height={1024}
-                priority
-                quality={95}
-                sizes="(max-width: 639px) 108px, (max-width: 1279px) 200px, 260px"
-                className="h-auto w-full"
-              />
-            </motion.div>
+        {/* The film itself dissolves toward one edge (`.hv-film`), so what
+            the fog is made of is the page's own background showing through.
+            These two only deepen it under the words. */}
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-0 lg:hidden"
+          style={{ background: WASH_UP }}
+        />
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-0 hidden lg:block"
+          style={{ background: WASH_SIDE }}
+        />
+        {/* where the film meets the seals */}
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-x-0 bottom-0 h-20 bg-gradient-to-t from-background to-transparent"
+        />
 
-            {/* Reads as a tagline, but it is what this page is about, so it
-                carries the h1 — the home page had none at all before. */}
-            <motion.h1
-              {...intro(0.25)}
-              className="max-w-xs text-center font-display text-[11px] font-normal uppercase leading-relaxed tracking-[0.34em] text-accent xl:mt-5 xl:text-left"
-            >
-              {t.hero.tagline}
-            </motion.h1>
+        {/* ---- In the fog: the logo, the line, the call ---- */}
+        <div className="absolute inset-0 flex items-end lg:items-center">
+          {/* matches the navbar's own container, so the logo in the fog sits
+              directly under the brand mark rather than near the edge */}
+          <div className="mx-auto w-full max-w-[1400px] px-4 pb-10 md:px-7 lg:pb-0">
+            <div className="flex flex-col items-center text-center lg:max-w-[470px] lg:items-start lg:text-left xl:max-w-[520px]">
+              <motion.div
+                {...intro(0.1)}
+                className="w-[112px] sm:w-[140px] md:w-[180px] lg:w-[220px]"
+              >
+                <Image
+                  src={logo}
+                  alt="Honey Volcano"
+                  width={1024}
+                  height={1024}
+                  priority
+                  quality={95}
+                  sizes="(max-width: 767px) 140px, (max-width: 1023px) 180px, 220px"
+                  className="h-auto w-full drop-shadow-[0_10px_30px_rgba(0,0,0,0.45)]"
+                />
+              </motion.div>
 
-            <div className="hidden w-full flex-col gap-3 xl:flex">
-              <Stamps from={0} to={3} />
+              {/* Reads as a tagline, but it is what this page is about, so it
+                  carries the h1 — the home page had none at all before. */}
+              <motion.h1
+                {...intro(0.25)}
+                className="mt-5 font-display text-[11px] font-normal uppercase leading-relaxed tracking-[0.3em] text-accent sm:text-[12px] md:mt-6 md:text-[13px] md:tracking-[0.26em]"
+              >
+                {t.hero.tagline}
+              </motion.h1>
+
+              <motion.p
+                {...intro(0.34)}
+                className="mt-3 max-w-md text-[15px] font-light leading-relaxed text-foreground-muted md:mt-4 md:text-base"
+              >
+                {t.hero.lead}
+              </motion.p>
+
+              <motion.div {...intro(0.44)} className="mt-6 md:mt-8">
+                <CallButton
+                  size="lg"
+                  showCopy
+                  className="[&>a]:max-sm:h-12 [&>a]:max-sm:px-6 [&>a]:max-sm:text-[14px]"
+                />
+              </motion.div>
             </div>
           </div>
-
-          {/* ---- Centre: the film, the line and the call ---- */}
-          <motion.div {...intro(0.18)} className="flex flex-col items-center justify-center gap-4 sm:gap-6">
-            <HeroFilm />
-
-            <p className="max-w-xl text-center text-[15px] font-light leading-relaxed text-foreground-muted md:text-base">
-              {t.hero.lead}
-            </p>
-
-            <CallButton size="lg" showCopy className="[&>a]:max-sm:h-12 [&>a]:max-sm:px-6 [&>a]:max-sm:text-[14px]" />
-          </motion.div>
-
-          {/* ---- Right: the last three seals on wide screens ---- */}
-          <div className="hidden w-full flex-col gap-3 xl:flex">
-            {/* spacer: drops the three seals level with the ones on the left */}
-            <span aria-hidden className="flex-1" />
-            <Stamps from={3} to={6} />
-          </div>
-        </div>
-
-        {/* ---- Below xl: all six seals, straight under the film ---- */}
-        <div className="mt-5 grid grid-cols-2 gap-2 sm:mt-8 sm:gap-3 xl:hidden">
-          <Stamps from={0} to={6} />
         </div>
       </div>
+
+      {/* ---- One line of seals, straight under the film ---- */}
+      <SealRow />
     </section>
   );
 }

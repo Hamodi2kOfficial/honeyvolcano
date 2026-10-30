@@ -1,31 +1,61 @@
 "use client";
 
 import * as React from "react";
+import Image from "next/image";
 import { Link } from "@/components/ui/link";
 import { usePathname } from "next/navigation";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
-import { Menu, X } from "lucide-react";
+import { HelpCircle, Home, Images, MapPin, Menu, Phone, X } from "lucide-react";
 
 import { CallButton } from "@/components/ui/call-button";
 import { ThemeToggle } from "@/components/ui/theme-toggle";
-import { VolcanoMark } from "@/components/ui/volcano-mark";
+import { BeeIcon, HoneyJarIcon } from "@/components/ui/bee-icons";
 import { LanguageSwitcher } from "@/components/site/controls";
 import { useI18n } from "@/components/i18n";
 import { EASE } from "@/lib/motion";
 import { cn } from "@/lib/utils";
 
-type Item = { href: string; key: keyof ReturnType<typeof useI18n>["t"]["nav"] };
+type Item = {
+  href: string;
+  key: keyof ReturnType<typeof useI18n>["t"]["nav"];
+  icon: React.ReactNode;
+};
 
 /** Everything in the menu, in order. "best" has no page yet (see below). */
 const ITEMS: Item[] = [
-  { href: "/", key: "home" },
-  { href: "/products", key: "products" },
-  { href: "/where-to-buy", key: "stores" },
-  { href: "/about", key: "about" },
-  { href: "__soon", key: "best" },
-  { href: "/contact", key: "contact" },
-  { href: "/gallery", key: "gallery" },
+  { href: "/", key: "home", icon: <Home /> },
+  { href: "/products", key: "products", icon: <HoneyJarIcon /> },
+  { href: "/where-to-buy", key: "stores", icon: <MapPin /> },
+  { href: "/about", key: "about", icon: <BeeIcon /> },
+  { href: "__soon", key: "best", icon: <HelpCircle /> },
+  { href: "/contact", key: "contact", icon: <Phone /> },
+  { href: "/gallery", key: "gallery", icon: <Images /> },
 ];
+
+/**
+ * The word, folded away until it is wanted.
+ *
+ * A grid column going from `0fr` to `1fr` is the one way to open a box to its
+ * natural width without measuring it in JavaScript first. The text stays in
+ * the DOM the whole time — only clipped — so the link keeps its accessible
+ * name whether the word is showing or not.
+ */
+function MorphLabel({ children, open }: { children: React.ReactNode; open: boolean }) {
+  return (
+    <span
+      className={cn(
+        "grid transition-[grid-template-columns] duration-300 ease-out motion-reduce:transition-none",
+        open
+          ? "grid-cols-[1fr]"
+          : "grid-cols-[0fr] group-hover:grid-cols-[1fr] group-focus-within:grid-cols-[1fr]"
+      )}
+    >
+      <span className="overflow-hidden">
+        <span className="block whitespace-nowrap pl-2">{children}</span>
+      </span>
+    </span>
+  );
+}
 
 function useActive() {
   const pathname = usePathname();
@@ -46,16 +76,27 @@ function useActive() {
  * reader is told it does nothing instead of being walked into a 404. The
  * tooltip shows on hover and on focus.
  */
-function SoonItem({ label, soon }: { label: string; soon: string }) {
+function SoonItem({
+  label,
+  soon,
+  icon,
+}: {
+  label: string;
+  soon: string;
+  icon: React.ReactNode;
+}) {
   return (
     <span className="group relative">
       <button
         type="button"
         aria-disabled="true"
         onClick={(e) => e.preventDefault()}
-        className="inline-flex h-10 cursor-default items-center rounded-full px-4 text-[13px] text-foreground-muted/70 transition-colors hover:text-foreground-muted"
+        className="inline-flex h-10 cursor-default items-center rounded-full px-3 text-[13px] text-foreground-muted/70 transition-colors hover:text-foreground-muted"
       >
-        {label}
+        <span aria-hidden className="shrink-0 [&_svg]:h-[18px] [&_svg]:w-[18px]">
+          {icon}
+        </span>
+        <MorphLabel open={false}>{label}</MorphLabel>
       </button>
       <span
         role="tooltip"
@@ -117,24 +158,33 @@ export function Navbar() {
           className="flex shrink-0 items-center gap-2.5 text-accent transition-opacity hover:opacity-80"
           aria-label="Honey Volcano — home"
         >
-          <VolcanoMark className="h-7 w-7" />
+          <Image
+            src="/logo-home.png"
+            alt=""
+            width={500}
+            height={500}
+            priority
+            quality={95}
+            sizes="36px"
+            className="h-9 w-9 shrink-0"
+          />
           <span className="hidden font-display text-[15px] leading-none tracking-[0.26em] sm:block">
             HONEY&nbsp;VOLCANO
           </span>
         </Link>
 
-        {/* Desktop menu */}
+        {/* Desktop menu — each item is its icon until it is wanted */}
         <nav className="hidden items-center gap-0.5 xl:flex" aria-label={t.nav.menu}>
           {ITEMS.map((item) =>
             item.href === "__soon" ? (
-              <SoonItem key="soon" label={t.nav.best} soon={t.nav.bestSoon} />
+              <SoonItem key="soon" label={t.nav.best} soon={t.nav.bestSoon} icon={item.icon} />
             ) : (
               <Link
                 key={item.href}
                 href={item.href}
                 aria-current={isActive(item.href) ? "page" : undefined}
                 className={cn(
-                  "relative inline-flex h-10 items-center rounded-full px-4 text-[13px] transition-colors",
+                  "group relative inline-flex h-10 items-center rounded-full px-3 text-[13px] transition-colors",
                   isActive(item.href)
                     ? "text-accent"
                     : "text-foreground-muted hover:text-foreground"
@@ -148,7 +198,10 @@ export function Navbar() {
                     transition={{ type: "spring", stiffness: 420, damping: 36 }}
                   />
                 )}
-                {t.nav[item.key]}
+                <span aria-hidden className="shrink-0 [&_svg]:h-[18px] [&_svg]:w-[18px]">
+                  {item.icon}
+                </span>
+                <MorphLabel open={isActive(item.href)}>{t.nav[item.key]}</MorphLabel>
               </Link>
             )
           )}
@@ -212,10 +265,15 @@ export function Navbar() {
                   }}
                   transition={{ duration: 0.4, ease: EASE }}
                 >
+                  {/* On a phone the icon and the word are both there from the
+                      start — there is room, and nothing should need hovering. */}
                   {item.href === "__soon" ? (
-                    <span className="flex items-center justify-between rounded-2xl border border-border/60 px-5 py-4 text-[17px] text-foreground-muted/70">
+                    <span className="flex items-center gap-3.5 rounded-2xl border border-border/60 px-5 py-4 text-[17px] text-foreground-muted/70">
+                      <span aria-hidden className="shrink-0 [&_svg]:h-5 [&_svg]:w-5">
+                        {item.icon}
+                      </span>
                       {t.nav.best}
-                      <span className="text-[10px] uppercase tracking-[0.25em] text-accent">
+                      <span className="ml-auto text-[10px] uppercase tracking-[0.25em] text-accent">
                         {t.nav.bestSoon}
                       </span>
                     </span>
@@ -224,15 +282,24 @@ export function Navbar() {
                       href={item.href}
                       aria-current={isActive(item.href) ? "page" : undefined}
                       className={cn(
-                        "flex items-center justify-between rounded-2xl border px-5 py-4 text-[17px] transition-colors",
+                        "flex items-center gap-3.5 rounded-2xl border px-5 py-4 text-[17px] transition-colors",
                         isActive(item.href)
                           ? "border-accent/45 bg-accent/10 text-accent"
                           : "border-border/60 text-foreground hover:border-accent/40 hover:bg-accent/5"
                       )}
                     >
+                      <span
+                        aria-hidden
+                        className={cn(
+                          "shrink-0 [&_svg]:h-5 [&_svg]:w-5",
+                          isActive(item.href) ? "text-accent" : "text-foreground-muted"
+                        )}
+                      >
+                        {item.icon}
+                      </span>
                       {t.nav[item.key]}
                       {isActive(item.href) && (
-                        <span aria-hidden className="h-1.5 w-1.5 rounded-full bg-accent" />
+                        <span aria-hidden className="ml-auto h-1.5 w-1.5 rounded-full bg-accent" />
                       )}
                     </Link>
                   )}

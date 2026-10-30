@@ -1,26 +1,35 @@
 "use client";
 
 import { useRef } from "react";
-import { motion, useInView, type Variants } from "motion/react";
+import { motion, useInView, useReducedMotion, type Variants } from "motion/react";
+
+import { DUR, EASE, STAGGER, TRAVEL } from "@/lib/motion";
 
 /**
- * Word-by-word blur-and-rise reveal (adapted from a 21st.dev pattern to our
- * motion/react stack). Inherits the parent's typography — pass the same
- * className you'd give the heading. Use only for single-line text (it collapses
- * whitespace, so it won't preserve manual line breaks).
+ * The site's one headline reveal: word by word, rising into place, once.
+ *
+ * Adapted from a 21st.dev word-stagger pattern onto our motion/react stack.
+ * Two things differ from the original. It keeps explicit line breaks, so the
+ * two-line headings this site is built on can use the same treatment as
+ * everything else instead of needing their own. And it animates transform and
+ * opacity only — the original's per-word blur is a paint on every frame, and
+ * this site holds itself to compositor-only motion.
+ *
+ * The full text is on the element as `aria-label` and the pieces are hidden
+ * from assistive tech, so a screen reader hears one heading, not a word list.
+ * Under `prefers-reduced-motion` the heading is simply there.
  */
 const container: Variants = {
   hidden: {},
-  visible: { transition: { staggerChildren: 0.06, delayChildren: 0.05 } },
+  visible: { transition: { staggerChildren: STAGGER.base, delayChildren: 0.04 } },
 };
 
 const word: Variants = {
-  hidden: { opacity: 0, y: 14, filter: "blur(8px)" },
+  hidden: { opacity: 0, y: TRAVEL.text },
   visible: {
     opacity: 1,
     y: 0,
-    filter: "blur(0px)",
-    transition: { duration: 0.7, ease: [0.215, 0.61, 0.355, 1] },
+    transition: { duration: DUR.base, ease: EASE },
   },
 };
 
@@ -45,8 +54,19 @@ export function RevealWords({
 }) {
   const ref = useRef<HTMLElement | null>(null);
   const inView = useInView(ref, { once, margin: "-8% 0px" });
-  const words = text.trim().split(/\s+/);
+  const reduced = useReducedMotion() ?? false;
   const Comp = TAGS[as];
+
+  // Lines first, then words, so a "\n" in the dictionary still breaks the line.
+  const lines = text.split("\n").map((line) => line.trim().split(/\s+/));
+
+  if (reduced) {
+    return (
+      <Comp className={className} style={{ whiteSpace: "pre-line" }}>
+        {text}
+      </Comp>
+    );
+  }
 
   return (
     <Comp
@@ -55,18 +75,21 @@ export function RevealWords({
       variants={container}
       initial="hidden"
       animate={inView ? "visible" : "hidden"}
-      aria-label={text}
+      aria-label={text.replace(/\n/g, " ")}
     >
-      {words.map((w, i) => (
-        <motion.span
-          key={`${w}-${i}`}
-          aria-hidden
-          variants={word}
-          className="inline-block"
-          style={{ marginRight: "0.25em", willChange: "transform, opacity, filter" }}
-        >
-          {w}
-        </motion.span>
+      {lines.map((words, li) => (
+        <span key={li} aria-hidden className="block">
+          {words.map((w, i) => (
+            <motion.span
+              key={`${w}-${i}`}
+              variants={word}
+              className="inline-block"
+              style={{ marginRight: "0.25em" }}
+            >
+              {w}
+            </motion.span>
+          ))}
+        </span>
       ))}
     </Comp>
   );
