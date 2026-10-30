@@ -397,3 +397,48 @@ export function sectionTitle(s: Section): string {
       return s.heading || "Enquiry form";
   }
 }
+
+/**
+ * Folds a saved section list back together with the designed one.
+ *
+ * The owner's saved layout is the authority on order, visibility and anything
+ * he has written — but it can only describe the sections that existed when he
+ * last pressed publish. Adding a section to the site used to make it invisible
+ * on the live site and nowhere to be found in the dashboard, because both took
+ * the saved list wholesale and the new section simply was not in it.
+ *
+ * A built-in can be hidden and moved but never deleted (see the lock in the
+ * home editor), so a built-in missing from a saved list means one thing only:
+ * it did not exist yet. Those are the ones put back here.
+ *
+ * Each returns to where it was designed to sit — directly after the nearest
+ * earlier section the owner does have — rather than being dropped at the end.
+ * Everything he created himself is left exactly where he put it.
+ */
+export function mergeHomeSections(saved: Section[], designed: Section[]): Section[] {
+  const known = new Set(
+    saved.flatMap((s) => (s.kind === "builtin" ? [s.builtin] : []))
+  );
+  const merged = [...saved];
+
+  designed.forEach((section, i) => {
+    if (section.kind !== "builtin" || known.has(section.builtin)) return;
+
+    // Walk back through the designed order for an anchor we already have.
+    // Sections restored a moment ago count, so a run of new ones (the three
+    // story sections, say) stays in its own order.
+    let at = 0;
+    for (let j = i - 1; j >= 0; j--) {
+      const earlier = designed[j];
+      if (earlier.kind !== "builtin" || !known.has(earlier.builtin)) continue;
+      const kind = earlier.builtin;
+      at = merged.findIndex((s) => s.kind === "builtin" && s.builtin === kind) + 1;
+      break;
+    }
+
+    merged.splice(at, 0, JSON.parse(JSON.stringify(section)) as Section);
+    known.add(section.builtin);
+  });
+
+  return merged;
+}

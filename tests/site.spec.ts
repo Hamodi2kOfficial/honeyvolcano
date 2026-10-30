@@ -485,6 +485,39 @@ test.describe("the contact form", () => {
   });
 });
 
+test.describe("a layout published before these sections existed", () => {
+  /**
+   * The owner's published layout can only name the sections that existed when
+   * he last pressed publish. This is the real one from the live site: seven
+   * sections, none of the six added since. Taking it wholesale hid all six.
+   */
+  const PUBLISHED = ["hero", "video", "trust", "values", "letter", "showcase", "cta"].map(
+    (builtin) => ({ id: `b-${builtin}`, kind: "builtin", builtin, visible: true })
+  );
+
+  test("still shows the sections it has never heard of", async ({ page }) => {
+    await page.route("**/api/content", (route) =>
+      route.fulfill({
+        status: 200,
+        contentType: "application/json",
+        body: JSON.stringify({ content: { home: { sections: PUBLISHED } } }),
+      })
+    );
+
+    await page.goto("/");
+    await ready(page);
+    await settle(page);
+
+    // One from each family that the published layout leaves out.
+    await expect(page.getByRole("heading", { name: /everything the hive makes/i })).toBeVisible();
+    await expect(page.getByRole("heading", { name: /our favourites/i })).toBeVisible();
+    await expect(page.getByRole("heading", { name: /a spoon is never enough/i })).toBeVisible();
+
+    // And what he did publish is still there, in his order.
+    await expect(page.getByRole("heading", { name: /reliable source/i })).toBeVisible();
+  });
+});
+
 test.describe("light and dark", () => {
   test("the toggle switches the page and is remembered", async ({ page }) => {
     await page.goto("/");

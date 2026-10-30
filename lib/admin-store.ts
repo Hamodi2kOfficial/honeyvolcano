@@ -14,7 +14,7 @@ import homeData from "@/content/home.json";
 import productsData from "@/content/products.json";
 import siteData from "@/content/site.json";
 
-import type { HomeContent, Img, Section } from "@/lib/home-model";
+import { mergeHomeSections, type HomeContent, type Img, type Section } from "@/lib/home-model";
 import { defaultMarketing, type Marketing } from "@/lib/marketing";
 
 export const ADMIN_USER = "admin";
@@ -93,7 +93,15 @@ export function loadWorkspace(): Workspace {
     const raw = localStorage.getItem(WORKSPACE_KEY);
     if (!raw) return freshWorkspace();
     const saved = JSON.parse(raw) as Partial<Workspace>;
-    return { ...freshWorkspace(), ...saved };
+    const fresh = freshWorkspace();
+    const ws = { ...fresh, ...saved };
+    // A layout saved before a section existed cannot mention it, and taking
+    // it wholesale would hide the section from the dashboard too — so the
+    // owner would press publish and quietly bake the loss into the live site.
+    if (saved.home?.sections) {
+      ws.home = { ...ws.home, sections: mergeHomeSections(saved.home.sections, fresh.home.sections) };
+    }
+    return ws;
   } catch {
     return freshWorkspace();
   }

@@ -3,6 +3,7 @@
 import { createContext, useContext, useEffect, useState } from "react";
 
 import { buildTimeContent, type SiteBundle } from "@/lib/content";
+import { mergeHomeSections } from "@/lib/home-model";
 import { track } from "@/lib/track";
 
 /**
@@ -39,7 +40,21 @@ export function LiveContentProvider({ children }: { children: React.ReactNode })
     fetch("/api/content", { signal: controller.signal, cache: "no-store" })
       .then((res) => (res.ok ? res.json() : null))
       .then((data: { content?: Partial<SiteBundle> | null } | null) => {
-        if (data?.content) setContent({ ...buildTimeContent, ...data.content });
+        if (!data?.content) return;
+        const next = { ...buildTimeContent, ...data.content };
+        // The published layout was written before some of these sections
+        // existed. Taking it wholesale would hide every section added since,
+        // which is exactly what happened to the ones built in round two.
+        if (data.content.home?.sections) {
+          next.home = {
+            ...next.home,
+            sections: mergeHomeSections(
+              data.content.home.sections,
+              buildTimeContent.home.sections
+            ),
+          };
+        }
+        setContent(next);
       })
       .catch(() => {
         /* no API, offline, or aborted — the baked-in content stays */
