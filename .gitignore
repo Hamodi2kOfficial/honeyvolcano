@@ -15,7 +15,6 @@
 
 # next.js
 /.next/
-/out/
 
 # production
 /build
@@ -40,8 +39,13 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
-# static export output
-/out
+# The static export IS tracked, on purpose. It is the folder the owner
+# uploads to publish, and he keeps it in the repository so there is always a
+# copy of exactly what is on the site. Rebuild it with `npm run build` and
+# commit it with whatever change produced it.
+#
+# It does not contain netlify/functions — those live outside it — so a deploy
+# made from this folder alone leaves the site without its /api/* routes.
 
 # local-only invoice generator (contains personal/bank details)
 scripts/make-invoice-pdf.js
