@@ -1,0 +1,79 @@
+"use client";
+
+import * as React from "react";
+import { Link } from "@/components/ui/link";
+import { motion } from "motion/react";
+
+import { cn } from "@/lib/utils";
+
+/**
+ * Signature call-to-action for Honey Volcano — a molten-gold pill with a
+ * travelling light shimmer and a honey droplet that drips on a slow loop.
+ * Deliberately not a plain "Buy now" button.
+ */
+export function HoneyCta({
+  href,
+  children,
+  className,
+  size = "md",
+}: {
+  href: string;
+  children: React.ReactNode;
+  className?: string;
+  size?: "sm" | "md" | "lg";
+}) {
+  const h =
+    size === "sm"
+      ? "h-10 px-6 text-[16px]"
+      : size === "lg"
+        ? "h-14 px-12 text-[21px]"
+        : "h-12 px-9 text-[19px]";
+
+  return (
+    <Link href={href} className={cn("group relative inline-block", className)}>
+      <span
+        className={cn(
+          "relative z-10 inline-flex items-center justify-center overflow-hidden whitespace-nowrap rounded-full font-semibold tracking-[0.02em] text-on-accent",
+          "shadow-[0_12px_34px_-10px_var(--accent)] ring-1 ring-accent-strong/45",
+          "transition-transform duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.04]",
+          "motion-reduce:transition-none motion-reduce:group-hover:scale-100",
+          h
+        )}
+        style={{
+          backgroundImage:
+            "linear-gradient(135deg, var(--accent-strong) 0%, var(--accent) 48%, var(--copper) 120%)",
+        }}
+      >
+        {/* travelling shimmer */}
+        <motion.span
+          aria-hidden
+          className="pointer-events-none absolute inset-0 motion-reduce:hidden"
+          style={{
+            backgroundImage:
+              "linear-gradient(105deg, transparent 40%, rgba(255,255,255,0.55) 50%, transparent 60%)",
+            backgroundSize: "240% 100%",
+            backgroundRepeat: "no-repeat",
+          }}
+          animate={{ backgroundPositionX: ["160%", "-60%"] }}
+          transition={{ duration: 3, repeat: Infinity, repeatDelay: 1.6, ease: "easeInOut" }}
+        />
+        <span className="relative">{children}</span>
+      </span>
+
+      {/* honey drip */}
+      <motion.span
+        aria-hidden
+        className="pointer-events-none absolute left-1/2 top-full -translate-x-1/2"
+        animate={{ y: [-2, 3, 24], scaleY: [0.5, 1, 0.35], opacity: [0, 1, 0] }}
+        transition={{ duration: 2.6, repeat: Infinity, repeatDelay: 2.6, ease: "easeIn" }}
+      >
+        <svg width="12" height="16" viewBox="0 0 12 16" aria-hidden className="text-accent">
+          <path
+            d="M6 0c0 4.2-6 7-6 11a6 6 0 0 0 12 0c0-4-6-6.8-6-11z"
+            fill="currentColor"
+          />
+        </svg>
+      </motion.span>
+    </Link>
+  );
+}

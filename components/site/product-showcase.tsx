@@ -1,0 +1,130 @@
+"use client";
+
+import Image from "next/image";
+import { motion } from "motion/react";
+
+import { HoneyCta } from "@/components/ui/honey-cta";
+import { EruptMark } from "@/components/ui/erupt-mark";
+import { RevealWords } from "@/components/ui/reveal-words";
+import { useI18n } from "@/components/i18n";
+import { EASE, IN_VIEW } from "@/lib/motion";
+import { useAsset } from "@/components/live-content";
+
+function Feature({
+  title,
+  align,
+  delay,
+}: {
+  title: string;
+  align: "left" | "right";
+  delay: number;
+}) {
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 20, filter: "blur(8px)" }}
+      whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+      viewport={IN_VIEW}
+      transition={{ duration: 0.9, ease: EASE, delay }}
+      className={
+        align === "right"
+          ? "text-center md:text-right"
+          : "text-center md:text-left"
+      }
+    >
+      <h3 className="text-shimmer font-display text-xl tracking-[0.15em] md:text-2xl">
+        {title}
+      </h3>
+    </motion.div>
+  );
+}
+
+export function ProductShowcase() {
+  const jar = useAsset("showcase.jar", "/product-jar-cut.png");
+  const { t } = useI18n();
+
+  return (
+    <section
+      id="honey"
+      className="relative overflow-hidden bg-bg-soft py-24 md:py-36"
+    >
+      <EruptMark className="top-6 left-1/2 -translate-x-1/2 text-4xl text-accent/[0.045] sm:text-6xl md:text-8xl" />
+      <div className="relative mx-auto max-w-6xl px-6">
+        {/* Heading */}
+        <div className="mx-auto max-w-2xl text-center">
+          <RevealWords
+            as="h2"
+            text={t.product.heading}
+            className="font-serif text-5xl font-light text-foreground md:text-6xl"
+          />
+        </div>
+
+        {/* Jar + features */}
+        <div className="mt-16 grid items-center gap-10 md:grid-cols-[1fr_auto_1fr] md:gap-6">
+          {/* left features */}
+          <div className="flex flex-col gap-12 md:items-end">
+            <Feature title={t.product.f1t} align="right" delay={0.1} />
+            <Feature title={t.product.f2t} align="right" delay={0.2} />
+          </div>
+
+          {/* jar */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.92 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={IN_VIEW}
+            transition={{ duration: 1, ease: EASE }}
+            className="mx-auto w-[300px] md:w-[420px]"
+          >
+            <motion.div
+              animate={{ y: [0, -14, 0] }}
+              transition={{ duration: 5.5, repeat: Infinity, ease: "easeInOut" }}
+              className="relative"
+            >
+              {/* slow-rotating conic halo */}
+              <motion.div
+                aria-hidden
+                className="absolute left-1/2 top-1/2 -z-10 h-[130%] w-[130%] -translate-x-1/2 -translate-y-1/2 rounded-full opacity-40 blur-2xl"
+                style={{
+                  background:
+                    "conic-gradient(from 0deg, transparent, rgba(212,175,55,0.55), transparent 55%, rgba(229,184,105,0.4), transparent)",
+                }}
+                animate={{ rotate: 360 }}
+                transition={{ duration: 22, repeat: Infinity, ease: "linear" }}
+              />
+              <div
+                aria-hidden
+                className="absolute left-1/2 top-1/2 -z-10 h-[70%] w-[70%] -translate-x-1/2 -translate-y-1/2 rounded-full opacity-40 blur-3xl"
+                style={{ background: "radial-gradient(circle, var(--accent) 0%, transparent 70%)" }}
+              />
+              <Image
+                src={jar}
+                alt="Honey Volcano raw honey jar"
+                width={1360}
+                height={2048}
+                priority={false}
+                className="relative h-auto w-full drop-shadow-[0_40px_70px_rgba(0,0,0,0.55)]"
+              />
+            </motion.div>
+          </motion.div>
+
+          {/* right feature */}
+          <div className="flex flex-col justify-center md:items-start">
+            <Feature title={t.product.f3t} align="left" delay={0.3} />
+          </div>
+        </div>
+
+        {/* Call to taste */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={IN_VIEW}
+          transition={{ duration: 0.8, ease: EASE }}
+          className="mt-16 flex justify-center"
+        >
+          <HoneyCta href="/products" size="lg">
+            {t.products.call}
+          </HoneyCta>
+        </motion.div>
+      </div>
+    </section>
+  );
+}
