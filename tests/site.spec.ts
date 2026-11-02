@@ -1154,6 +1154,11 @@ test.describe("the owner's October round of fixes", () => {
     }
   });
 
+  // Six languages, a footer link and a page load each: real work, about 21
+  // seconds of it. Under a loaded machine that overran the 45s budget and
+  // failed for no reason of its own.
+  test.slow();
+
   test("terms and conditions exist, in every language, linked from the footer", async ({
     page,
   }) => {
@@ -1558,6 +1563,78 @@ test.describe("the round his Lithuanian reader found", () => {
       ).toHaveLength(0);
     });
   }
+
+  /**
+   * A first-time visitor gets English.
+   *
+   * The language is a saved preference, so a browser that once chose Spanish
+   * keeps being shown Spanish — which is correct, and is exactly why this
+   * needs saying out loud: nothing may ever pick a language on a visitor's
+   * behalf, from the browser locale or anywhere else.
+   */
+  test("a first-time visitor gets English, whatever their browser says", async ({
+    browser,
+  }) => {
+    for (const locale of ["en-GB", "es-ES", "is-IS", "ru-RU"]) {
+      const ctx = await browser.newContext({ locale });
+      const page = await ctx.newPage();
+      await page.goto("/");
+      await ready(page);
+      await page.waitForTimeout(400);
+
+      await expect(
+        page.locator("html"),
+        `a ${locale} browser was served something other than English`
+      ).toHaveAttribute("lang", "en");
+      await expect(page.locator("main").first()).toContainText(
+        "Lithuanian honey"
+      );
+      expect(
+        await page.evaluate(() => localStorage.getItem("medaus-lang")),
+        "a language was saved for someone who never chose one"
+      ).toBeNull();
+      await ctx.close();
+    }
+  });
+
+  /**
+   * Reveals must finish for a visitor who asked for no motion.
+   *
+   * useReducedMotion reports null on the first render and the truth on the
+   * second, so an element can take the hidden initial state before the answer
+   * is known. An attempt to skip the animation entirely once the answer
+   * arrived left every such visitor looking at a blank page — the reveal has
+   * to still run, it just takes no time.
+   */
+  test("a visitor who asked for no motion still sees the page", async ({
+    page,
+  }) => {
+    for (const path of ["/", "/about/", "/terms/", "/products/"]) {
+      await page.goto(path);
+      await ready(page);
+      await page.waitForTimeout(700);
+      // No scrolling at all: whatever is on the first screen must be readable.
+      // IN_VIEW holds its trigger 12% up from the bottom, so anything still in
+      // that band is correctly waiting its turn rather than stuck.
+      const faded = await page.evaluate(() =>
+        [...document.querySelectorAll("main h1, main h2, main p")]
+          .filter((el) => {
+            const r = el.getBoundingClientRect();
+            const trigger = window.innerHeight * 0.88;
+            if (r.top > trigger || r.bottom < 0) return false;
+            let n: HTMLElement | null = el as HTMLElement;
+            let least = 1;
+            while (n && n !== document.body) {
+              least = Math.min(least, Number(getComputedStyle(n).opacity));
+              n = n.parentElement;
+            }
+            return least < 0.9;
+          })
+          .map((el) => (el.textContent || "").trim().slice(0, 30))
+      );
+      expect(faded, `${path}: invisible with reduced motion on`).toHaveLength(0);
+    }
+  });
 
   /**
    * The month that sent him a list of Lithuanian month names. "31 October

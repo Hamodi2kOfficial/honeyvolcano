@@ -1,7 +1,7 @@
 "use client";
 
 import * as React from "react";
-import { motion, useReducedMotion } from "motion/react";
+import { motion, useAnimationControls, useReducedMotion } from "motion/react";
 
 import { EASE, IN_VIEW } from "@/lib/motion";
 
@@ -25,14 +25,40 @@ export function Reveal({
   as?: "div" | "section" | "li" | "article" | "p" | "span";
 }) {
   const reduced = useReducedMotion();
+  const controls = useAnimationControls();
   const Tag = motion[as];
 
+  // Arriving is for things you are about to read. Something the scroll has
+  // already carried off the top of the window has no arrival to show, so it
+  // is simply put in its final state: on a flick down a long page that is
+  // most of the section, and animating all of them was work nobody could
+  // ever see. It still ends up visible, which is the part that matters —
+  // leaving it hidden is the bug this replaced.
+  const show = React.useCallback(
+    (entry: IntersectionObserverEntry | null) => {
+      // The observer already measured it for us; asking the element again
+      // would force a layout in the middle of a scroll.
+      const past = (entry?.boundingClientRect.bottom ?? 1) < 0;
+      void controls.start({
+        opacity: 1,
+        y: 0,
+        transition: past || reduced ? { duration: 0 } : { duration: 0.7, ease: EASE, delay },
+      });
+    },
+    [controls, delay, reduced]
+  );
+
+  // Both of these are attached whatever the motion preference. useReducedMotion
+  // reports null on the first render and the truth on the second, so `initial`
+  // can be the hidden state before we know — and dropping the animation once we
+  // do know left the content hidden for good. For a reduced-motion visitor the
+  // reveal still runs; it just takes no time.
   return (
     <Tag
       initial={reduced ? false : { opacity: 0, y }}
-      whileInView={{ opacity: 1, y: 0 }}
+      animate={controls}
+      onViewportEnter={show}
       viewport={IN_VIEW}
-      transition={{ duration: 0.7, ease: EASE, delay }}
       className={className}
     >
       {children}
