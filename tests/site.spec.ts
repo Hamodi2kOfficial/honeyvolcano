@@ -1707,6 +1707,52 @@ test.describe("the round his Lithuanian reader found", () => {
   });
 
   /**
+   * An animated heading must read as a sentence, not as one long word.
+   *
+   * Each word is its own element so it can rise into place, and the lines
+   * are their own blocks. Nothing visible separates them, so nothing
+   * separated them in the text either: "From the beekeeper's hands" and
+   * "straight to yours" came out as "...handsstraight to yours". That text
+   * is what a search engine indexes and what you get if you copy the
+   * heading — and Jordan asked to be found in Google for this.
+   *
+   * `aria-label` carries the true wording, so it is the thing to compare
+   * against. This only shows up with motion on; the reduced-motion path
+   * renders the heading as plain text and was always fine.
+   */
+  test("an animated heading reads as a sentence", async ({ browser }) => {
+    const ctx = await browser.newContext({ reducedMotion: "no-preference" });
+    const page = await ctx.newPage();
+
+    for (const path of ["/", "/about/", "/products/", "/contact/"]) {
+      await page.goto(path);
+      await ready(page);
+      await settle(page);
+
+      const runOn = await page.evaluate(() =>
+        [
+          ...document.querySelectorAll(
+            "h1[aria-label], h2[aria-label], h3[aria-label]"
+          ),
+        ]
+          .map((h) => ({
+            text: (h.textContent || "").replace(/\s+/g, " ").trim(),
+            aria: (h.getAttribute("aria-label") || "")
+              .replace(/\s+/g, " ")
+              .trim(),
+          }))
+          .filter((h) => h.aria && h.text !== h.aria)
+      );
+
+      expect(
+        runOn,
+        `${path}: a heading's text does not match its wording`
+      ).toEqual([]);
+    }
+    await ctx.close();
+  });
+
+  /**
    * A first-time visitor gets English.
    *
    * The language is a saved preference, so a browser that once chose Spanish

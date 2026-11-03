@@ -11,6 +11,11 @@
  *   "town"   — only the town is known. These get NO pin (a town-centre pin
  *              would be a wrong pin) and appear in the list with a note.
  *
+ * Four were filled in on 3 November 2026 from the shops' own websites:
+ * Fjarðarkaup, both Lindabakarí branches and Reykjavíkurblóm. The chains
+ * were left alone — Euro Market publishes hours for Smiðjuvegur, which is
+ * not one of the four branches here, and branch hours differ.
+ *
  * `hours` is only filled in where it was verified against the shop's own site
  * or a current directory listing. Everything else stays null and the page says
  * "please check with the store" — we never invent opening hours.
@@ -71,7 +76,8 @@ export const stores: Store[] = [
     lat: 64.08237,
     lng: -21.94045,
     precision: "exact",
-    hours: null,
+    /** Read off fjardarkaup.is on 3 Nov 2026. */
+    hours: ["Mon–Wed 09:00–18:00", "Thu 09:00–18:30", "Fri 09:00–19:00", "Sat 10:00–16:00", "Sun closed"],
   },
   {
     id: "euromarket-smidjuvegur",
@@ -222,7 +228,8 @@ export const stores: Store[] = [
     lat: 64.05245,
     lng: -21.97934,
     precision: "exact",
-    hours: null,
+    /** Read off lindabakari.is on 3 Nov 2026. */
+    hours: ["Mon–Fri 07:00–17:00", "Sat 07:00–16:00", "Sun 08:00–16:00"],
     note: 'Listed as "Vellir 220"; the shop is at Tjarnarvellir 15, postcode 221.',
   },
   {
@@ -234,7 +241,8 @@ export const stores: Store[] = [
     lat: 64.09634,
     lng: -21.8027,
     precision: "exact",
-    hours: null,
+    /** Read off lindabakari.is on 3 Nov 2026. */
+    hours: ["Mon–Fri 07:00–17:00", "Sat 07:00–16:00", "Sun 08:00–16:00"],
     note: 'Written as "Ogurhvær"; the street is Ögurhvarf, postcode 203.',
   },
   {
@@ -303,7 +311,8 @@ export const stores: Store[] = [
     lat: 64.14617,
     lng: -21.90049,
     precision: "exact",
-    hours: null,
+    /** Read off blom.is on 3 Nov 2026. */
+    hours: ["Mon–Fri 10:00–18:00", "Sat–Sun 11:00–17:00"],
     note: 'Written as "Reykjavikublom" — the shop is Reykjavíkurblóm.',
   },
   {

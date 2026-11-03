@@ -88,8 +88,15 @@ export function RevealWords({
               {/* A real space, not a margin. A margin looks identical but
                   leaves the heading as one run-on word in the page's text,
                   which is what a search engine reads and what you get if you
-                  copy it. */}
-              {i < words.length - 1 ? " " : null}
+                  copy it.
+
+                  The last word of a line needs one too. The lines are their
+                  own blocks, so nothing separates them in the text either,
+                  and "From the beekeeper's hands\nstraight to yours" was read
+                  as "...handsstraight to yours". It sits inside the line's
+                  own block, where a trailing space collapses and changes
+                  nothing on screen. */}
+              {i < words.length - 1 || li < lines.length - 1 ? " " : null}
             </React.Fragment>
           ))}
         </span>
