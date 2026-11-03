@@ -1,6 +1,8 @@
 import { expect, test, type Page } from "@playwright/test";
 
 import supplied from "./fixtures/about-supplied.json";
+import { mergeById, mergeProducts } from "../lib/content";
+import { layoutStamp } from "../lib/home-model";
 
 /** The shape of one language in tests/fixtures/about-supplied.json. */
 type AboutContent = {
@@ -1563,6 +1565,114 @@ test.describe("the round his Lithuanian reader found", () => {
       ).toHaveLength(0);
     });
   }
+
+  /**
+   * The fold itself, checked directly.
+   *
+   * The site and the dashboard both run this, and the dashboard one matters
+   * most: if it drops a field there, the owner presses publish and the loss
+   * becomes permanent. Going through a browser would test one caller; this
+   * tests the thing they share.
+   */
+  test("the fold keeps what the saved copy never mentioned", () => {
+    const designed = [
+      { id: "a", name: "A", image: "/a.webp", weight: "500 g", featured: true },
+      { id: "b", name: "B", image: "/b.webp", weight: "1 kg", featured: false },
+    ];
+
+    // Exactly the shape of the 27 October copy: ids and names, nothing else.
+    const saved = [{ id: "a", name: "A" }, { id: "b", name: "B renamed" }];
+
+    const merged = mergeById(saved as never, designed as never) as typeof designed;
+
+    expect(merged[0].image, "an unmentioned field was dropped").toBe("/a.webp");
+    expect(merged[0].weight).toBe("500 g");
+    expect(merged[0].featured, "a true flag was lost").toBe(true);
+    expect(merged[1].name, "a field the owner did set was overwritten").toBe(
+      "B renamed"
+    );
+    expect(merged[1].featured, "a false the owner set must stick").toBe(false);
+  });
+
+  test("a false the owner chose is not treated as missing", () => {
+    const designed = [{ id: "a", name: "A", featured: true }];
+    const saved = [{ id: "a", name: "A", featured: false }];
+    const merged = mergeProducts(saved as never, designed as never);
+    expect(
+      (merged[0] as unknown as { featured: boolean }).featured,
+      "unticking a product in the dashboard must stick"
+    ).toBe(false);
+  });
+
+  test("the layout stamp changes when the design changes", () => {
+    const a = layoutStamp([
+      { id: "1", kind: "builtin", builtin: "hero", visible: true },
+      { id: "2", kind: "builtin", builtin: "featured", visible: true },
+    ] as never);
+    const b = layoutStamp([
+      { id: "1", kind: "builtin", builtin: "hero", visible: true },
+      { id: "2", kind: "builtin", builtin: "video", visible: true },
+    ] as never);
+    expect(a, "two different designs share a stamp").not.toBe(b);
+  });
+
+  /**
+   * A saved product list must not strip the pictures off the shelf.
+   *
+   * The dashboard saves what a product was on the day it was saved. The
+   * copy from 27 October 2026 lists all seven and gives none of them an
+   * `image`, `weight`, `featured` or `flavours` — those came later. Taken
+   * wholesale it emptied every one of those fields on the live site: no
+   * product photos, no weights, nothing in "Our favourites", no flavour
+   * tabs. The owner found the missing pictures himself.
+   *
+   * This is the real payload, read back from production.
+   */
+  test("a saved product list cannot strip fields the build added", async ({
+    page,
+  }) => {
+    const SAVED_PRODUCTS = [
+      "raw-honey-500",
+      "raw-honey-1kg",
+      "honeycomb-300",
+      "delicacies-220",
+      "multicoloured-220",
+      "pollen-100",
+      "bee-bread-100",
+    ].map((id) => ({ id, name: id, price: 1000 }));
+
+    await page.route("**/api/content", (route) =>
+      route.fulfill({
+        status: 200,
+        contentType: "application/json",
+        body: JSON.stringify({ content: { products: SAVED_PRODUCTS } }),
+      })
+    );
+    await page.goto("/products/");
+    await ready(page);
+    await settle(page);
+
+    // Every jar still has a picture that actually loaded.
+    const imgs = await page.evaluate(() =>
+      [...document.querySelectorAll("main img")].map((i) => ({
+        src: (i as HTMLImageElement).currentSrc,
+        drawn: (i as HTMLImageElement).naturalWidth,
+      }))
+    );
+    const jars = imgs.filter((i) => i.src.includes("/products/"));
+    expect(
+      jars.length,
+      "the saved list stripped the product photos off the page"
+    ).toBeGreaterThanOrEqual(7);
+    expect(
+      jars.filter((i) => i.drawn === 0),
+      "a product photo is on the page but did not load"
+    ).toEqual([]);
+
+    // And the weights the saved copy never mentioned are still shown.
+    const text = await page.locator("main").innerText();
+    expect(text, "the weights went with the pictures").toMatch(/\d+\s*g\b/);
+  });
 
   /**
    * A layout saved against an older site must not come back.

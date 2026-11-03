@@ -22,6 +22,7 @@ import {
   type Section,
 } from "@/lib/home-model";
 import homeDesign from "@/content/home.json";
+import { mergeProducts, mergeSlides } from "@/lib/content";
 import { defaultMarketing, type Marketing } from "@/lib/marketing";
 
 export const ADMIN_USER = "admin";
@@ -101,12 +102,34 @@ export function loadWorkspace(): Workspace {
     if (!raw) return freshWorkspace();
     const saved = JSON.parse(raw) as Partial<Workspace>;
     const fresh = freshWorkspace();
-    const ws = { ...fresh, ...saved };
-    // A layout saved before a section existed cannot mention it, and taking
-    // it wholesale would hide the section from the dashboard too — so the
-    // owner would press publish and quietly bake the loss into the live site.
+    // Anything saved here was saved against the site as it was that day,
+    // and carries only the fields that existed then. Taken wholesale it
+    // hides everything added since from the dashboard too — and then the
+    // owner presses publish and bakes the loss into the live site. That is
+    // not a worry, it is what happened: the copy published on 27 October
+    // lists all seven products with no image, weight, featured flag or
+    // flavours, and when the content API came back every product photo
+    // vanished from honeyvolcano.com.
+    //
+    // So the dashboard folds the same way the site does: a field the saved
+    // copy states wins, a field it never mentions falls back to the build.
+    const ws = {
+      ...fresh,
+      ...saved,
+      products: saved.products
+        ? mergeProducts(saved.products, fresh.products)
+        : fresh.products,
+      gallery: saved.gallery?.slides
+        ? { slides: mergeSlides(saved.gallery.slides, fresh.gallery.slides) }
+        : fresh.gallery,
+      site: { ...fresh.site, ...saved.site },
+      marketing: { ...fresh.marketing, ...saved.marketing },
+    };
     if (saved.home?.sections) {
-      ws.home = { ...ws.home, sections: mergeHomeSections(saved.home.sections, fresh.home.sections) };
+      ws.home = {
+        ...ws.home,
+        sections: mergeHomeSections(saved.home.sections, fresh.home.sections),
+      };
     }
     return ws;
   } catch {

@@ -2,7 +2,13 @@
 
 import { createContext, useContext, useEffect, useState } from "react";
 
-import { buildTimeContent, type SiteBundle } from "@/lib/content";
+import {
+  buildTimeContent,
+  mergeProducts,
+  mergeSlides,
+  type SiteBundle,
+} from "@/lib/content";
+import { defaultMarketing } from "@/lib/marketing";
 import { layoutStamp, mergeHomeSections } from "@/lib/home-model";
 import { track } from "@/lib/track";
 
@@ -41,7 +47,45 @@ export function LiveContentProvider({ children }: { children: React.ReactNode })
       .then((res) => (res.ok ? res.json() : null))
       .then((data: { content?: Partial<SiteBundle> | null } | null) => {
         if (!data?.content) return;
-        const next = { ...buildTimeContent, ...data.content };
+
+        // Everything the dashboard saves is a snapshot of the site as it was
+        // that day, and it is only ever a partial one: it carries the fields
+        // that existed when it was saved and nothing added since. Taking any
+        // of it wholesale therefore deletes whatever came later.
+        //
+        // That is not hypothetical. The copy saved on 27 October lists all
+        // seven products and gives none of them an `image`, a `weight`, a
+        // `featured` flag or `flavours` — so the moment this API came back,
+        // every product photo disappeared from the live site, the weights went
+        // with them, "Our favourites" had nothing to show and the flavour tabs
+        // emptied. The rule throughout is the same one `mergeProducts` was
+        // written for: a field the saved copy actually states wins, including
+        // `false`, because that is the owner's decision; a field it never
+        // mentions falls back to what this build ships.
+        const saved = data.content;
+        const next: SiteBundle = {
+          ...buildTimeContent,
+          ...saved,
+          products: saved.products
+            ? mergeProducts(saved.products, buildTimeContent.products)
+            : buildTimeContent.products,
+          gallery: saved.gallery?.slides
+            ? {
+                slides: mergeSlides(
+                  saved.gallery.slides,
+                  buildTimeContent.gallery.slides
+                ),
+              }
+            : buildTimeContent.gallery,
+          site: { ...buildTimeContent.site, ...saved.site },
+          // defaultMarketing() first so the result is always whole: both of
+          // the others are optional and two partials do not make a Marketing.
+          marketing: {
+            ...defaultMarketing(),
+            ...buildTimeContent.marketing,
+            ...saved.marketing,
+          },
+        };
         // A saved layout is only applied to the design it was arranged
         // against. An older one described a site with a second video section
         // and sections still ticked "under construction", and merging kept

@@ -1,0 +1,262 @@
+{
+  "content": {
+    "home": {
+      "sections": [
+        {
+          "id": "b-hero",
+          "kind": "builtin",
+          "builtin": "hero",
+          "visible": true
+        },
+        {
+          "id": "b-video",
+          "kind": "builtin",
+          "builtin": "video",
+          "visible": true
+        },
+        {
+          "id": "b-trust",
+          "kind": "builtin",
+          "builtin": "trust",
+          "visible": true
+        },
+        {
+          "id": "b-values",
+          "kind": "builtin",
+          "builtin": "values",
+          "visible": true,
+          "underConstruction": true
+        },
+        {
+          "id": "b-letter",
+          "kind": "builtin",
+          "builtin": "letter",
+          "visible": true,
+          "underConstruction": true
+        },
+        {
+          "id": "b-showcase",
+          "kind": "builtin",
+          "builtin": "showcase",
+          "visible": true
+        },
+        {
+          "id": "b-cta",
+          "kind": "builtin",
+          "builtin": "cta",
+          "visible": true
+        }
+      ]
+    },
+    "gallery": {
+      "slides": [
+        {
+          "id": "g1",
+          "src": "/gallery/g-mountain.jpg",
+          "alt": "Honey Volcano jar in a lupine mountain meadow",
+          "text": "Let energy erupt"
+        },
+        {
+          "id": "g2",
+          "src": "/gallery/1.jpg",
+          "alt": "Honey Volcano",
+          "text": ""
+        },
+        {
+          "id": "g3",
+          "src": "/gallery/g-comb.jpg",
+          "alt": "Golden honeycomb dripping raw honey",
+          "text": "Let happiness erupt"
+        },
+        {
+          "id": "g4",
+          "src": "/gallery/polenandcomb.jpg",
+          "alt": "Bee pollen and honeycomb in the mountains",
+          "text": "Let energy erupt"
+        },
+        {
+          "id": "g5",
+          "src": "/gallery/2.jpg",
+          "alt": "Honey Volcano",
+          "text": ""
+        },
+        {
+          "id": "g6",
+          "src": "/gallery/g-pour.jpg",
+          "alt": "Raw honey drizzling into a jar",
+          "text": "Natural & Real"
+        },
+        {
+          "id": "g7",
+          "src": "/gallery/3faces.jpg",
+          "alt": "Honey Volcano — Let happiness erupt",
+          "text": ""
+        },
+        {
+          "id": "g8",
+          "src": "/gallery/g-spread.jpg",
+          "alt": "Honey jar with honeycomb and wildflowers",
+          "text": "Natural & Real"
+        },
+        {
+          "id": "g9",
+          "src": "/gallery/3.jpg",
+          "alt": "Honey Volcano",
+          "text": ""
+        },
+        {
+          "id": "g10",
+          "src": "/gallery/snack1s.jpg",
+          "alt": "Honey delicacy",
+          "text": ""
+        },
+        {
+          "id": "g11",
+          "src": "/gallery/4.jpg",
+          "alt": "Honey Volcano",
+          "text": ""
+        }
+      ]
+    },
+    "products": [
+      {
+        "id": "raw-honey-500",
+        "name": "Raw honey 500 g",
+        "priceISK": 2299,
+        "tba": false
+      },
+      {
+        "id": "raw-honey-1kg",
+        "name": "Raw honey 1 kg",
+        "priceISK": 3499,
+        "tba": false
+      },
+      {
+        "id": "honeycomb-300",
+        "name": "Honeycomb 300 g",
+        "priceISK": 2299,
+        "tba": false
+      },
+      {
+        "id": "delicacies-220",
+        "name": "Honey delicacies 220 g",
+        "priceISK": 2199,
+        "tba": false
+      },
+      {
+        "id": "multicoloured-220",
+        "name": "Honey multicoloured 220 g",
+        "priceISK": 2499,
+        "tba": false
+      },
+      {
+        "id": "pollen-100",
+        "name": "Pollen 100 g",
+        "priceISK": 1499,
+        "tba": false
+      },
+      {
+        "id": "bee-bread-100",
+        "name": "Bee bread 100 g",
+        "priceISK": null,
+        "tba": true
+      }
+    ],
+    "site": {
+      "phone": "8340999",
+      "phoneIntl": "+3548340999",
+      "email": "golovinasjordanas@gmail.com",
+      "businessNote": "Some combined purchasings or for small business entities can be discounted 15 procent from retail prices."
+    },
+    "media": [
+      {
+        "src": "/gallery/g-mountain.jpg",
+        "alt": "Jar in a lupine mountain meadow"
+      },
+      {
+        "src": "/gallery/g-comb.jpg",
+        "alt": "Golden honeycomb dripping raw honey"
+      },
+      {
+        "src": "/gallery/g-pour.jpg",
+        "alt": "Raw honey drizzling into a jar"
+      },
+      {
+        "src": "/gallery/g-spread.jpg",
+        "alt": "Honey jar with honeycomb and wildflowers"
+      },
+      {
+        "src": "/gallery/polenandcomb.jpg",
+        "alt": "Bee pollen and honeycomb"
+      },
+      {
+        "src": "/gallery/3faces.jpg",
+        "alt": "Honey Volcano — let happiness erupt"
+      },
+      {
+        "src": "/gallery/snack1s.jpg",
+        "alt": "Honey delicacy"
+      },
+      {
+        "src": "/gallery/1.jpg",
+        "alt": "Honey Volcano"
+      },
+      {
+        "src": "/gallery/2.jpg",
+        "alt": "Honey Volcano"
+      },
+      {
+        "src": "/gallery/3.jpg",
+        "alt": "Honey Volcano"
+      },
+      {
+        "src": "/gallery/4.jpg",
+        "alt": "Honey Volcano"
+      },
+      {
+        "src": "/trust-jar.jpg",
+        "alt": "Jar among wild lupine and mountains"
+      },
+      {
+        "src": "/honeycomb.jpg",
+        "alt": "Honeycomb texture"
+      },
+      {
+        "src": "/lifestyle.jpg",
+        "alt": "Honey Volcano lifestyle photo"
+      },
+      {
+        "src": "/product-jar-cut.png",
+        "alt": "Honey Volcano jar"
+      },
+      {
+        "src": "/logo-full.png",
+        "alt": "Honey Volcano logo"
+      }
+    ],
+    "copy": {},
+    "assets": {},
+    "marketing": {
+      "announcement": {
+        "enabled": false,
+        "text": "Fresh harvest — taste before you order",
+        "linkLabel": "See the products",
+        "href": "/products",
+        "from": "",
+        "until": ""
+      },
+      "offers": [],
+      "share": {
+        "title": "Honey Volcano — Raw Forest Honey",
+        "description": "Premium raw forest honey, harvested from untamed mountains and wild lupine fields. Pure, unfiltered, and artisanal.",
+        "image": "/logo-full.png"
+      },
+      "forms": {
+        "onProductsPage": true,
+        "askPhone": true,
+        "successMessage": "Thank you — we will be in touch shortly."
+      }
+    }
+  },
+  "updatedAt": "2026-10-27T00:19:15.003Z"
+}

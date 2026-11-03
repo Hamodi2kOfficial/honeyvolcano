@@ -96,10 +96,29 @@ export const buildTimeContent: SiteBundle = {
  * the owner unticks a product, that is a decision and it sticks. Only a field
  * the saved copy never mentions falls back to what the site ships with.
  */
-export function mergeProducts(saved: Product[], designed: Product[]): Product[] {
-  const byId = new Map(designed.map((p) => [p.id, p]));
-  return saved.map((p) => {
-    const base = byId.get(p.id);
-    return base ? { ...base, ...p } : p;
+export function mergeById<T extends { id: string }>(
+  saved: T[],
+  designed: T[]
+): T[] {
+  const byId = new Map(designed.map((d) => [d.id, d]));
+  return saved.map((s) => {
+    const base = byId.get(s.id);
+    return base ? { ...base, ...s } : s;
   });
+}
+
+/** The product shelf. See `mergeById`. */
+export function mergeProducts(
+  saved: Product[],
+  designed: Product[]
+): Product[] {
+  return mergeById(saved, designed);
+}
+
+/** The gallery. Same reasoning, same trap. */
+export function mergeSlides(
+  saved: GallerySlide[],
+  designed: GallerySlide[]
+): GallerySlide[] {
+  return mergeById(saved, designed);
 }
