@@ -3,7 +3,7 @@
 import { createContext, useContext, useEffect, useState } from "react";
 
 import { buildTimeContent, type SiteBundle } from "@/lib/content";
-import { mergeHomeSections } from "@/lib/home-model";
+import { layoutStamp, mergeHomeSections } from "@/lib/home-model";
 import { track } from "@/lib/track";
 
 /**
@@ -42,10 +42,15 @@ export function LiveContentProvider({ children }: { children: React.ReactNode })
       .then((data: { content?: Partial<SiteBundle> | null } | null) => {
         if (!data?.content) return;
         const next = { ...buildTimeContent, ...data.content };
-        // The published layout was written before some of these sections
-        // existed. Taking it wholesale would hide every section added since,
-        // which is exactly what happened to the ones built in round two.
-        if (data.content.home?.sections) {
+        // A saved layout is only applied to the design it was arranged
+        // against. An older one described a site with a second video section
+        // and sections still ticked "under construction", and merging kept
+        // every one of them — the film played twice and finished sections wore
+        // a building plate. A layout that is unstamped, or stamped for a
+        // different design, is left alone and this build's own sections are
+        // used. Rearranging anything in the dashboard stamps it afresh.
+        const designStamp = layoutStamp(buildTimeContent.home.sections);
+        if (data.content.home?.stamp === designStamp) {
           next.home = {
             ...next.home,
             sections: mergeHomeSections(
@@ -53,6 +58,8 @@ export function LiveContentProvider({ children }: { children: React.ReactNode })
               buildTimeContent.home.sections
             ),
           };
+        } else {
+          next.home = buildTimeContent.home;
         }
         setContent(next);
       })

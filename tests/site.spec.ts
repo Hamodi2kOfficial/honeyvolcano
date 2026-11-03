@@ -1565,6 +1565,148 @@ test.describe("the round his Lithuanian reader found", () => {
   }
 
   /**
+   * A layout saved against an older site must not come back.
+   *
+   * What he reported after a deploy: the film playing in the hero and again
+   * in the section below it, and finished sections wearing an "under
+   * construction" plate. Neither is in the design — both came from a layout
+   * the dashboard saved months earlier, which merging kept wholesale because
+   * it started from the saved copy and only ever added to it. It reappeared
+   * the moment a deploy brought /api/content back.
+   *
+   * These serve that exact payload and expect the build to win.
+   */
+  /**
+   * Not invented: this is the layout that was actually sitting in the
+   * site's blob store, saved on 27 October 2026, read back from production.
+   * A `video` section of its own beside the hero's film, and `values` and
+   * `letter` still ticked as under construction. The build ships none of
+   * those three.
+   */
+  const STALE_LAYOUT = {
+    content: {
+      home: {
+        sections: [
+          { id: "s1", kind: "builtin", builtin: "hero", visible: true },
+          { id: "s2", kind: "builtin", builtin: "video", visible: true },
+          { id: "s3", kind: "builtin", builtin: "trust", visible: true },
+          {
+            id: "s4",
+            kind: "builtin",
+            builtin: "values",
+            visible: true,
+            underConstruction: true,
+          },
+          {
+            id: "s5",
+            kind: "builtin",
+            builtin: "letter",
+            visible: true,
+            underConstruction: true,
+          },
+          { id: "s6", kind: "builtin", builtin: "showcase", visible: true },
+          { id: "s7", kind: "builtin", builtin: "cta", visible: true },
+        ],
+      },
+    },
+  };
+
+  test("a layout saved against an older site is not applied", async ({
+    page,
+  }) => {
+    // What the build alone renders, with no content API at all. The page is
+    // asked for itself rather than for numbers written down here, so this
+    // keeps holding when the design changes.
+    const shape = async () =>
+      page.evaluate(() => ({
+        films: document.querySelectorAll("video").length,
+        // `blur-[13px]` belongs only to the wrapper that lays an
+        // "under construction" plate over a section. The designed
+        // construction section is a section in its own right and has none.
+        plated: document.querySelectorAll('[class*="blur-[13px]"]').length,
+      }));
+
+    await page.route("**/api/content", (route) => route.fulfill({ status: 404, body: "" }));
+    await page.goto("/");
+    await ready(page);
+    await settle(page);
+    const built = await shape();
+    expect(built.films, "the build itself should show one film").toBe(1);
+    expect(built.plated, "the build itself plates nothing").toBe(0);
+
+    // Now the same page, served the layout from the older site.
+    await page.unroute("**/api/content");
+    await page.route("**/api/content", (route) =>
+      route.fulfill({
+        status: 200,
+        contentType: "application/json",
+        body: JSON.stringify(STALE_LAYOUT),
+      })
+    );
+    await page.goto("/");
+    await ready(page);
+    await settle(page);
+    const withStale = await shape();
+
+    expect(
+      withStale.films,
+      "the old layout put the film on the page a second time"
+    ).toBe(built.films);
+    expect(
+      withStale.plated,
+      "the old layout brought back an under-construction plate"
+    ).toBe(built.plated);
+  });
+
+  test("a layout saved against this design is still obeyed", async ({
+    page,
+  }) => {
+    // Same payload, carrying the stamp of the sections this build ships.
+    // Hiding a section has to keep working, or the dashboard is pointless.
+    const stamp =
+      "hero|story1|featured|trust|story2|story3|showcase|cta|construction";
+    await page.route("**/api/content", (route) =>
+      route.fulfill({
+        status: 200,
+        contentType: "application/json",
+        body: JSON.stringify({
+          content: {
+            home: {
+              stamp,
+              sections: [
+                {
+                  id: "b-hero",
+                  kind: "builtin",
+                  builtin: "hero",
+                  visible: true,
+                },
+                {
+                  id: "b-featured",
+                  kind: "builtin",
+                  builtin: "featured",
+                  visible: false,
+                },
+              ],
+            },
+          },
+        }),
+      })
+    );
+    await page.goto("/");
+    await ready(page);
+    await settle(page);
+
+    expect(
+      await page.locator("video").count(),
+      "the stamped layout should still show the hero"
+    ).toBe(1);
+    await expect(
+      page.locator("main"),
+      "a section hidden in the dashboard was shown anyway"
+    ).not.toContainText(/our jars|featured/i);
+  });
+
+  /**
    * A first-time visitor gets English.
    *
    * The language is a saved preference, so a browser that once chose Spanish

@@ -14,7 +14,14 @@ import homeData from "@/content/home.json";
 import productsData from "@/content/products.json";
 import siteData from "@/content/site.json";
 
-import { mergeHomeSections, type HomeContent, type Img, type Section } from "@/lib/home-model";
+import {
+  layoutStamp,
+  mergeHomeSections,
+  type HomeContent,
+  type Img,
+  type Section,
+} from "@/lib/home-model";
+import homeDesign from "@/content/home.json";
 import { defaultMarketing, type Marketing } from "@/lib/marketing";
 
 export const ADMIN_USER = "admin";
@@ -227,7 +234,14 @@ export function clearPassword() {
 /** Exactly what gets published: the site's content plus the picture library. */
 export function publishableBundle(ws: Workspace) {
   return {
-    home: ws.home,
+    // Stamped with the design it was arranged against, so a later build
+    // with different sections knows not to apply it. See `layoutStamp`.
+    home: {
+      ...ws.home,
+      stamp: layoutStamp(
+        (homeDesign as unknown as HomeContent).sections
+      ),
+    },
     gallery: ws.gallery,
     products: ws.products,
     site: ws.site,

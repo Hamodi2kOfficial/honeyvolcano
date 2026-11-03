@@ -106,7 +106,37 @@ export type Section = Base &
   );
 
 export type SectionKind = Section["kind"];
-export type HomeContent = { sections: Section[] };
+export type HomeContent = {
+  sections: Section[];
+  /**
+   * Which design this layout was arranged against. See `layoutStamp`.
+   * Absent on anything saved before stamping existed, which is the point.
+   */
+  stamp?: string;
+};
+
+/**
+ * A fingerprint of the sections this build ships with.
+ *
+ * The dashboard saves a layout, and that layout outlives the design it was
+ * arranged against. A saved copy from an older site still listed a separate
+ * `video` section — so the film played in the hero and again below it — and
+ * still carried `underConstruction` ticks on sections long since finished.
+ * Nothing dropped them, because merging started from the saved copy and only
+ * ever added to it. A deploy that brought the content API back brought all of
+ * it back with it.
+ *
+ * So a saved layout now says which design it was made for. If that does not
+ * match the build being served, the build's own layout is used and the saved
+ * one is left alone — not deleted, just not applied to a site it no longer
+ * describes. Rearranging anything in the dashboard stamps it afresh and it
+ * sticks again.
+ */
+export function layoutStamp(sections: Section[]): string {
+  return sections
+    .map((s) => (s.kind === "builtin" ? s.builtin : s.kind))
+    .join("|");
+}
 
 /** Labels + one-line descriptions shown in the "Add section" picker. */
 export const SECTION_META: Record<
