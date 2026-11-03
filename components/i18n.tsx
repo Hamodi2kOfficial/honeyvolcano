@@ -66,9 +66,58 @@ export function I18nProvider({ children }: { children: React.ReactNode }) {
     document.documentElement.lang = lang;
   }, [lang]);
 
+  /**
+   * Change the language, with the page dipping while it happens.
+   *
+   * Every string on screen changes in the same frame, and swapping them
+   * outright reads as a flicker. Fading down, swapping, and fading back
+   * makes it one deliberate movement instead. The CSS is in globals.css;
+   * all this does is hold the class on long enough for the words to be
+   * replaced while nobody can see it.
+   *
+   * The timer is cleared if the language changes again mid-swap, so
+   * tapping through the list quickly cannot leave the page faded out.
+   */
+  const swapTimer = React.useRef<number | undefined>(undefined);
+  const restoreTimer = React.useRef<number | undefined>(undefined);
+
+  React.useEffect(
+    () => () => {
+      window.clearTimeout(swapTimer.current);
+      window.clearTimeout(restoreTimer.current);
+      document.documentElement.classList.remove("hv-lang-swap");
+    },
+    []
+  );
+
   const setLang = React.useCallback((l: Lang) => {
-    setLangState(l);
-    window.localStorage.setItem("medaus-lang", l);
+    try {
+      window.localStorage.setItem("medaus-lang", l);
+    } catch {
+      /* private window, or storage full: the choice still applies now */
+    }
+
+    const el = document.documentElement;
+    const reduced = window.matchMedia(
+      "(prefers-reduced-motion: reduce)"
+    ).matches;
+    if (reduced) {
+      setLangState(l);
+      return;
+    }
+
+    window.clearTimeout(swapTimer.current);
+    window.clearTimeout(restoreTimer.current);
+    el.classList.add("hv-lang-swap");
+
+    swapTimer.current = window.setTimeout(() => {
+      setLangState(l);
+      // One frame for the new words to be painted behind the fade, so
+      // coming back up never shows the old ones.
+      restoreTimer.current = window.setTimeout(() => {
+        el.classList.remove("hv-lang-swap");
+      }, 20);
+    }, 150);
   }, []);
 
   // Anything the owner rewrote in the dashboard wins over the shipped

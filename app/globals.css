@@ -54,6 +54,66 @@
   --shadow-soft: 0 24px 60px -30px rgba(0, 0, 0, 0.8);
 }
 
+/*
+ * Changing language, without the words snapping.
+ *
+ * Every visible string changes at once, which read as a flicker. The
+ * page dips while the swap happens and comes back with the new wording.
+ *
+ * The three landmarks are faded rather than the document, deliberately:
+ * an element with opacity below 1 becomes the containing block for any
+ * `position: fixed` inside it, so fading <html> would drop the navigation
+ * bar and the call button out of the corner of the screen for the length
+ * of the swap. <header> is itself fixed, so fading it moves nothing.
+ *
+ * Short on purpose. This is punctuation, not an effect.
+ */
+header,
+main,
+footer {
+  transition: opacity 140ms ease;
+}
+
+html.hv-lang-swap header,
+html.hv-lang-swap main,
+html.hv-lang-swap footer {
+  opacity: 0.35;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Asked for no motion: swap the words and leave it at that. */
+  body > header,
+  body > main,
+  body > footer {
+    transition: none;
+  }
+  html.hv-lang-swap > body > header,
+  html.hv-lang-swap > body > main,
+  html.hv-lang-swap > body > footer {
+    opacity: 1;
+  }
+}
+
+/*
+ * The page gave up waiting for its own animations.
+ *
+ * Set by the failsafe script in <head> when the browser cannot run the
+ * reveals, or when the page has not come alive after a few seconds. Every
+ * reveal is server-rendered at opacity 0, so without this the visitor
+ * reads a blank page — the one in front of the phone number included.
+ *
+ * `!important` because the hidden state is an inline style, and this has
+ * to beat it. It only ever matches elements that are hiding themselves.
+ */
+.hv-show-all [style*="opacity:0"],
+.hv-show-all [style*="opacity: 0"],
+.hv-show-all [style*="clip-path"] {
+  opacity: 1 !important;
+  transform: none !important;
+  filter: none !important;
+  clip-path: none !important;
+}
+
 @theme inline {
   /*
    * The type scale, raised.

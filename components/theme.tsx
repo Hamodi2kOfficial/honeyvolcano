@@ -23,6 +23,34 @@ const EVENT = "hv-themechange";
 /** Runs in <head>, before anything is painted. Kept tiny and dependency-free. */
 export const themeScript = `(function(){try{var s=localStorage.getItem("${STORAGE_KEY}");var d=s==="dark"||(!s&&window.matchMedia("(prefers-color-scheme: dark)").matches);var e=document.documentElement;e.classList.toggle("dark",d);e.style.colorScheme=d?"dark":"light";}catch(_){document.documentElement.classList.add("dark");}})();`;
 
+/**
+ * Keeps the page readable when its animations cannot run.
+ *
+ * Every scroll reveal is server-rendered at `opacity: 0`, waiting for motion
+ * to bring it in — 65 elements on the home page alone. If that never happens
+ * the visitor reads a blank page: no heading, no navigation, and no Call to
+ * taste, which is the only thing the site is for.
+ *
+ * Three ways it can never happen, and all three are covered here.
+ *
+ * A single error proves nothing — the page throws a benign hydration warning
+ * on every load, and treating that as death switched every animation off for
+ * everyone. An error only counts if the page has still not come alive a
+ * moment later.
+ *
+ * A browser with no `IntersectionObserver` is the worst of them, and not in
+ * the way you would expect: motion does not degrade, it throws, React's
+ * hydration dies with it, and React strips `<html>` of its classes on the
+ * way down — so a flag set there would be wiped by the very failure it is
+ * for. Hence a stub observer that reports everything as already in view, and
+ * a `<style>` element rather than a class.
+ *
+ * ES5 and dependency-free on purpose: it has to run on the browsers that are
+ * the problem. On a healthy one it defines nothing, the timer finds the page
+ * already alive, and none of it has any effect.
+ */
+export const failsafeScript = `(function(){try{if(!("IntersectionObserver" in window)){window.IntersectionObserver=function(cb){this.observe=function(el){try{cb([{target:el,isIntersecting:true,intersectionRatio:1,time:0,boundingClientRect:el.getBoundingClientRect(),intersectionRect:el.getBoundingClientRect(),rootBounds:null}],this);}catch(e){}};this.unobserve=function(){};this.disconnect=function(){};this.takeRecords=function(){return[];};this.root=null;this.rootMargin="0px";this.thresholds=[0];};}var shown=false;var reveal=function(){if(shown)return;shown=true;var st=document.createElement("style");st.id="hv-failsafe";st.appendChild(document.createTextNode('[style*="opacity:0"],[style*="opacity: 0"],[style*="clip-path"]{opacity:1!important;transform:none!important;filter:none!important;clip-path:none!important}'));(document.head||document.documentElement).appendChild(st);};window.addEventListener("error",function(){setTimeout(function(){if(!document.documentElement.getAttribute("data-hv-ready")){reveal();}},1500);});setTimeout(function(){if(!document.documentElement.getAttribute("data-hv-ready")){reveal();}},4000);}catch(_){try{var f=document.createElement("style");f.appendChild(document.createTextNode('[style*="opacity:0"]{opacity:1!important;transform:none!important}'));(document.head||document.documentElement).appendChild(f);}catch(__){}}})();`;
+
 function apply(theme: Theme) {
   const el = document.documentElement;
   el.classList.toggle("dark", theme === "dark");

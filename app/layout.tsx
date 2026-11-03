@@ -6,7 +6,7 @@ import { SmoothScroll } from "@/components/smooth-scroll";
 import { LiveContentProvider } from "@/components/live-content";
 import { AnnouncementBar } from "@/components/site/announcement-bar";
 import { SiteChrome } from "@/components/site/chrome";
-import { ThemeProvider, themeScript } from "@/components/theme";
+import { ThemeProvider, failsafeScript, themeScript } from "@/components/theme";
 
 const cinzel = Cinzel({
   subsets: ["latin"],
@@ -103,6 +103,18 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       <head>
         {/* Decides light or dark before the first paint, so nothing flashes. */}
         <script dangerouslySetInnerHTML={{ __html: themeScript }} />
+        {/* And makes sure the page is readable even if nothing else runs. */}
+        <script dangerouslySetInnerHTML={{ __html: failsafeScript }} />
+        <noscript>
+          {/* No scripts at all: the reveals will never fire, so drop the
+              hidden state immediately rather than show a blank page. */}
+          <style
+            dangerouslySetInnerHTML={{
+              __html:
+                "[style*=\"opacity:0\"],[style*=\"opacity: 0\"]{opacity:1!important;transform:none!important;filter:none!important;clip-path:none!important}",
+            }}
+          />
+        </noscript>
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(ORGANISATION) }}
