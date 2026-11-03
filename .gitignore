@@ -47,14 +47,13 @@ next-env.d.ts
 # It does not contain netlify/functions — those live outside it — so a deploy
 # made from this folder alone leaves the site without its /api/* routes.
 
-# Invoices never go in here. This repository is public, and an invoice
-# carries a bank account and two kennitölur. They live one level up, outside
-# the repository; these patterns are in case one is ever copied in by hand.
-*nvoice*
+# Personal paperwork and local-only scripts. Kept out of a public repository;
+# the patterns stay even though these live outside it, in case one is ever
+# copied in by hand.
 *.pdf
-
-# local-only invoice generator (contains personal/bank details)
-scripts/make-invoice-pdf.js
+*.docx
+*nvoice*
+scripts/make-*-pdf.js
 
 # Stray root asset, not part of the site
 WhatsApp Image*.jpeg
